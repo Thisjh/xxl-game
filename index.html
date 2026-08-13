@@ -53,9 +53,9 @@ html,body{
   background:
     radial-gradient(circle at 75% 15%, var(--bg4), transparent 45%),
     radial-gradient(circle at 18% 8%, rgba(255,255,255,.5), transparent 40%),
-    radial-gradient(circle at 88% 95%, rgba(255,200,220,.3), transparent 45%),
+    radial-gradient(circle at 88% 95%, rgba(255,200,220,.32), transparent 45%),
     radial-gradient(135deg,var(--bg1) 0%,var(--bg2) 50%,var(--bg3) 100%),
-    radial-gradient(ellipse at center, transparent 60%, rgba(180,140,160,.18) 100%);
+    radial-gradient(ellipse at center, transparent 55%, rgba(120,90,110,.22) 100%);
 }
 #bg-layer::after{
   content:'';position:absolute;inset:-20%;
@@ -71,18 +71,18 @@ html,body{
 #level-badge{
   background:linear-gradient(160deg,var(--ui1),var(--ui2));
   border-radius:var(--r-pill);padding:8px 20px;font-weight:900;font-size:var(--f-sub);color:var(--text);
-  box-shadow:var(--sh-ui);letter-spacing:1px;border:1px solid rgba(255,255,255,.6);white-space:nowrap;flex:0 0 auto}
+  box-shadow:var(--sh-ui);letter-spacing:1px;border:1.5px solid var(--ui-shadow);white-space:nowrap;flex:0 0 auto}
 .home-circle{
-  width:40px;height:40px;border-radius:50%;border:none;cursor:pointer;font-size:19px;
+  width:40px;height:40px;border-radius:50%;border:1.5px solid var(--ui-shadow);cursor:pointer;font-size:19px;
   background:linear-gradient(160deg,var(--ui1),var(--ui2));
   box-shadow:var(--sh-ui-sm);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
 .home-circle:active{transform:translateY(3px);box-shadow:var(--sh-ui-active)}
 #coin-badge{
   background:linear-gradient(160deg,var(--ui1),var(--ui2));border-radius:var(--r-pill);
   padding:9px 16px;font-weight:900;font-size:var(--f-sub);color:var(--text);
-  box-shadow:var(--sh-ui);display:flex;align-items:center;gap:5px;margin-left:auto}
+  box-shadow:var(--sh-ui);border:1.5px solid var(--ui-shadow);display:flex;align-items:center;gap:5px;margin-left:auto}
 .sound-group{display:flex;gap:8px;flex:0 0 auto}
-#progress-box{background:rgba(255,255,255,.55);border-radius:14px;padding:5px;height:20px;position:relative;overflow:hidden;box-shadow:inset 0 1px 3px rgba(80,140,130,.15);border:1px solid rgba(255,255,255,.6)}
+#progress-box{background:rgba(255,255,255,.7);border-radius:14px;padding:5px;height:20px;position:relative;overflow:hidden;box-shadow:inset 0 1px 3px rgba(80,140,130,.18);border:1.5px solid var(--card-shadow)}
 #progress-fill{height:100%;width:0%;border-radius:9px;background:linear-gradient(90deg,#FF6FA5,#FFA8C9);
   transition:width .45s cubic-bezier(.34,1.56,.64,1);box-shadow:0 0 8px rgba(255,111,165,.45)}
 #progress-text{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;font-weight:900;text-shadow:0 1px 2px rgba(0,0,0,.4)}
@@ -91,11 +91,11 @@ html,body{
 .tile{
   width:var(--tile-size);height:var(--tile-size);
   background:linear-gradient(160deg,var(--card1),var(--card2));
-  border-radius:12px;border:1px solid rgba(255,255,255,.7);
-  box-shadow:0 3px 10px rgba(80,140,130,.18),0 1px 2px rgba(0,0,0,.05),inset 0 1px 2px rgba(255,255,255,.8);
+  border-radius:12px;border:2px solid var(--card-shadow);
+  box-shadow:0 5px 14px rgba(74,130,122,.32),0 2px 4px rgba(0,0,0,.10),inset 0 1px 2px rgba(255,255,255,.9);
   display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;
   transition:transform .12s ease,box-shadow .12s ease,background .12s ease;}
-.tile:active{transform:translateY(4px);box-shadow:0 2px 0 var(--card-shadow),inset 0 2px 3px rgba(255,255,255,.6)}
+.tile:active{transform:translateY(4px);box-shadow:0 1px 0 var(--card-shadow),inset 0 2px 3px rgba(255,255,255,.6)}
 .tile svg{width:88%;height:88%;display:block;transform-origin:center}
 .tile.selected{
   transform:translateY(-2px) scale(1.06);
@@ -120,7 +120,7 @@ html,body{
 #tools{width:100%;max-width:460px;display:flex;gap:10px;justify-content:center;padding:8px 14px 16px}
 .tool{flex:1;max-width:130px;background:linear-gradient(160deg,var(--ui1),var(--ui2));border-radius:var(--r-lg);padding:10px 4px 8px;text-align:center;cursor:pointer;position:relative;
   box-shadow:var(--sh-ui);
-  border:1px solid rgba(255,255,255,.55);transition:transform .1s}
+  border:1.5px solid var(--ui-shadow);transition:transform .1s}
 .tool:active{transform:translateY(4px);box-shadow:var(--sh-ui-active)}
 .tool-icon{font-size:30px;line-height:1}
 .tool-name{font-size:13px;color:var(--text);font-weight:900;margin-top:3px}
@@ -188,15 +188,15 @@ html,body{
 @keyframes comboFly{0%{opacity:0;transform:translate(-50%,-50%) scale(.4)}25%{opacity:1;transform:translate(-50%,-50%) scale(1.3)}100%{opacity:0;transform:translate(-50%,-72%) scale(1)}}
 /* 关卡顶部：音效开关 + 靠拢方向提示条 */
 .snd-btn{width:38px;height:38px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(160deg,var(--ui1),var(--ui2));box-shadow:var(--sh-ui-sm);position:relative;padding:0}
+  background:linear-gradient(160deg,var(--ui1),var(--ui2));box-shadow:var(--sh-ui-sm);position:relative;padding:0;border:1.5px solid var(--ui-shadow)}
 .snd-btn:active{transform:translateY(3px);box-shadow:var(--sh-ui-active)}
 .snd-btn svg{width:22px;height:22px;display:block}
 .snd-btn.off{opacity:.5;filter:grayscale(1)}
 .snd-btn.off::after{content:'';position:absolute;left:50%;top:50%;width:30px;height:3px;background:#c0392b;border-radius:2px;
   transform:translate(-50%,-50%) rotate(-45deg);box-shadow:0 0 2px #fff}
-#dir-bar{background:rgba(255,255,255,.7);border-radius:var(--r-md);padding:7px 14px;font-size:var(--f-body);font-weight:900;color:var(--text);
+#dir-bar{background:rgba(255,255,255,.85);border-radius:var(--r-md);padding:7px 14px;font-size:var(--f-body);font-weight:900;color:var(--text);
   display:flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap;letter-spacing:1px;
-  box-shadow:var(--sh-ui-sm);border:1px solid rgba(255,255,255,.7)}
+  box-shadow:var(--sh-ui-sm);border:1.5px solid var(--card-shadow)}
 /* ====== 场景装饰（皮肤卡通背景） ====== */
 #scene-layer{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 /* 山丘：贴底分层、柔和可见（garden A） */
@@ -1182,7 +1182,7 @@ function applySkin(){
   r.setProperty('--text',sk.text);
   renderScene(sk.scene||{});
 }
-const BUTTERFLY_SVG='<svg viewBox="0 0 40 32" width="100%" height="100%"><g class="bf-wing"><ellipse cx="14" cy="10" rx="9" ry="7.5" fill="#FFB3CE"/><ellipse cx="26" cy="10" rx="9" ry="7.5" fill="#FFC9DD"/><ellipse cx="14" cy="22" rx="7.5" ry="6.5" fill="#FFC9DD"/><ellipse cx="26" cy="22" rx="7.5" ry="6.5" fill="#FFB3CE"/></g><rect x="19" y="6" width="2" height="20" rx="1" fill="#9b6b7a"/></svg>';
+const BUTTERFLY_SVG='<svg viewBox="0 0 40 32" width="100%" height="100%"><g class="bf-wing"><ellipse cx="14" cy="10" rx="9" ry="7.5" fill="#FF8FB7"/><ellipse cx="26" cy="10" rx="9" ry="7.5" fill="#FFA8C6"/><ellipse cx="14" cy="22" rx="7.5" ry="6.5" fill="#FFA8C6"/><ellipse cx="26" cy="22" rx="7.5" ry="6.5" fill="#FF8FB7"/><circle cx="14" cy="10" r="2.2" fill="#7a3a55"/><circle cx="26" cy="10" r="2.2" fill="#7a3a55"/></g><rect x="19" y="6" width="2" height="20" rx="1" fill="#5b2a40"/></svg>';
 function FLOWER_SVG(petal,center){return '<svg viewBox="0 0 24 24" width="100%" height="100%"><circle cx="12" cy="6" r="4" fill="'+petal+'"/><circle cx="18" cy="12" r="4" fill="'+petal+'"/><circle cx="12" cy="18" r="4" fill="'+petal+'"/><circle cx="6" cy="12" r="4" fill="'+petal+'"/><circle cx="12" cy="12" r="3.4" fill="'+center+'"/></svg>';}
 function renderScene(sc){
   const layer=document.getElementById('scene-layer');if(!layer)return;
@@ -1208,10 +1208,10 @@ function renderScene(sc){
   }
   // SVG 小花（garden A · 全部贴四角，避开棋盘区）
   if(sc.flowersSvg){
-    const fps=[['left','5%','top','11%','20px','#FFD6E6','#FFE7A8'],
-               ['right','5%','top','11%','22px','#CFE9FF','#FFE7A8'],
-               ['left','5%','bottom','12%','22px','#FFD6E6','#FFE7A8'],
-               ['right','5%','bottom','12%','20px','#CFE9FF','#FFE7A8']];
+    const fps=[['left','5%','top','11%','20px','#FF8FB7','#FFCB57'],
+               ['right','5%','top','11%','22px','#7AB8E8','#FFCB57'],
+               ['left','5%','bottom','12%','22px','#FF8FB7','#FFCB57'],
+               ['right','5%','bottom','12%','20px','#7AB8E8','#FFCB57']];
     fps.forEach(([h,hv,v,vv,sz,pe,ce])=>{
       const f=document.createElement('div');f.className='scene-flower-svg';f.innerHTML=FLOWER_SVG(pe,ce);
       f.style.cssText=`${h}:${hv};${v}:${vv};width:${sz};height:${sz};opacity:.75;animation-delay:${Math.random()*2}s`;layer.appendChild(f);
