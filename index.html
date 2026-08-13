@@ -212,11 +212,11 @@ html,body{
 /* 花朵：emoji 版（其它皮肤沿用） */
 .scene-flower{position:absolute;width:40px;height:40px;opacity:.7}
 /* 柔和太阳 / SVG 小花 / 蝴蝶（garden A） */
-.scene-sun{position:absolute;width:46px;height:46px;border-radius:50%;
+.scene-sun{position:absolute;width:30px;height:30px;border-radius:50%;
   background:radial-gradient(circle at 40% 38%,#FFF4CF,#FFDD9B);
-  box-shadow:0 0 26px 6px rgba(255,221,155,.45);animation:sunBreathe 6s ease-in-out infinite}
-.scene-flower-svg{position:absolute;opacity:.92;animation:flowerSway 4.5s ease-in-out infinite;transform-origin:bottom center}
-.scene-butterfly{position:absolute;width:28px;height:22px;animation:bfFlutter 3.6s ease-in-out infinite}
+  box-shadow:0 0 10px 0 rgba(255,221,155,.32)}
+.scene-flower-svg{position:absolute;opacity:.78;animation:flowerSway 4.5s ease-in-out infinite;transform-origin:bottom center}
+.scene-butterfly{position:absolute;width:24px;height:20px;animation:bfFlutter 3.6s ease-in-out infinite}
 .scene-butterfly .bf-wing{transform-origin:center;animation:bfFlap 1.5s ease-in-out infinite}
 .scene-flower{position:absolute;width:40px;height:40px;opacity:.7}
 .scene-star{position:absolute;color:rgba(255,255,255,.45);font-size:18px;animation:twinkle 2.6s ease-in-out infinite}
@@ -1196,22 +1196,25 @@ function renderScene(sc){
     const hb=document.createElement('div');hb.className='scene-hill-b';
     hb.style.background=sc.hills[1]||sc.hills[0];layer.appendChild(hb);
   }
-  // 柔和太阳（garden A）
+  // 柔和太阳（garden A · 小、静、贴角，不干扰玩牌）
   if(sc.sun){
     const sun=document.createElement('div');sun.className='scene-sun';
-    sun.style.cssText='top:5%;right:6%';layer.appendChild(sun);
+    sun.style.cssText='top:2.5%;right:4%';layer.appendChild(sun);
   }
-  // 蝴蝶（garden A）
+  // 蝴蝶（garden A · 上移到顶栏边，不压棋盘）
   if(sc.butterfly){
     const b=document.createElement('div');b.className='scene-butterfly';b.innerHTML=BUTTERFLY_SVG;
-    b.style.cssText='top:28%;right:12%';layer.appendChild(b);
+    b.style.cssText='top:9%;right:18%';layer.appendChild(b);
   }
-  // SVG 小花（garden A）
+  // SVG 小花（garden A · 全部贴四角，避开棋盘区）
   if(sc.flowersSvg){
-    const fps=[[6,70,'24px','#FFD6E6','#FFE7A8'],[90,66,'30px','#CFE9FF','#FFE7A8'],[92,10,'22px','#FFD6E6','#FFE7A8'],[4,16,'20px','#CFE9FF','#FFE7A8']];
-    fps.forEach(([l,b,t,sz,pe,ce])=>{
+    const fps=[['left','5%','top','11%','20px','#FFD6E6','#FFE7A8'],
+               ['right','5%','top','11%','22px','#CFE9FF','#FFE7A8'],
+               ['left','5%','bottom','12%','22px','#FFD6E6','#FFE7A8'],
+               ['right','5%','bottom','12%','20px','#CFE9FF','#FFE7A8']];
+    fps.forEach(([h,hv,v,vv,sz,pe,ce])=>{
       const f=document.createElement('div');f.className='scene-flower-svg';f.innerHTML=FLOWER_SVG(pe,ce);
-      f.style.cssText=`left:${l}%;bottom:${b}%;width:${sz};height:${sz};animation-delay:${Math.random()*2}s`;layer.appendChild(f);
+      f.style.cssText=`${h}:${hv};${v}:${vv};width:${sz};height:${sz};opacity:.75;animation-delay:${Math.random()*2}s`;layer.appendChild(f);
     });
   }
   // 云朵
