@@ -199,14 +199,25 @@ html,body{
   box-shadow:var(--sh-ui-sm);border:1px solid rgba(255,255,255,.7)}
 /* ====== 场景装饰（皮肤卡通背景） ====== */
 #scene-layer{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-.scene-hill-t,.scene-hill-b{position:absolute;width:200%;height:120px;left:-50%;border-radius:50% 50% 0 0;opacity:.5}
-.scene-hill-t{position:absolute;width:200%;height:90px;left:-50%;border-radius:50% 50% 0 0;opacity:.55;
-  background:linear-gradient(180deg,rgba(255,200,220,.7),rgba(220,240,235,.6));
-  bottom:auto;top:auto}
-.scene-hill-b{position:absolute;width:200%;height:120px;left:-50%;border-radius:50% 50% 0 0;opacity:.45;
-  background:linear-gradient(180deg,rgba(220,240,235,.6),rgba(190,225,220,.5));
-  bottom:auto;top:auto}
-.scene-cloud{position:absolute;background:rgba(255,255,255,.22);border-radius:50px;filter:blur(2px);opacity:.8}
+/* 山丘：贴底分层、柔和可见（garden A） */
+.scene-hill-t,.scene-hill-b{position:absolute;left:-50%;width:200%;border-radius:50% 50% 0 0}
+.scene-hill-b{bottom:0;height:130px;opacity:.8}
+.scene-hill-t{bottom:48px;height:96px;opacity:.9}
+/* 蓬松云朵（garden A） */
+.scene-cloud{position:absolute;background:rgba(255,255,255,.92);border-radius:40px;
+  box-shadow:0 4px 14px rgba(120,160,150,.12);animation:cloudDrift 16s ease-in-out infinite}
+.scene-cloud::before,.scene-cloud::after{content:"";position:absolute;background:rgba(255,255,255,.94);border-radius:50%}
+.scene-cloud::before{width:62%;height:135%;top:-46%;left:8%}
+.scene-cloud::after{width:48%;height:100%;top:-32%;right:12%}
+/* 花朵：emoji 版（其它皮肤沿用） */
+.scene-flower{position:absolute;width:40px;height:40px;opacity:.7}
+/* 柔和太阳 / SVG 小花 / 蝴蝶（garden A） */
+.scene-sun{position:absolute;width:46px;height:46px;border-radius:50%;
+  background:radial-gradient(circle at 40% 38%,#FFF4CF,#FFDD9B);
+  box-shadow:0 0 26px 6px rgba(255,221,155,.45);animation:sunBreathe 6s ease-in-out infinite}
+.scene-flower-svg{position:absolute;opacity:.92;animation:flowerSway 4.5s ease-in-out infinite;transform-origin:bottom center}
+.scene-butterfly{position:absolute;width:28px;height:22px;animation:bfFlutter 3.6s ease-in-out infinite}
+.scene-butterfly .bf-wing{transform-origin:center;animation:bfFlap 1.5s ease-in-out infinite}
 .scene-flower{position:absolute;width:40px;height:40px;opacity:.7}
 .scene-star{position:absolute;color:rgba(255,255,255,.45);font-size:18px;animation:twinkle 2.6s ease-in-out infinite}
 @keyframes twinkle{0%,100%{opacity:.25;transform:scale(1)}50%{opacity:.7;transform:scale(1.2)}}
@@ -219,6 +230,11 @@ html,body{
 @keyframes bubbleRise{0%{transform:translateY(0) scale(1);opacity:.22}100%{transform:translateY(-80vh) scale(.5);opacity:0}}
 .scene-aurora{position:absolute;width:200%;height:150px;top:10%;left:-50%;background:linear-gradient(180deg,transparent,rgba(100,200,255,.05),transparent);filter:blur(24px);animation:auroraDrift 8s ease-in-out infinite alternate}
 @keyframes auroraDrift{0%{transform:translateX(-10%) skewX(-5deg)}100%{transform:translateX(10%) skewX(5deg)}}
+@keyframes cloudDrift{0%,100%{transform:translateX(0)}50%{transform:translateX(14px)}}
+@keyframes sunBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+@keyframes flowerSway{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}}
+@keyframes bfFlutter{0%,100%{transform:translate(0,0) rotate(-3deg)}50%{transform:translate(-5px,-10px) rotate(3deg)}}
+@keyframes bfFlap{0%,100%{transform:scaleX(1)}50%{transform:scaleX(.6)}}
 </style>
 </head>
 <body>
@@ -761,18 +777,18 @@ function saveGame(){try{localStorage.setItem(SAVE_KEY,JSON.stringify(save));}cat
 function allIconPool(){const a=[];for(let i=0;i<FULL_ICONS.length;i++)a.push(i);return a;}
 
 const SKINS=[
-  {id:'green',name:'奶油薄荷',price:0,free:true,bg:['#F0FBFA','#DCF2EE','#FFD2DF'],bg4:'#FFD2DF',card:['#FFFFFF','#F0FAF8','#C9E2DD'],accent:'#FF6FA5',ui:['#FFFFFF','#F2FAF9','#B5D9D2'],text:'#2D4A45',
-    scene:{hills:['#B5E0DA','#9CD0CA'],clouds:true,hearts:true,decor:'heart'}},
+  {id:'green',name:'奶油薄荷',price:0,free:true,bg:['#DCEFF4','#EAF8F0','#FBF4F7'],bg4:'#FFD2DF',card:['#FFFFFF','#F0FAF8','#C9E2DD'],accent:'#FF6FA5',ui:['#FFFFFF','#F2FAF9','#B5D9D2'],text:'#2D4A45',
+    scene:{hills:['#B5E0DA','#9CD0CA'],clouds:true,sun:true,butterfly:true,flowersSvg:true,decor:'heart'}},
   {id:'pink',name:'少女粉',price:10,bg:['#ffc1e3','#ff8fb1','#ff5e9c'],bg4:'#ffd6ea',card:['#ffffff','#fff0f6','#f3c9dc'],accent:'#ff4f9a',ui:['#fff0f7','#ffd6ea','#d96fa6'],text:'#a83a6b',
-    scene:{hills:['#ffb8d9','#ff80bf'],clouds:true,hearts:true,decor:'heart'}},
+    scene:{hills:['#ffb8d9','#ff80bf'],clouds:true,hearts:true,sun:true,decor:'heart'}},
   {id:'purple',name:'梦幻紫',price:10,bg:['#c9a7ff','#9b6dff','#5b2ea6'],bg4:'#e3d2ff',card:['#ffffff','#f4ecff','#d9c4f5'],accent:'#a06bff',ui:['#f6efff','#e3d2ff','#a07fd6'],text:'#5e3a9e',
     scene:{hills:['#b08ce6','#9068d0'],stars:true,aurora:true,decor:'star'}},
   {id:'blue',name:'海洋蓝',price:10,bg:['#9fe0ff','#4fb0e6','#1f6fb0'],bg4:'#d6f3ff',card:['#ffffff','#eef7ff','#c4dcef'],accent:'#1fa8e0',ui:['#eef9ff','#cfeaff','#7fb8d9'],text:'#1f5e8c',
     scene:{hills:['#70c8f0','#40a0d8'],bubbles:true,waves:true,decor:'bubble'}},
   {id:'orange',name:'日落橘',price:12,bg:['#ffd89b','#ff9e5e','#ff6f3c'],bg4:'#ffe6c4',card:['#fffaf0','#ffeee0','#f0cfae'],accent:'#ff7a2f',ui:['#fff5ea','#ffe0c4','#d99a5e'],text:'#9e5a1f',
-    scene:{hills:['#ffc878','#ffa040'],clouds:true,leaves:'🍂',decor:'leaf'}},
+    scene:{hills:['#ffc878','#ffa040'],clouds:true,sun:true,leaves:'🍂',decor:'leaf'}},
   {id:'mint',name:'薄荷绿',price:12,bg:['#b6f5d8','#5fd6a0','#1f9e6e'],bg4:'#d6f9e8',card:['#f6fffb','#e6fbf0','#bfe9d4'],accent:'#1faa74',ui:['#f0fff8','#d4f5e6','#7fc9a6'],text:'#1f7a55',
-    scene:{hills:['#90eeb0','#40d080'],flowers:'🌸',dew:true,decor:'flower'}}
+    scene:{hills:['#90eeb0','#40d080'],sun:true,flowersSvg:true,dew:true,decor:'flower'}}
 ];
 const SHOP_ITEMS=[
   {key:'hint',icon:'💡',name:'提示',desc:'高亮一对可消除',price:30},
@@ -1166,17 +1182,37 @@ function applySkin(){
   r.setProperty('--text',sk.text);
   renderScene(sk.scene||{});
 }
+const BUTTERFLY_SVG='<svg viewBox="0 0 40 32" width="100%" height="100%"><g class="bf-wing"><ellipse cx="14" cy="10" rx="9" ry="7.5" fill="#FFB3CE"/><ellipse cx="26" cy="10" rx="9" ry="7.5" fill="#FFC9DD"/><ellipse cx="14" cy="22" rx="7.5" ry="6.5" fill="#FFC9DD"/><ellipse cx="26" cy="22" rx="7.5" ry="6.5" fill="#FFB3CE"/></g><rect x="19" y="6" width="2" height="20" rx="1" fill="#9b6b7a"/></svg>';
+function FLOWER_SVG(petal,center){return '<svg viewBox="0 0 24 24" width="100%" height="100%"><circle cx="12" cy="6" r="4" fill="'+petal+'"/><circle cx="18" cy="12" r="4" fill="'+petal+'"/><circle cx="12" cy="18" r="4" fill="'+petal+'"/><circle cx="6" cy="12" r="4" fill="'+petal+'"/><circle cx="12" cy="12" r="3.4" fill="'+center+'"/></svg>';}
 function renderScene(sc){
   const layer=document.getElementById('scene-layer');if(!layer)return;
   layer.innerHTML='';
   if(!sc.hills&&!sc.clouds&&!sc.stars&&!sc.bubbles&&!sc.waves&&!sc.hearts&&
-     !sc.flowers&&!sc.leaves&&!sc.dew&&!sc.aurora)return;
+     !sc.flowers&&!sc.leaves&&!sc.dew&&!sc.aurora&&!sc.sun&&!sc.butterfly&&!sc.flowersSvg)return;
   // 山坡（顶部+底部）
   if(sc.hills){
     const ht=document.createElement('div');ht.className='scene-hill-t';
     ht.style.background=sc.hills[0];layer.appendChild(ht);
     const hb=document.createElement('div');hb.className='scene-hill-b';
     hb.style.background=sc.hills[1]||sc.hills[0];layer.appendChild(hb);
+  }
+  // 柔和太阳（garden A）
+  if(sc.sun){
+    const sun=document.createElement('div');sun.className='scene-sun';
+    sun.style.cssText='top:5%;right:6%';layer.appendChild(sun);
+  }
+  // 蝴蝶（garden A）
+  if(sc.butterfly){
+    const b=document.createElement('div');b.className='scene-butterfly';b.innerHTML=BUTTERFLY_SVG;
+    b.style.cssText='top:28%;right:12%';layer.appendChild(b);
+  }
+  // SVG 小花（garden A）
+  if(sc.flowersSvg){
+    const fps=[[6,70,'24px','#FFD6E6','#FFE7A8'],[90,66,'30px','#CFE9FF','#FFE7A8'],[92,10,'22px','#FFD6E6','#FFE7A8'],[4,16,'20px','#CFE9FF','#FFE7A8']];
+    fps.forEach(([l,b,t,sz,pe,ce])=>{
+      const f=document.createElement('div');f.className='scene-flower-svg';f.innerHTML=FLOWER_SVG(pe,ce);
+      f.style.cssText=`left:${l}%;bottom:${b}%;width:${sz};height:${sz};animation-delay:${Math.random()*2}s`;layer.appendChild(f);
+    });
   }
   // 云朵
   if(sc.clouds){
