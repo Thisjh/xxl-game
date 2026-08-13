@@ -53,7 +53,7 @@ html,body{
   background:
     radial-gradient(circle at 75% 15%, var(--bg4), transparent 45%),
     radial-gradient(circle at 18% 8%, rgba(255,255,255,.5), transparent 40%),
-    radial-gradient(circle at 88% 95%, rgba(255,200,220,.32), transparent 45%),
+    radial-gradient(circle at 88% 95%, rgba(255,180,205,.42), transparent 46%),
     radial-gradient(135deg,var(--bg1) 0%,var(--bg2) 50%,var(--bg3) 100%),
     radial-gradient(ellipse at center, transparent 55%, rgba(120,90,110,.22) 100%);
 }
@@ -777,7 +777,7 @@ function saveGame(){try{localStorage.setItem(SAVE_KEY,JSON.stringify(save));}cat
 function allIconPool(){const a=[];for(let i=0;i<FULL_ICONS.length;i++)a.push(i);return a;}
 
 const SKINS=[
-  {id:'green',name:'奶油薄荷',price:0,free:true,bg:['#DCEFF4','#EAF8F0','#FBF4F7'],bg4:'#FFD2DF',card:['#FFFFFF','#F0FAF8','#C9E2DD'],accent:'#FF6FA5',ui:['#FFFFFF','#F2FAF9','#B5D9D2'],text:'#2D4A45',
+  {id:'green',name:'奶油薄荷',price:0,free:true,bg:['#DCEFF4','#EAF8F0','#F8D9E5'],bg4:'#FCC7DB',card:['#FFFFFF','#F0FAF8','#C9E2DD'],accent:'#FF6FA5',ui:['#FFFFFF','#F2FAF9','#B5D9D2'],text:'#2D4A45',
     scene:{hills:['#B5E0DA','#9CD0CA'],clouds:true,sun:true,butterfly:true,flowersSvg:true,decor:'heart'}},
   {id:'pink',name:'少女粉',price:10,bg:['#ffc1e3','#ff8fb1','#ff5e9c'],bg4:'#ffd6ea',card:['#ffffff','#fff0f6','#f3c9dc'],accent:'#ff4f9a',ui:['#fff0f7','#ffd6ea','#d96fa6'],text:'#a83a6b',
     scene:{hills:['#ffb8d9','#ff80bf'],clouds:true,hearts:true,sun:true,decor:'heart'}},
