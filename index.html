@@ -961,15 +961,83 @@ function generateBoard(lv){
   // 剩余的（一定是偶数），按两两分配给各类型
   let rem=totalCells-assigned;
   for(let i=0;i<rem;i+=2){const ti=(i/2)%nTypes;pool.push(chosen[ti],chosen[ti]);}
-  shuffle(pool);
-  let idx=0;
-  for(let r=0;r<rows;r++)for(let c=0;c<cols;c++)
-    if(idx<pool.length){grid[r][c]={icon:pool[idx],id:idx,el:null};idx++;}
+  // 关键修复：随机排布不保证"可完全清空"。用与正式玩法一致的规则模拟整局，
+  // 只有能从头消到空的棋盘才采用；否则重新洗牌重排，最多重试若干次。
+  let solved=false;
+  for(let attempt=0;attempt<30 && !solved;attempt++){
+    shuffle(pool);
+    let idx=0;
+    for(let r=0;r<rows;r++)for(let c=0;c<cols;c++)
+      if(idx<pool.length){grid[r][c]={icon:pool[idx],id:idx,el:null};idx++;}
+    if(!hasAnyMatch())continue;          // 连第一步都走不了，直接重排
+    // 能整局清空、且 3 次随机模拟全部成功 => 容错高，玩家乱点也难卡死
+    let ok=0;for(let k=0;k<3;k++)if(simulateFullClear())ok++;
+    if(ok>=3)solved=true;
+  }
+  if(!solved){ // 兜底：采用当前排布，ensureSolvable 会保证至少有一步可走
+    shuffle(pool);let idx=0;
+    for(let r=0;r<rows;r++)for(let c=0;c<cols;c++)
+      if(idx<pool.length){grid[r][c]={icon:pool[idx],id:idx,el:null};idx++;}
+  }
   remaining=pool.length;total=remaining;
   ensureSolvable();renderBoard();updateUI();
 }
 
-function ensureSolvable(){let t=0;while(!hasAnyMatch()&&t<25){shuffleRemaining(false);t++;}}
+function ensureSolvable(){
+  let t=0;
+  while(!hasAnyMatch()&&t<60){shuffleRemaining(false);t++;}
+  if(!hasAnyMatch()) forceAMove(); // 极端兜底：强行制造一步可走
+}
+// 兜底：把一对同图案移到最外圈，保证"外围消除"必然可用（只移动、绝不增减，配对不被破坏）
+function forceAMove(){
+  const R=ROWS(),C=COLS();
+  const byIcon={};
+  for(let r=0;r<R;r++)for(let c=0;c<C;c++)if(grid[r][c]){(byIcon[grid[r][c].icon]=byIcon[grid[r][c].icon]||[]).push({r,c});}
+  let ic=null,src=null;
+  for(const k in byIcon)if(byIcon[k].length>=2){ic=k;src=byIcon[k];break;}
+  if(ic==null)return;
+  const borders=[];
+  for(let r=0;r<R;r++)for(let c=0;c<C;c++)if(onBorder(r,c))borders.push({r,c});
+  if(borders.length<2)return;
+  const b0=borders[0],b1=borders[1];
+  const d0=grid[b0.r][b0.c], d1=grid[b1.r][b1.c]; // 先取值，再写回，避免读已被覆盖
+  grid[src[0].r][src[0].c]= d0?{icon:d0.icon}:null;
+  grid[src[1].r][src[1].c]= d1?{icon:d1.icon}:null;
+  grid[b0.r][b0.c]={icon:ic};
+  grid[b1.r][b1.c]={icon:ic};
+  renderBoard();updateUI();
+}
+// 模拟整局消除（与正式玩法同规则：连线/外围消除 + 靠拢），返回能否从头消到空
+function simStep(){
+  const R=ROWS(),C=COLS();
+  const ts=[];
+  for(let r=0;r<R;r++)for(let c=0;c<C;c++)if(grid[r][c])ts.push({r,c,i:grid[r][c].icon});
+  const pairs=[];
+  for(let i=0;i<ts.length;i++)for(let j=i+1;j<ts.length;j++){
+    const a=ts[i],b=ts[j];
+    if(a.i===b.i && (canConnect(a.r,a.c,b.r,b.c)||(onBorder(a.r,a.c)&&onBorder(b.r,b.c)))) pairs.push([a,b]);
+  }
+  if(!pairs.length)return null;
+  return pairs[Math.floor(Math.random()*pairs.length)];
+}
+function simulateFullClear(){
+  const saved=grid;
+  const R=ROWS(),C=COLS();
+  grid=grid.map(row=>row.map(c=>c?{icon:c.icon}:null)); // 用纯 {icon} 副本模拟，不碰真实棋盘
+  let ok=false,guard=0;
+  while(guard++ < R*C+10){
+    const p=simStep();
+    if(!p){ok=false;break;}
+    grid[p[0].r][p[0].c]=null;
+    grid[p[1].r][p[1].c]=null;
+    applyCollapse();
+    let empty=true;
+    for(let r=0;r<R;r++)for(let c=0;c<C;c++)if(grid[r][c]){empty=false;break;}
+    if(empty){ok=true;break;}
+  }
+  grid=saved;
+  return ok;
+}
 
 function renderBoard(){
   boardEl.innerHTML='';
@@ -1128,7 +1196,12 @@ function matchTiles(r1,c1,r2,c2){
     if(combo>=2)showCombo('连击 x'+combo);
     remaining-=2;selected=null;updateUI();
     if(remaining===0){combo=0;Sound.win();setTimeout(showWin,500);return;}
-    if(!hasAnyMatch()){combo=0;setTimeout(showStuck,400);}
+    if(!hasAnyMatch()){
+      combo=0;
+      ensureSolvable();                 // 尽量自动洗牌逼出一步可走
+      if(!hasAnyMatch()){setTimeout(showStuck,400);} // 极端兜底才提示卡死
+      else {showCombo('自动洗牌 🔄');}
+    }
   },330);
 }
 function showCombo(t){const el=document.getElementById('combo-pop');el.textContent=t;el.classList.remove('show');void el.offsetWidth;el.classList.add('show');}
