@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<html lang="zh-CN" data-page-node-id="QzcmvYgLtbzOGtvVkPvEk1">
+<head data-page-node-id="uylhwWiZXsn8dqvqXHmDfs">
+<meta charset="UTF-8" data-page-node-id="HAaZGtOyFsNq56lXwHECJn">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" data-page-node-id="3aD7lOHZmKkvIDMlMadgMm">
 <title>萌宠连连看 - 经典连线消除</title>
-<meta name="description" content="萌宠连连看：点两个相同的萌宠，用连线接通就消除。56 款可爱卡通图案，向中心靠拢的关卡挑战。">
+<meta name="description" content="萌宠连连看：点两个相同的萌宠，用连线接通就消除。56 款可爱卡通图案，向中心靠拢的关卡挑战。" data-page-node-id="RXblD8g4RiAF4DCnYoX141">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{
@@ -236,173 +236,219 @@ html,body{
 @keyframes flowerSway{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}}
 @keyframes bfFlutter{0%,100%{transform:translate(0,0) rotate(-3deg)}50%{transform:translate(-5px,-10px) rotate(3deg)}}
 @keyframes bfFlap{0%,100%{transform:scaleX(1)}50%{transform:scaleX(.6)}}
+/* ===== 每日挑战 ===== */
+.modal .btn.daily{background:linear-gradient(135deg,#C9A7FF,#8E6BE8);box-shadow:0 5px 0 #5B3FB0}
+.modal .btn.daily:active{transform:translateY(4px);box-shadow:0 1px 0 #5B3FB0}
+.daily-streak{display:flex;flex-direction:column;align-items:center;margin:8px 0 2px}
+.ds-num{font-size:34px;font-weight:900;color:var(--text);line-height:1.1}
+.ds-lbl{font-size:12px;opacity:.7}
+.daily-week{display:flex;gap:5px;justify-content:center;margin:10px 0 6px}
+.dw-item{flex:1;background:rgba(255,255,255,.55);border-radius:10px;padding:6px 2px;text-align:center;box-shadow:0 2px 4px rgba(80,140,130,.08)}
+.dw-item .dw-d{font-size:10px;opacity:.6}
+.dw-item .dw-m{font-size:15px;font-weight:900;color:var(--text);opacity:.3}
+.dw-item.done .dw-m{opacity:1;color:#1FAA74}
+.dw-item.today{outline:2px solid var(--accent);outline-offset:-1px}
+.daily-mend{font-size:12px;color:var(--accent);text-decoration:underline;cursor:pointer;display:inline-block;margin-top:2px}
+.daily-mend.off{opacity:.4;text-decoration:none;cursor:default}
+#progress-box.warn #progress-fill{background:linear-gradient(90deg,#FF5E5E,#FFA07A)!important}
 </style>
 </head>
-<body>
-<svg id="svg-defs" xmlns="http://www.w3.org/2000/svg"><defs>
-  <radialGradient id="gA" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#ff9a9a"/><stop offset=".5" stop-color="#ef4444"/><stop offset="1" stop-color="#b91c1c"/></radialGradient>
-  <radialGradient id="gO" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#ffd27a"/><stop offset=".55" stop-color="#ff9f1c"/><stop offset="1" stop-color="#e07b00"/></radialGradient>
-  <linearGradient id="gS" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff6b81"/><stop offset="1" stop-color="#e11d48"/></linearGradient>
-  <radialGradient id="gG" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#c79bf0"/><stop offset=".6" stop-color="#9b59d0"/><stop offset="1" stop-color="#6f3ba8"/></radialGradient>
-  <radialGradient id="gC" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#ffc785"/><stop offset="1" stop-color="#f59e0b"/></radialGradient>
-  <radialGradient id="gF" cx="40%" cy="35%" r="75%"><stop offset="0" stop-color="#9be36b"/><stop offset="1" stop-color="#4caf2f"/></radialGradient>
-  <radialGradient id="gStar" cx="40%" cy="35%" r="75%"><stop offset="0" stop-color="#fff3a0"/><stop offset=".6" stop-color="#ffd000"/><stop offset="1" stop-color="#f0a000"/></radialGradient>
-  <radialGradient id="gH" cx="38%" cy="30%" r="80%"><stop offset="0" stop-color="#ff9ec4"/><stop offset=".6" stop-color="#ff5e9c"/><stop offset="1" stop-color="#e21f6a"/></radialGradient>
-  <radialGradient id="gW" cx="40%" cy="35%" r="80%"><stop offset="0" stop-color="#ff8a9a"/><stop offset=".55" stop-color="#ff4d5e"/><stop offset="1" stop-color="#c81e3a"/></radialGradient>
-  <radialGradient id="gM" cx="40%" cy="30%" r="80%"><stop offset="0" stop-color="#ff8a8a"/><stop offset=".6" stop-color="#e74c3c"/><stop offset="1" stop-color="#b03020"/></radialGradient>
-  <radialGradient id="gCar" cx="40%" cy="30%" r="80%"><stop offset="0" stop-color="#ffc070"/><stop offset=".55" stop-color="#ff9f1c"/><stop offset="1" stop-color="#e07b00"/></radialGradient>
-  <radialGradient id="gFish" cx="40%" cy="32%" r="78%"><stop offset="0" stop-color="#9fe0f5"/><stop offset=".55" stop-color="#3fb0d8"/><stop offset="1" stop-color="#1f7fb0"/></radialGradient>
-  <radialGradient id="gRab" cx="40%" cy="32%" r="80%"><stop offset="0" stop-color="#fff0f5"/><stop offset=".6" stop-color="#f7c8dd"/><stop offset="1" stop-color="#e69bc0"/></radialGradient>
-  <radialGradient id="gSun" cx="40%" cy="32%" r="78%"><stop offset="0" stop-color="#ffe890"/><stop offset=".55" stop-color="#ffc83d"/><stop offset="1" stop-color="#f0a000"/></radialGradient>
-  <radialGradient id="gDia" cx="40%" cy="28%" r="80%"><stop offset="0" stop-color="#d6f6ff"/><stop offset=".55" stop-color="#7fd8f0"/><stop offset="1" stop-color="#3aa0c0"/></radialGradient>
-  <radialGradient id="gFlo" cx="40%" cy="32%" r="80%"><stop offset="0" stop-color="#ffd1ec"/><stop offset=".6" stop-color="#f06ea9"/><stop offset="1" stop-color="#c93f86"/></radialGradient>
+<body data-page-node-id="DaHkSUkeV9zMd0xgxZeYTY">
+<svg id="svg-defs" xmlns="http://www.w3.org/2000/svg" data-page-node-id="tDxtBXH0AXAYBcYdXaFO0V"><defs data-page-node-id="X7D2m0K3ZDWgKCzQjvX09c">
+  <radialGradient id="gA" cx="36%" cy="30%" r="80%" data-page-node-id="4eG3LKdGXXUcygxfg4U4JT"><stop offset="0" stop-color="#ff9a9a" data-page-node-id="NNSiZC6ApBlvuj3jfGjnlG"/><stop offset=".5" stop-color="#ef4444" data-page-node-id="qBmKthfFe0TezsXBsu2ACg"/><stop offset="1" stop-color="#b91c1c" data-page-node-id="f0F9zQx4v5VD7eCvSkyd8o"/></radialGradient>
+  <radialGradient id="gO" cx="38%" cy="32%" r="75%" data-page-node-id="grMvA6IQssdoNOMuBhTtse"><stop offset="0" stop-color="#ffd27a" data-page-node-id="rPKjuo20OjsC3g3hEfVKED"/><stop offset=".55" stop-color="#ff9f1c" data-page-node-id="jjoJ3sV65MmFDZcDkPIWFm"/><stop offset="1" stop-color="#e07b00" data-page-node-id="jlSLZQUw1DVGsmwHtvZ9Eh"/></radialGradient>
+  <linearGradient id="gS" x1="0" y1="0" x2="0" y2="1" data-page-node-id="Ho25YSkA94O8vieGA13a3a"><stop offset="0" stop-color="#ff6b81" data-page-node-id="gsBZNp2dcGFuLLYviCAwmw"/><stop offset="1" stop-color="#e11d48" data-page-node-id="rK8vgFyfohv83lo3mepolj"/></linearGradient>
+  <radialGradient id="gG" cx="35%" cy="30%" r="75%" data-page-node-id="zwkIX0xFI4V1RLjU02aAfA"><stop offset="0" stop-color="#c79bf0" data-page-node-id="ct2D4HMlfiWCDJRK4X5QsK"/><stop offset=".6" stop-color="#9b59d0" data-page-node-id="zlVNVJKL3DMdasAZzx3x98"/><stop offset="1" stop-color="#6f3ba8" data-page-node-id="6iMVdQNtJ5qfOyFnKphI0z"/></radialGradient>
+  <radialGradient id="gC" cx="40%" cy="35%" r="70%" data-page-node-id="DLaWthzFaX6JKEiDMdWtD4"><stop offset="0" stop-color="#ffc785" data-page-node-id="ZGTsljP5sfMKoo99DfCpDu"/><stop offset="1" stop-color="#f59e0b" data-page-node-id="LyzVKyaXCjHXxGS6R7OVWU"/></radialGradient>
+  <radialGradient id="gF" cx="40%" cy="35%" r="75%" data-page-node-id="g56aXl459dPlAwuFW3cgph"><stop offset="0" stop-color="#9be36b" data-page-node-id="aJfMqIbDh1RiITdruyQTrY"/><stop offset="1" stop-color="#4caf2f" data-page-node-id="s09lfekjxodI2GBmybfTyG"/></radialGradient>
+  <radialGradient id="gStar" cx="40%" cy="35%" r="75%" data-page-node-id="XdH7mLh0S36N54LnThdec1"><stop offset="0" stop-color="#fff3a0" data-page-node-id="xQzdW4rLBko0AiMEt441KI"/><stop offset=".6" stop-color="#ffd000" data-page-node-id="C3TLHu8xryZGqxlvsMOxTv"/><stop offset="1" stop-color="#f0a000" data-page-node-id="XCT5yxaHXNPBjo64ieG6Cr"/></radialGradient>
+  <radialGradient id="gH" cx="38%" cy="30%" r="80%" data-page-node-id="ez7U1Z7RxznLqlg1cDqafl"><stop offset="0" stop-color="#ff9ec4" data-page-node-id="sbWpwdBqTCneVjJIQchazs"/><stop offset=".6" stop-color="#ff5e9c" data-page-node-id="gCi7ZcpbYKuwC0ItNbjp3z"/><stop offset="1" stop-color="#e21f6a" data-page-node-id="0wBQmkPwF6wE4q9EUEtMkU"/></radialGradient>
+  <radialGradient id="gW" cx="40%" cy="35%" r="80%" data-page-node-id="1Zk0oHLQoege326EAfGQDJ"><stop offset="0" stop-color="#ff8a9a" data-page-node-id="nBtDPGj7kflaRAl4rlCqYl"/><stop offset=".55" stop-color="#ff4d5e" data-page-node-id="TDPHg81EOBVGpiobsvGsfE"/><stop offset="1" stop-color="#c81e3a" data-page-node-id="CkkpFBAp5axyzWVyxT2INz"/></radialGradient>
+  <radialGradient id="gM" cx="40%" cy="30%" r="80%" data-page-node-id="UZNcgYiySrH39s0aNDeoNZ"><stop offset="0" stop-color="#ff8a8a" data-page-node-id="QBkY6Sz0h2lamYliGqaxDt"/><stop offset=".6" stop-color="#e74c3c" data-page-node-id="xvFdeKlZqxVxNO9plYTW9H"/><stop offset="1" stop-color="#b03020" data-page-node-id="yK912MleNpcC1uVLdL2Nhi"/></radialGradient>
+  <radialGradient id="gCar" cx="40%" cy="30%" r="80%" data-page-node-id="EzikBjpqQTZMa5vUYlfalO"><stop offset="0" stop-color="#ffc070" data-page-node-id="epKEEv7H5NtY1pEB4UfsLC"/><stop offset=".55" stop-color="#ff9f1c" data-page-node-id="EHyoqa9JrfApvHJFXYFjzl"/><stop offset="1" stop-color="#e07b00" data-page-node-id="PDy8gAAlwXDWFow2EsHBxl"/></radialGradient>
+  <radialGradient id="gFish" cx="40%" cy="32%" r="78%" data-page-node-id="TufsvSx0Xs1O1JUEDry6av"><stop offset="0" stop-color="#9fe0f5" data-page-node-id="uIRB3SUtETipvvqdsSwNV9"/><stop offset=".55" stop-color="#3fb0d8" data-page-node-id="uanvBvstg9ZcO3U6YyLrhn"/><stop offset="1" stop-color="#1f7fb0" data-page-node-id="W5JzvMRaKclCuDTfSt8zN1"/></radialGradient>
+  <radialGradient id="gRab" cx="40%" cy="32%" r="80%" data-page-node-id="ehOeiBnQPwmzC6taFHNZSL"><stop offset="0" stop-color="#fff0f5" data-page-node-id="2xE6Ve1klYxxyYhHn4e5t3"/><stop offset=".6" stop-color="#f7c8dd" data-page-node-id="XGZABC84SefmQrr6RoTAYg"/><stop offset="1" stop-color="#e69bc0" data-page-node-id="gyAPilTE3Agpi3mKAQYdQT"/></radialGradient>
+  <radialGradient id="gSun" cx="40%" cy="32%" r="78%" data-page-node-id="ABZ8uBtbLJmQ7bwWUSAu6h"><stop offset="0" stop-color="#ffe890" data-page-node-id="s59lTYxfPrEGRUYdw28HEI"/><stop offset=".55" stop-color="#ffc83d" data-page-node-id="NHaR5u3L3mxoI6h0R34zKq"/><stop offset="1" stop-color="#f0a000" data-page-node-id="LGWNuC8pVZqYVXYmIT4cY8"/></radialGradient>
+  <radialGradient id="gDia" cx="40%" cy="28%" r="80%" data-page-node-id="o8uUROLmWIhPKFsRF0TDj4"><stop offset="0" stop-color="#d6f6ff" data-page-node-id="ZGJfHoX54CieHh6yKq8iG8"/><stop offset=".55" stop-color="#7fd8f0" data-page-node-id="KSNPcWJRAHXRaBSFPPwF8t"/><stop offset="1" stop-color="#3aa0c0" data-page-node-id="A3Lq4simB26faO7jOQPQN7"/></radialGradient>
+  <radialGradient id="gFlo" cx="40%" cy="32%" r="80%" data-page-node-id="6FFFHnO5M4DyJHArf7QpIq"><stop offset="0" stop-color="#ffd1ec" data-page-node-id="dYmaSEDGO5mGHPWX8bZYpD"/><stop offset=".6" stop-color="#f06ea9" data-page-node-id="QFSAHgVHNPywpbxvpXAhtm"/><stop offset="1" stop-color="#c93f86" data-page-node-id="OyXlFOcwdLvRbFiC5NU3c9"/></radialGradient>
   <!-- 动态萌图渐变 -->
-  <radialGradient id="gButterfly" cx="40%" cy="32%" r="80%"><stop offset="0" stop-color="#ffd1ec"/><stop offset=".5" stop-color="#ff7eb3"/><stop offset="1" stop-color="#c2185b"/></radialGradient>
-  <radialGradient id="gCandy" cx="40%" cy="32%" r="80%"><stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#ff9ec4"/><stop offset="1" stop-color="#ff5e9c"/></radialGradient>
-  <radialGradient id="gBear" cx="40%" cy="30%" r="80%"><stop offset="0" stop-color="#e8c9a0"/><stop offset=".6" stop-color="#c99a6a"/><stop offset="1" stop-color="#9c6b3f"/></radialGradient>
-  <radialGradient id="gBubble" cx="40%" cy="30%" r="80%"><stop offset="0" stop-color="#eaffff"/><stop offset=".5" stop-color="#bdefff"/><stop offset="1" stop-color="#7fd8f0"/></radialGradient>
-  <radialGradient id="gCrown" cx="40%" cy="30%" r="80%"><stop offset="0" stop-color="#fff3a0"/><stop offset=".5" stop-color="#ffd000"/><stop offset="1" stop-color="#e6a000"/></radialGradient>
-  <radialGradient id="gBow" cx="40%" cy="30%" r="80%"><stop offset="0" stop-color="#ffd1ec"/><stop offset=".6" stop-color="#ff7eb3"/><stop offset="1" stop-color="#d44f8e"/></radialGradient>
-  <radialGradient id="gIce" cx="40%" cy="30%" r="80%"><stop offset="0" stop-color="#ffd1ea"/><stop offset=".6" stop-color="#ff8fb1"/><stop offset="1" stop-color="#e21f6a"/></radialGradient>
-  <radialGradient id="gIce2" cx="40%" cy="30%" r="80%"><stop offset="0" stop-color="#e6fff5"/><stop offset=".6" stop-color="#9be3c4"/><stop offset="1" stop-color="#4caf8f"/></radialGradient>
+  <radialGradient id="gButterfly" cx="40%" cy="32%" r="80%" data-page-node-id="rKgGdrKzXiEsZvuPRrWtnT"><stop offset="0" stop-color="#ffd1ec" data-page-node-id="nbME15UARPq94Gtkyspnh7"/><stop offset=".5" stop-color="#ff7eb3" data-page-node-id="eD7zkrhSIFClutIuLlAEjQ"/><stop offset="1" stop-color="#c2185b" data-page-node-id="nADTFj2jEV9PT0puMlB2mp"/></radialGradient>
+  <radialGradient id="gCandy" cx="40%" cy="32%" r="80%" data-page-node-id="19c3PlL9K8DvS6p8gLEyN1"><stop offset="0" stop-color="#ffffff" data-page-node-id="3L9vTO0X2m13ym1UB6Heso"/><stop offset=".5" stop-color="#ff9ec4" data-page-node-id="kMFf5gTxxtyYFas1Fqo8iz"/><stop offset="1" stop-color="#ff5e9c" data-page-node-id="1K1ndAxnZe5b58aTFQr216"/></radialGradient>
+  <radialGradient id="gBear" cx="40%" cy="30%" r="80%" data-page-node-id="qdIc7hmzlm5nuWWw58Rh8R"><stop offset="0" stop-color="#e8c9a0" data-page-node-id="GTYhEN5XblwX5MG0oklr4d"/><stop offset=".6" stop-color="#c99a6a" data-page-node-id="PK1M18hFBU9ryr7uxZGEMk"/><stop offset="1" stop-color="#9c6b3f" data-page-node-id="rDs1w0t4FO2EXujzMJ21Zb"/></radialGradient>
+  <radialGradient id="gBubble" cx="40%" cy="30%" r="80%" data-page-node-id="03xP5xpcnCuyQ4G2t4R099"><stop offset="0" stop-color="#eaffff" data-page-node-id="pUKhl7T3J9t4qvfKfImJjx"/><stop offset=".5" stop-color="#bdefff" data-page-node-id="ztUrkkdHiNj988LOA4icc0"/><stop offset="1" stop-color="#7fd8f0" data-page-node-id="9eyGPrxM7Nq98MOBlBHpuY"/></radialGradient>
+  <radialGradient id="gCrown" cx="40%" cy="30%" r="80%" data-page-node-id="712c3wTcJ9ixAr4150rk4N"><stop offset="0" stop-color="#fff3a0" data-page-node-id="VOmP5FSk213xyGkPAMR4FV"/><stop offset=".5" stop-color="#ffd000" data-page-node-id="QxA1RLno7KrLqSdBedEwkl"/><stop offset="1" stop-color="#e6a000" data-page-node-id="uWd0UC435wDb1Troctck1D"/></radialGradient>
+  <radialGradient id="gBow" cx="40%" cy="30%" r="80%" data-page-node-id="ZepHMmf1BXn6ywdEPdS7jE"><stop offset="0" stop-color="#ffd1ec" data-page-node-id="4b0ypspxOA57xeJIYsL50A"/><stop offset=".6" stop-color="#ff7eb3" data-page-node-id="77bD4t1T7d52GTKttPu9ES"/><stop offset="1" stop-color="#d44f8e" data-page-node-id="xfoGBSIeJfp1e59syWhH7v"/></radialGradient>
+  <radialGradient id="gIce" cx="40%" cy="30%" r="80%" data-page-node-id="EPHFRLIIjV2BC4M34TglbY"><stop offset="0" stop-color="#ffd1ea" data-page-node-id="EWkF01vfiXj7c7pnnJigr0"/><stop offset=".6" stop-color="#ff8fb1" data-page-node-id="iQGdmHTpDdcNpGkpLGSQa1"/><stop offset="1" stop-color="#e21f6a" data-page-node-id="7WQnuFjScDl3ewatk2mCAU"/></radialGradient>
+  <radialGradient id="gIce2" cx="40%" cy="30%" r="80%" data-page-node-id="BQezAA8j9TxyyMWT4JlxUi"><stop offset="0" stop-color="#e6fff5" data-page-node-id="MeoBN9NHzCAuPFB12rz1jY"/><stop offset=".6" stop-color="#9be3c4" data-page-node-id="NZAR3eezUkzuK9wqftfcmv"/><stop offset="1" stop-color="#4caf8f" data-page-node-id="BNBfHs8pe6byNPa4DasYP5"/></radialGradient>
   <!-- 自然系渐变 -->
-  <radialGradient id="gLeaf" cx="40%" cy="30%" r="80%"><stop offset="0" stop-color="#9be36b"/><stop offset="1" stop-color="#3a9e2f"/></radialGradient>
-  <radialGradient id="gClover" cx="40%" cy="30%" r="80%"><stop offset="0" stop-color="#a6e87a"/><stop offset="1" stop-color="#4caf2f"/></radialGradient>
-  <radialGradient id="gDrop" cx="40%" cy="35%" r="80%"><stop offset="0" stop-color="#9fe0f5"/><stop offset="1" stop-color="#2f9fd0"/></radialGradient>
-  <radialGradient id="gMoon" cx="40%" cy="35%" r="80%"><stop offset="0" stop-color="#fff3c4"/><stop offset="1" stop-color="#c9b0e6"/></radialGradient>
+  <radialGradient id="gLeaf" cx="40%" cy="30%" r="80%" data-page-node-id="vkPLM5ZGpHvkdKVxQnP5Y8"><stop offset="0" stop-color="#9be36b" data-page-node-id="MXrDyySqD6kqruZYmbLinm"/><stop offset="1" stop-color="#3a9e2f" data-page-node-id="ZlunDZVUwjzjNAwcwhBMdA"/></radialGradient>
+  <radialGradient id="gClover" cx="40%" cy="30%" r="80%" data-page-node-id="clxKszzoCWZ9TEseBFPbkC"><stop offset="0" stop-color="#a6e87a" data-page-node-id="dct8BpEdYWcdzWZVfwu9Ru"/><stop offset="1" stop-color="#4caf2f" data-page-node-id="hQpZjwDd946dZsxE5RudI4"/></radialGradient>
+  <radialGradient id="gDrop" cx="40%" cy="35%" r="80%" data-page-node-id="YtwwMFoubpEAHWvnmw0fic"><stop offset="0" stop-color="#9fe0f5" data-page-node-id="d6d70bBcGENZFflprG48cG"/><stop offset="1" stop-color="#2f9fd0" data-page-node-id="11nPLAiaH7gbttoKBp9TGW"/></radialGradient>
+  <radialGradient id="gMoon" cx="40%" cy="35%" r="80%" data-page-node-id="rFGAZOehpymFzOZTqvPKJJ"><stop offset="0" stop-color="#fff3c4" data-page-node-id="uauZQD8fY95eTf966bgHAx"/><stop offset="1" stop-color="#c9b0e6" data-page-node-id="iekUK4EmGT21L91W3xDYwt"/></radialGradient>
   <!-- 甜点系渐变 -->
-  <radialGradient id="gCake" cx="40%" cy="30%" r="80%"><stop offset="0" stop-color="#ffd1ea"/><stop offset="1" stop-color="#ff8fb1"/></radialGradient>
-  <radialGradient id="gDonut" cx="40%" cy="30%" r="80%"><stop offset="0" stop-color="#ffc8a0"/><stop offset="1" stop-color="#e8a06a"/></radialGradient>
-  <radialGradient id="gCherry" cx="40%" cy="30%" r="80%"><stop offset="0" stop-color="#ff8a9a"/><stop offset="1" stop-color="#c81e3a"/></radialGradient>
-  <radialGradient id="gLolli" cx="40%" cy="30%" r="80%"><stop offset="0" stop-color="#ffd1ea"/><stop offset="1" stop-color="#ff5e9c"/></radialGradient>
+  <radialGradient id="gCake" cx="40%" cy="30%" r="80%" data-page-node-id="9tv8cOR2Ere2DGNOhCUIq1"><stop offset="0" stop-color="#ffd1ea" data-page-node-id="o7dIpXOvNZvHA4jCXPA9A7"/><stop offset="1" stop-color="#ff8fb1" data-page-node-id="l5gJgWzBwXRSGbl2ljns44"/></radialGradient>
+  <radialGradient id="gDonut" cx="40%" cy="30%" r="80%" data-page-node-id="woF6KskM82cCRDx8d1wJYY"><stop offset="0" stop-color="#ffc8a0" data-page-node-id="sxLoTTvE3tSs8X3tETINKL"/><stop offset="1" stop-color="#e8a06a" data-page-node-id="N06ogE5J9bFD31z1C8QU7w"/></radialGradient>
+  <radialGradient id="gCherry" cx="40%" cy="30%" r="80%" data-page-node-id="CdA1VHaKZMWMzl1QR5HtdI"><stop offset="0" stop-color="#ff8a9a" data-page-node-id="JoSiT0PSqAFCRJHfgoG3Jd"/><stop offset="1" stop-color="#c81e3a" data-page-node-id="aY1ylxrN63VQRW8T0AIKtD"/></radialGradient>
+  <radialGradient id="gLolli" cx="40%" cy="30%" r="80%" data-page-node-id="yfmxehtsXcD2HABUTc55lX"><stop offset="0" stop-color="#ffd1ea" data-page-node-id="7GVKLMhjNSic0zqw6oVbXG"/><stop offset="1" stop-color="#ff5e9c" data-page-node-id="GUSiFxE269H0bTD4Q6hGDT"/></radialGradient>
   <!-- 梦幻系渐变 -->
-  <radialGradient id="gSpark" cx="40%" cy="30%" r="80%"><stop offset="0" stop-color="#fff3a0"/><stop offset="1" stop-color="#ffd000"/></radialGradient>
-  <radialGradient id="gCloud" cx="40%" cy="30%" r="80%"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#cfeaff"/></radialGradient>
-  <radialGradient id="gPlanet" cx="40%" cy="30%" r="80%"><stop offset="0" stop-color="#c9a7ff"/><stop offset="1" stop-color="#6f3ba8"/></radialGradient>
-  <radialGradient id="gMeteor" cx="40%" cy="30%" r="80%"><stop offset="0" stop-color="#ffd27a"/><stop offset="1" stop-color="#e07b00"/></radialGradient>
+  <radialGradient id="gSpark" cx="40%" cy="30%" r="80%" data-page-node-id="K6zVGUiw3xye9YdGBwpWKy"><stop offset="0" stop-color="#fff3a0" data-page-node-id="ELameuIRkIra1NyjhJvbbk"/><stop offset="1" stop-color="#ffd000" data-page-node-id="zHBkq0tjk2rp1gaz0KAVO6"/></radialGradient>
+  <radialGradient id="gCloud" cx="40%" cy="30%" r="80%" data-page-node-id="4uwlFvt44xSNyYzbN6t46g"><stop offset="0" stop-color="#ffffff" data-page-node-id="gb9j7EpC9wNf8j8o3DDldL"/><stop offset="1" stop-color="#cfeaff" data-page-node-id="aGu2LK2MlsurhDJ6Vd129Y"/></radialGradient>
+  <radialGradient id="gPlanet" cx="40%" cy="30%" r="80%" data-page-node-id="nDRpEfYPBNagzhHxCLOyP8"><stop offset="0" stop-color="#c9a7ff" data-page-node-id="ZRg6PpqYBAGzXtHeOC64nu"/><stop offset="1" stop-color="#6f3ba8" data-page-node-id="D6sBBBFV8xOgGlGm8tH6xI"/></radialGradient>
+  <radialGradient id="gMeteor" cx="40%" cy="30%" r="80%" data-page-node-id="FirpWLGfhGTClaQazzECc5"><stop offset="0" stop-color="#ffd27a" data-page-node-id="7v5fCLGSsKOz90Er69Whjw"/><stop offset="1" stop-color="#e07b00" data-page-node-id="uIkOHsDTEzFeVXlRIc6XNV"/></radialGradient>
   <!-- 宠物系渐变 -->
-  <radialGradient id="gPanda" cx="40%" cy="32%" r="80%"><stop offset="0" stop-color="#ffffff"/><stop offset=".6" stop-color="#e8e8e8"/><stop offset="1" stop-color="#c0c0c0"/></radialGradient>
-  <radialGradient id="gPenguin" cx="40%" cy="30%" r="80%"><stop offset="0" stop-color="#2a2a3a"/><stop offset=".7" stop-color="#1a1a28"/><stop offset="1" stop-color="#0f0f18"/></radialGradient>
-  <radialGradient id="gHamster" cx="40%" cy="30%" r="80%"><stop offset="0" stop-color="#ffe4a0"/><stop offset=".7" stop-color="#f0c060"/><stop offset="1" stop-color="#d4a030"/></radialGradient>
-  <radialGradient id="gHedgehog" cx="40%" cy="32%" r="78%"><stop offset="0" stop-color="#d4a050"/><stop offset=".7" stop-color="#a07830"/><stop offset="1" stop-color="#705018"/></radialGradient>
-  <radialGradient id="gChick" cx="40%" cy="30%" r="80%"><stop offset="0" stop-color="#fff8c0"/><stop offset=".7" stop-color="#ffe040"/><stop offset="1" stop-color="#e0c000"/></radialGradient>
-  <radialGradient id="gPuppy" cx="40%" cy="32%" r="80%"><stop offset="0" stop-color="#f5d090"/><stop offset=".7" stop-color="#d4a050"/><stop offset="1" stop-color="#a07820"/></radialGradient>
-  <radialGradient id="gKitten" cx="40%" cy="30%" r="80%"><stop offset="0" stop-color="#f5a070"/><stop offset=".7" stop-color="#e07040"/><stop offset="1" stop-color="#c04820"/></radialGradient>
-  <radialGradient id="gPiglet" cx="40%" cy="32%" r="80%"><stop offset="0" stop-color="#ffc8d0"/><stop offset=".7" stop-color="#ffa0a8"/><stop offset="1" stop-color="#e07078"/></radialGradient>
-  <radialGradient id="gOwl" cx="40%" cy="32%" r="80%"><stop offset="0" stop-color="#c08a4f"/><stop offset=".7" stop-color="#9c6b3f"/><stop offset="1" stop-color="#7a4f23"/></radialGradient>
-  <radialGradient id="gPeacock" cx="40%" cy="32%" r="80%"><stop offset="0" stop-color="#5fd6c6"/><stop offset=".7" stop-color="#3fbfb0"/><stop offset="1" stop-color="#1f7d8c"/></radialGradient>
-  <radialGradient id="gParrot" cx="40%" cy="32%" r="80%"><stop offset="0" stop-color="#ff8aa0"/><stop offset=".7" stop-color="#ff6b8a"/><stop offset="1" stop-color="#d83a5a"/></radialGradient>
-  <radialGradient id="gLion" cx="40%" cy="32%" r="80%"><stop offset="0" stop-color="#ffe0a0"/><stop offset=".7" stop-color="#ffd27a"/><stop offset="1" stop-color="#e0a23a"/></radialGradient>
-  <radialGradient id="gTiger" cx="40%" cy="32%" r="80%"><stop offset="0" stop-color="#ffc885"/><stop offset=".7" stop-color="#ffb15a"/><stop offset="1" stop-color="#e0821a"/></radialGradient>
-  <radialGradient id="gElephant" cx="40%" cy="32%" r="80%"><stop offset="0" stop-color="#d3dadd"/><stop offset=".7" stop-color="#b3bdc3"/><stop offset="1" stop-color="#9aa7ae"/></radialGradient>
-  <radialGradient id="gGiraffe" cx="40%" cy="32%" r="80%"><stop offset="0" stop-color="#f6dca2"/><stop offset=".7" stop-color="#ecc878"/><stop offset="1" stop-color="#d8a94a"/></radialGradient>
+  <radialGradient id="gPanda" cx="40%" cy="32%" r="80%" data-page-node-id="GF62c2TzdGICOWL3A54gle"><stop offset="0" stop-color="#ffffff" data-page-node-id="mVJFps2EegP8Vma5aPVkkD"/><stop offset=".6" stop-color="#e8e8e8" data-page-node-id="lhTTA6GIODFehSGIQghHjn"/><stop offset="1" stop-color="#c0c0c0" data-page-node-id="S3UE6G8Yc2RuIJSUwN1aDN"/></radialGradient>
+  <radialGradient id="gPenguin" cx="40%" cy="30%" r="80%" data-page-node-id="4pcpta3xxgRzZQbDWHZfWW"><stop offset="0" stop-color="#2a2a3a" data-page-node-id="wmr5jKJCGMBApVFGtfJixT"/><stop offset=".7" stop-color="#1a1a28" data-page-node-id="0ux03sO9U0gGtwkGzPGAyI"/><stop offset="1" stop-color="#0f0f18" data-page-node-id="qGe99KOj6Nvr1xi7ANDw95"/></radialGradient>
+  <radialGradient id="gHamster" cx="40%" cy="30%" r="80%" data-page-node-id="ZCZWv3POIwXtJBhvLoUeGU"><stop offset="0" stop-color="#ffe4a0" data-page-node-id="eWFXD7R6ZKA5xeUMoFLjha"/><stop offset=".7" stop-color="#f0c060" data-page-node-id="Fc6vY3BjsDOgojivNWPznH"/><stop offset="1" stop-color="#d4a030" data-page-node-id="Qy8DalBR7eM2C2LNuHOYmk"/></radialGradient>
+  <radialGradient id="gHedgehog" cx="40%" cy="32%" r="78%" data-page-node-id="0dzCBjvBEQtTKriCzuRipF"><stop offset="0" stop-color="#d4a050" data-page-node-id="DPVahqnYxFuxLE9CgBqXnh"/><stop offset=".7" stop-color="#a07830" data-page-node-id="YXTHVKoBTiJPRqzjhJ39po"/><stop offset="1" stop-color="#705018" data-page-node-id="AdqHjRleEyf8WwV0CsqLCD"/></radialGradient>
+  <radialGradient id="gChick" cx="40%" cy="30%" r="80%" data-page-node-id="FiUXuqb9haPySruGcMrCXr"><stop offset="0" stop-color="#fff8c0" data-page-node-id="mm2EBbsMfByVNCw9xpON4q"/><stop offset=".7" stop-color="#ffe040" data-page-node-id="hOckdlxve4WyZZ9qXJ27LX"/><stop offset="1" stop-color="#e0c000" data-page-node-id="iG06NPNr7gIiKA5SsOVk0Z"/></radialGradient>
+  <radialGradient id="gPuppy" cx="40%" cy="32%" r="80%" data-page-node-id="wklpAKJwtDHICw5kNUYS8k"><stop offset="0" stop-color="#f5d090" data-page-node-id="nIWFGvBuwxDzJlOsviGwfr"/><stop offset=".7" stop-color="#d4a050" data-page-node-id="qrpRZqTFTLNeGXXNBjjXV1"/><stop offset="1" stop-color="#a07820" data-page-node-id="ImovC4CVDGYmEdtCklrJKD"/></radialGradient>
+  <radialGradient id="gKitten" cx="40%" cy="30%" r="80%" data-page-node-id="FB0GmoGfmctkVXpOeHhKSa"><stop offset="0" stop-color="#f5a070" data-page-node-id="uLNCUjMX9GxWR2khgN1BWC"/><stop offset=".7" stop-color="#e07040" data-page-node-id="WuNWbZJOxeZWKiJaAc7xKY"/><stop offset="1" stop-color="#c04820" data-page-node-id="aYTmgCoE2uA889uBWxL190"/></radialGradient>
+  <radialGradient id="gPiglet" cx="40%" cy="32%" r="80%" data-page-node-id="fjDACzeHigI3WlW1VWUIGX"><stop offset="0" stop-color="#ffc8d0" data-page-node-id="bJ3dwKHoYkEBQIXv3cXb5V"/><stop offset=".7" stop-color="#ffa0a8" data-page-node-id="pBkaj16z5hVzc7HLOH9KZY"/><stop offset="1" stop-color="#e07078" data-page-node-id="JczCGBRTvKrtXigHTzBcUE"/></radialGradient>
+  <radialGradient id="gOwl" cx="40%" cy="32%" r="80%" data-page-node-id="DzvSCu1nsFahbPXJJVcXn3"><stop offset="0" stop-color="#c08a4f" data-page-node-id="DVqHVdcslOcVla9q7bOPw4"/><stop offset=".7" stop-color="#9c6b3f" data-page-node-id="HjnkZ9MGyxufpXIARHpEKW"/><stop offset="1" stop-color="#7a4f23" data-page-node-id="20fpFISC9WJTGEe8GFceuL"/></radialGradient>
+  <radialGradient id="gPeacock" cx="40%" cy="32%" r="80%" data-page-node-id="h7LIEEstblAyaGBJynDVjd"><stop offset="0" stop-color="#5fd6c6" data-page-node-id="uTzBzGHaeNrHwazDgZu8L5"/><stop offset=".7" stop-color="#3fbfb0" data-page-node-id="leAPtYtlQQfK4eaOCXxyXK"/><stop offset="1" stop-color="#1f7d8c" data-page-node-id="fzrgGAu0rEUqXxn1a1rAQ6"/></radialGradient>
+  <radialGradient id="gParrot" cx="40%" cy="32%" r="80%" data-page-node-id="SEkJ7EBAjCysr27668WwYh"><stop offset="0" stop-color="#ff8aa0" data-page-node-id="cCPCDYARqgy2FGP3QDcfag"/><stop offset=".7" stop-color="#ff6b8a" data-page-node-id="E3LtJHVynkVgC8Ug7X65y1"/><stop offset="1" stop-color="#d83a5a" data-page-node-id="sR3kYKuOF6yop5XN91lBGJ"/></radialGradient>
+  <radialGradient id="gLion" cx="40%" cy="32%" r="80%" data-page-node-id="YxZObU3uK4Mk6O7k9ZvPWm"><stop offset="0" stop-color="#ffe0a0" data-page-node-id="WYxPmVyRRw5PSxAGM6Ld9h"/><stop offset=".7" stop-color="#ffd27a" data-page-node-id="ayOATrCDVBLIqCC62MWWn6"/><stop offset="1" stop-color="#e0a23a" data-page-node-id="9CsGFbRew2FB5HmtAMThYg"/></radialGradient>
+  <radialGradient id="gTiger" cx="40%" cy="32%" r="80%" data-page-node-id="oxVvNleaXrg5uNPkLtpIm0"><stop offset="0" stop-color="#ffc885" data-page-node-id="UQUVdv4Ofvzbm2dScob8Sf"/><stop offset=".7" stop-color="#ffb15a" data-page-node-id="H7wVVxAZo9RHJhqSH4EnWI"/><stop offset="1" stop-color="#e0821a" data-page-node-id="T07826H9y2Ul7NgctpBVT5"/></radialGradient>
+  <radialGradient id="gElephant" cx="40%" cy="32%" r="80%" data-page-node-id="5wimGQglLxW739I7IsHQue"><stop offset="0" stop-color="#d3dadd" data-page-node-id="UNUUS2fxQ4GpKFTnXwkq3t"/><stop offset=".7" stop-color="#b3bdc3" data-page-node-id="9o0oVO5ku3ELjkpJ20VD0Z"/><stop offset="1" stop-color="#9aa7ae" data-page-node-id="gVLFBEvpq3SyqIpjjtQRk2"/></radialGradient>
+  <radialGradient id="gGiraffe" cx="40%" cy="32%" r="80%" data-page-node-id="AsN3RvMoXL4b0YNMfDR8l3"><stop offset="0" stop-color="#f6dca2" data-page-node-id="glC1uyCmntAJKWxK0zg6Qv"/><stop offset=".7" stop-color="#ecc878" data-page-node-id="OYf4NwFPmTaZxA065c0dI2"/><stop offset="1" stop-color="#d8a94a" data-page-node-id="KdlewgegKguNGgRaAWjILh"/></radialGradient>
 
 </defs></svg>
 
-<div id="bg-layer"></div>
-<div id="scene-layer"></div>
+<div id="bg-layer" data-page-node-id="v7nrmHzvHv10cUZN019yPG"></div>
+<div id="scene-layer" data-page-node-id="730ztDr9LHNbJm313vaWVP"></div>
 
-<div id="game">
-  <div id="topbar">
-    <div id="level-row">
-      <button class="home-circle" id="home-btn">🏠</button>
-      <div id="level-badge">第 1 关</div>
-      <div id="coin-badge">💰 <span id="coin-num">0</span></div>
-      <div class="sound-group">
-        <button class="snd-btn" id="btn-music" title="背景音乐"></button>
-        <button class="snd-btn" id="btn-sfx" title="消除音效"></button>
+<div id="game" data-page-node-id="Ih0iLZ6bnexOV7OALHz7ll">
+  <div id="topbar" data-page-node-id="l6VslprxoJywnBoyWiXlBK">
+    <div id="level-row" data-page-node-id="dx4d2pQXwjWHFqEbfEiyn4">
+      <button class="home-circle" id="home-btn" data-page-node-id="BdxfHKB71EFOw2ZNDbCvqz">🏠</button>
+      <div id="level-badge" data-page-node-id="VLMD6mxLnbX0PvLKLPvNNH">第 1 关</div>
+      <div id="coin-badge" data-page-node-id="YXsS6rGBYeFwDK9HUGrBJI">💰 <span id="coin-num" data-page-node-id="RF0s1d1xZqA1gbbBtCtaOT">0</span></div>
+      <div class="sound-group" data-page-node-id="iagPCclyFzKExq0wPILhrL">
+        <button class="snd-btn" id="btn-music" title="背景音乐" data-page-node-id="HwFAa3CNJlIjHS951EmMlE"></button>
+        <button class="snd-btn" id="btn-sfx" title="消除音效" data-page-node-id="ub8d2FvNSwhzXqSBowO6Hw"></button>
       </div>
     </div>
-    <div id="dir-bar"></div>
-    <div id="progress-box"><div id="progress-fill"></div><div id="progress-text">0%</div></div>
+    <div id="dir-bar" data-page-node-id="ZzbQrwQN3HnyxKAIQXKAIt"></div>
+    <div id="progress-box" data-page-node-id="sJcvkeJKNMFVn5xJKjLsqX"><div id="progress-fill" data-page-node-id="PaM9yPBngO5K6ZN1dtySuV"></div><div id="progress-text" data-page-node-id="sGlgPib5cupBiJsygcDv7h">0%</div></div>
   </div>
-  <div id="board-wrap">
-    <svg id="svg-lines"></svg>
-    <div id="board"></div>
+  <div id="board-wrap" data-page-node-id="Ixig8feZEdJEoQ86wjwJOi">
+    <svg id="svg-lines" data-page-node-id="HgREIAXFwT4sxKiFOQGuk9"></svg>
+    <div id="board" data-page-node-id="ETLbmXbqsmUL8oOQuSLBao"></div>
   </div>
-  <div id="tools">
-    <div class="tool" id="tool-hint"><div class="tool-icon">💡</div><div class="tool-name">提示</div><div class="tool-count" id="hint-count">3</div></div>
-    <div class="tool" id="tool-refresh"><div class="tool-icon">🔄</div><div class="tool-name">刷新</div><div class="tool-count" id="refresh-count">3</div></div>
-    <div class="tool" id="tool-bomb"><div class="tool-icon">💣</div><div class="tool-name">炸弹</div><div class="tool-count" id="bomb-count">1</div></div>
+  <div id="tools" data-page-node-id="yCxwpTWBVxRL4Q6mEdlBMn">
+    <div class="tool" id="tool-hint" data-page-node-id="UAg9ot65q2BLNChMe1knrG"><div class="tool-icon" data-page-node-id="GlC1XjHv9VeF9AACd9bdVF">💡</div><div class="tool-name" data-page-node-id="Z6fjQEayZNO0qSyUISJA7v">提示</div><div class="tool-count" id="hint-count" data-page-node-id="hFXyZRpNDXsYy3UxiDe2RP">3</div></div>
+    <div class="tool" id="tool-refresh" data-page-node-id="pFqdy4emByyAKXUDBqla7Q"><div class="tool-icon" data-page-node-id="9CxIjC6XVLliaEjEAqVeAk">🔄</div><div class="tool-name" data-page-node-id="cTcRANTsG5ovp4ixgDauwt">刷新</div><div class="tool-count" id="refresh-count" data-page-node-id="wlKuj1MwfX3VFVX2r1ImZE">3</div></div>
+    <div class="tool" id="tool-bomb" data-page-node-id="JCstwHhQ10zw7mEi05d35O"><div class="tool-icon" data-page-node-id="bLFLKfrYDnD3BuVBKAolrY">💣</div><div class="tool-name" data-page-node-id="rSqS6DT1Wcb2n0R0j96F2D">炸弹</div><div class="tool-count" id="bomb-count" data-page-node-id="QOB4qZHjRNZPUUSyadJZWX">1</div></div>
   </div>
 </div>
 
-<div id="combo-pop">连击!</div>
+<div id="combo-pop" data-page-node-id="chYt3cDgwWAjA4h7tPWfKw">连击!</div>
 
 <!-- 主页 -->
-<div class="overlay" id="home-screen">
-  <div class="modal home">
-    <div class="home-logo">
-      <svg class="logo-pet" viewBox="0 0 64 64" aria-hidden="true">
-        <path d="M16 27 L11 8 L30 20 Z" fill="#FFD9E6" stroke="#E58AAE" stroke-width="2" stroke-linejoin="round"/>
-        <path d="M48 27 L53 8 L34 20 Z" fill="#FFD9E6" stroke="#E58AAE" stroke-width="2" stroke-linejoin="round"/>
-        <path d="M19 23 L16 13 L26 20 Z" fill="#FF9CC0"/>
-        <path d="M45 23 L48 13 L38 20 Z" fill="#FF9CC0"/>
-        <circle cx="32" cy="37" r="22" fill="#FFF2F7" stroke="#E58AAE" stroke-width="2"/>
-        <g transform="translate(45,9)">
-          <path d="M0 0 L-9 -6 L-9 6 Z" fill="#FF6FA5"/>
-          <path d="M0 0 L9 -6 L9 6 Z" fill="#FF6FA5"/>
-          <circle cx="0" cy="0" r="3.2" fill="#D4537E"/>
+<div class="overlay" id="home-screen" data-page-node-id="ecWsyKiWHHrMJFY5KEichW">
+  <div class="modal home" data-page-node-id="VqO6ztdv0064b8bStcbTtl">
+    <div class="home-logo" data-page-node-id="i54ERU52L74S77O4Eu86zx">
+      <svg class="logo-pet" viewBox="0 0 64 64" aria-hidden="true" data-page-node-id="FmPiJCEEX6LTu8m127XB4X">
+        <path d="M16 27 L11 8 L30 20 Z" fill="#FFD9E6" stroke="#E58AAE" stroke-width="2" stroke-linejoin="round" data-page-node-id="C9lgWA43HI4sdtU12J4CZx"/>
+        <path d="M48 27 L53 8 L34 20 Z" fill="#FFD9E6" stroke="#E58AAE" stroke-width="2" stroke-linejoin="round" data-page-node-id="jGKe3eJ7m1YYgV5Qtbaueb"/>
+        <path d="M19 23 L16 13 L26 20 Z" fill="#FF9CC0" data-page-node-id="KseAmJrtlRzQwwhsGa5DkM"/>
+        <path d="M45 23 L48 13 L38 20 Z" fill="#FF9CC0" data-page-node-id="CKeSsH96AqHk657uLUpDGM"/>
+        <circle cx="32" cy="37" r="22" fill="#FFF2F7" stroke="#E58AAE" stroke-width="2" data-page-node-id="OeC06RUhARAD6M7I5jSDZm"/>
+        <g transform="translate(45,9)" data-page-node-id="Md33rLPKYPtm3HPR6MgvbA">
+          <path d="M0 0 L-9 -6 L-9 6 Z" fill="#FF6FA5" data-page-node-id="kPwuWS3OgcbB6IIZzKYSK8"/>
+          <path d="M0 0 L9 -6 L9 6 Z" fill="#FF6FA5" data-page-node-id="eOPum7uxHjPCgH7BuWSVbk"/>
+          <circle cx="0" cy="0" r="3.2" fill="#D4537E" data-page-node-id="06nmIX0I3zrFy989BmED0N"/>
         </g>
-        <circle cx="24" cy="37" r="4.2" fill="#5B4A52"/>
-        <circle cx="40" cy="37" r="4.2" fill="#5B4A52"/>
-        <circle cx="25.4" cy="35.6" r="1.5" fill="#fff"/>
-        <circle cx="41.4" cy="35.6" r="1.5" fill="#fff"/>
-        <ellipse cx="20" cy="44" rx="4" ry="2.6" fill="#FFB3C9" opacity=".85"/>
-        <ellipse cx="44" cy="44" rx="4" ry="2.6" fill="#FFB3C9" opacity=".85"/>
-        <path d="M28 45 Q32 49 36 45" fill="none" stroke="#E58AAE" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="24" cy="37" r="4.2" fill="#5B4A52" data-page-node-id="CWW9ynyxsR3zgcFKRJi9eV"/>
+        <circle cx="40" cy="37" r="4.2" fill="#5B4A52" data-page-node-id="qyzGaazKxT5dquXlktM3YW"/>
+        <circle cx="25.4" cy="35.6" r="1.5" fill="#fff" data-page-node-id="LqOQS6GrqcxfAcsa6BPHBL"/>
+        <circle cx="41.4" cy="35.6" r="1.5" fill="#fff" data-page-node-id="3xACoTErBzstnc0qVtaDg2"/>
+        <ellipse cx="20" cy="44" rx="4" ry="2.6" fill="#FFB3C9" opacity=".85" data-page-node-id="uy6BXkw5J5TSpknaT5Tddb"/>
+        <ellipse cx="44" cy="44" rx="4" ry="2.6" fill="#FFB3C9" opacity=".85" data-page-node-id="dvuKyrE6fDMnnKEV9P6DUP"/>
+        <path d="M28 45 Q32 49 36 45" fill="none" stroke="#E58AAE" stroke-width="2" stroke-linecap="round" data-page-node-id="RzsAcOlNFdQigDYvOmklXI"/>
       </svg>
-      <span>萌宠连连看</span>
+      <span data-page-node-id="5pVX0XQDPCUwdI91wFhGHQ">萌宠连连看</span>
     </div>
-    <p class="home-sub">经典连线消除 · 56 萌图</p>
-    <div class="home-stats">
-      <div class="stat"><div class="stat-num" id="home-coins">0</div><div class="stat-lbl">金币</div></div>
-      <div class="stat"><div class="stat-num" id="home-level">1</div><div class="stat-lbl">最高关卡</div></div>
+    <p class="home-sub" data-page-node-id="iCwMczbdq61gD0vLWWwZBY">经典连线消除 · 59 萌图</p>
+    <div class="home-stats" data-page-node-id="fELOAjq1qhf5V7jZ5AQvYJ">
+      <div class="stat" data-page-node-id="cpdcvX1ogy8yQF50QCbLBV"><div class="stat-num" id="home-coins" data-page-node-id="C1Z1RsamxFk7g7qg6oH2c3">0</div><div class="stat-lbl" data-page-node-id="oiIS9zWer8HCI0WcHwli03">金币</div></div>
+      <div class="stat" data-page-node-id="PXBgAAs52GiS7c4E7OhHX1"><div class="stat-num" id="home-level" data-page-node-id="H3uQLcVqQpBTepJ2jSh6Fo">1</div><div class="stat-lbl" data-page-node-id="EBwRiNNwiObAOGAdFf3Yh2">最高关卡</div></div>
     </div>
-    <button class="btn big" id="home-start">开始游戏</button>
-    <div class="home-row">
-      <button class="btn secondary sm" id="home-shop">🛒 商店</button>
-      <button class="btn secondary sm" id="home-skin">🎨 皮肤</button>
+    <button class="btn big" id="home-start" data-page-node-id="p9OL7NtUGkaPgObSlywmxO">开始游戏</button>
+    <button class="btn big daily" id="home-daily">📅 每日挑战</button>
+    <div class="home-row" data-page-node-id="qs0KnmjfLTJOxGENFOchlI">
+      <button class="btn secondary sm" id="home-shop" data-page-node-id="4ENI0DsGbdNN3d9bliEKoW">🛒 商店</button>
+      <button class="btn secondary sm" id="home-skin" data-page-node-id="3yVWEHwYHDfW5TozAikZit">🎨 皮肤</button>
     </div>
   </div>
 </div>
 
 <!-- 商店 -->
-<div class="overlay hidden" id="shop-screen">
-  <div class="modal">
-    <h2>🛒 商店</h2>
-    <p>当前金币：💰 <span id="shop-coins">0</span></p>
-    <div class="shop-list" id="shop-list"></div>
-    <button class="btn" id="shop-close">关闭</button>
+<div class="overlay hidden" id="shop-screen" data-page-node-id="XS4WeVdTtWW92h8qOnl2zK">
+  <div class="modal" data-page-node-id="015O5IkWRyB8pEAuELXa5v">
+    <h2 data-page-node-id="dzyKHr7pmkfO5ExDP8ppQr">🛒 商店</h2>
+    <p data-page-node-id="ApVJb9aGqjJUE4oKGjNvEZ">当前金币：💰 <span id="shop-coins" data-page-node-id="Y9XZ4E93PSamvMdlO5HfwK">0</span></p>
+    <div class="shop-list" id="shop-list" data-page-node-id="J7DGYUkC7DxF4LL9bhZcf0"></div>
+    <button class="btn" id="shop-close" data-page-node-id="GkpQAdrHPUP9dlRImT0k9X">关闭</button>
   </div>
 </div>
 
 <!-- 皮肤 -->
-<div class="overlay hidden" id="skin-screen">
-  <div class="modal">
-    <h2>🎨 皮肤</h2>
-    <p>用金币解锁渐变主题，点击切换</p>
-    <div class="shop-list" id="skin-list"></div>
-    <button class="btn" id="skin-close">关闭</button>
+<div class="overlay hidden" id="skin-screen" data-page-node-id="Roko9yT2FQs0GTqADTqXHu">
+  <div class="modal" data-page-node-id="1jidQ9BOCyYUbj68Mcy9Tp">
+    <h2 data-page-node-id="FGJYPaQrGO4rooF63u8xJJ">🎨 皮肤</h2>
+    <p data-page-node-id="XlRhp02fVKP20HO3GscbV3">用金币解锁渐变主题，点击切换</p>
+    <div class="shop-list" id="skin-list" data-page-node-id="0oTCXp7KsUAg6Y5QDk8SZz"></div>
+    <button class="btn" id="skin-close" data-page-node-id="3EV7FyV62EyYNGYtXG9dAV">关闭</button>
   </div>
 </div>
 
-<div class="overlay hidden" id="win-screen">
+<!-- 每日挑战 -->
+<div class="overlay hidden" id="daily-screen">
   <div class="modal">
-    <h2>🎉 过关啦！</h2>
-    <p id="win-text">第 1 关完成</p>
-    <p id="win-reward"></p>
-    <button class="btn" id="next-level-btn">下一关</button>
-    <button class="btn secondary" id="replay-win-btn">再玩</button>
+    <h2>📅 每日挑战</h2>
+    <p>今天这一关固定布局，限时 90 秒清空</p>
+    <div class="daily-streak">
+      <div class="ds-num" id="daily-streak-num">0</div>
+      <div class="ds-lbl">连续打卡（天）</div>
+    </div>
+    <div class="daily-week" id="daily-week"></div>
+    <p id="daily-tip">通关得 80 金币起，剩时越多奖励越高</p>
+    <div><span class="daily-mend" id="daily-mend">💰150 补签昨天</span></div>
+    <div>
+      <button class="btn" id="daily-start-btn">开始挑战</button>
+      <button class="btn secondary" id="daily-close">关闭</button>
+    </div>
   </div>
 </div>
 
-<div class="overlay hidden" id="stuck-screen">
+<!-- 每日挑战结算 -->
+<div class="overlay hidden" id="daily-result-screen">
   <div class="modal">
-    <h2>🤔 连不上啦</h2>
-    <p>没有能消除的组合了<br>用道具或刷新重排，也可重开本关</p>
-    <button class="btn" id="auto-shuffle-btn">自动刷新</button>
-    <button class="btn secondary" id="retry-stuck-btn">重开</button>
+    <h2 id="dr-title">🎉 挑战成功</h2>
+    <p id="dr-sub"></p>
+    <p id="dr-reward"></p>
+    <button class="btn" id="dr-again">再玩一次</button>
+    <button class="btn secondary" id="dr-home">返回主页</button>
+  </div>
+</div>
+
+<div class="overlay hidden" id="win-screen" data-page-node-id="RmNE7Jnozvdbe0CCnhkXPb">
+  <div class="modal" data-page-node-id="uvaOC4bWXX3TN1boeOIKOp">
+    <h2 data-page-node-id="OUJDr8ipaLqkiDN4lwGWJw">🎉 过关啦！</h2>
+    <p id="win-text" data-page-node-id="aR4OdrGgYQG3RwL2rnSJo8">第 1 关完成</p>
+    <p id="win-reward" data-page-node-id="L7agvE0EgFar19stdU5PxR"></p>
+    <button class="btn" id="next-level-btn" data-page-node-id="crak1vX0z59ZauJJ0aVtqy">下一关</button>
+    <button class="btn secondary" id="replay-win-btn" data-page-node-id="SP0erjiYZHMGBBrdd0tZev">再玩</button>
+  </div>
+</div>
+
+<div class="overlay hidden" id="stuck-screen" data-page-node-id="CzX7Q2Bt09F5Xg33J7s81l">
+  <div class="modal" data-page-node-id="8mpHY1RICC8yCFKI7mEENC">
+    <h2 data-page-node-id="24ZWO7r4G2HD3IRaeQbCNE">🤔 连不上啦</h2>
+    <p data-page-node-id="BckjvPBYTb2FhVma4vlFRn">没有能消除的组合了<br data-page-node-id="zdzDF8Wm16L7GFcMw26jAr">用道具或刷新重排，也可重开本关</p>
+    <button class="btn" id="auto-shuffle-btn" data-page-node-id="2ouaf3juAkTbno9JxpwZLo">自动刷新</button>
+    <button class="btn secondary" id="retry-stuck-btn" data-page-node-id="gXQBUj2XKFiaBE6BT2Cixg">重开</button>
   </div>
 </div>
 
@@ -593,20 +639,20 @@ const Sound={
 const ICON_SVGS=[
   `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M28 40 L20 18 L40 34 Z" fill="#FFD9A8" stroke="#C98A5E" stroke-width="2.2" stroke-linejoin="round"/><path d="M72 40 L80 18 L60 34 Z" fill="#FFD9A8" stroke="#C98A5E" stroke-width="2.2" stroke-linejoin="round"/><circle cx="50" cy="56" r="27" fill="#FFD9A8" stroke="#C98A5E" stroke-width="2.6"/><ellipse cx="42" cy="53" rx="3.6" ry="4.8" fill="#4A3B4A"/><ellipse cx="58" cy="53" rx="3.6" ry="4.8" fill="#4A3B4A"/><circle cx="41" cy="51" r="1.4" fill="#fff"/><circle cx="57" cy="51" r="1.4" fill="#fff"/><path d="M47 60 L53 60 L50 64 Z" fill="#FF7E9D"/><line x1="22" y1="58" x2="12" y2="60" stroke="#C98A5E" stroke-width="1.4"/><line x1="78" y1="58" x2="88" y2="60" stroke="#C98A5E" stroke-width="1.4"/><ellipse cx="36" cy="62" rx="4" ry="2.4" fill="#FF9CB0" opacity="0.85"/><ellipse cx="64" cy="62" rx="4" ry="2.4" fill="#FF9CB0" opacity="0.85"/></svg>`,
   `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="24" cy="46" rx="12" ry="20" fill="#C98A5E" stroke="#9A6B3A" stroke-width="2.4"/><ellipse cx="76" cy="46" rx="12" ry="20" fill="#C98A5E" stroke="#9A6B3A" stroke-width="2.4"/><circle cx="50" cy="54" r="28" fill="#F0C89A" stroke="#C98A5E" stroke-width="2.8"/><ellipse cx="42" cy="52" rx="4" ry="5" fill="#3A2E22"/><ellipse cx="58" cy="52" rx="4" ry="5" fill="#3A2E22"/><circle cx="41" cy="50" r="1.4" fill="#fff"/><circle cx="57" cy="50" r="1.4" fill="#fff"/><ellipse cx="50" cy="60" rx="4" ry="3" fill="#5A3A2A"/><path d="M50 63 V67 M50 67 Q44 72 40 67 M50 67 Q56 72 60 67" stroke="#5A3A2A" stroke-width="1.8" fill="none" stroke-linecap="round"/><ellipse cx="34" cy="62" rx="5" ry="3" fill="#FF9CB0" opacity="0.8"/><ellipse cx="66" cy="62" rx="5" ry="3" fill="#FF9CB0" opacity="0.8"/></svg>`,
-  `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="11" fill="#E8C39E" stroke="#B98A66" stroke-width="2.2"/><circle cx="68" cy="32" r="11" fill="#E8C39E" stroke="#B98A66" stroke-width="2.2"/><circle cx="50" cy="56" r="27" fill="#E8C39E" stroke="#B98A66" stroke-width="2.6"/><ellipse cx="42" cy="52" rx="3.6" ry="4.8" fill="#4A3B4A"/><ellipse cx="58" cy="52" rx="3.6" ry="4.8" fill="#4A3B4A"/><circle cx="41" cy="50" r="1.4" fill="#fff"/><circle cx="57" cy="50" r="1.4" fill="#fff"/><ellipse cx="50" cy="62" rx="10" ry="8" fill="#F3D9C2"/><ellipse cx="50" cy="59" rx="3.4" ry="2.6" fill="#4A3B4A"/><ellipse cx="36" cy="64" rx="4" ry="2.4" fill="#FF9CB0" opacity="0.85"/><ellipse cx="64" cy="64" rx="4" ry="2.4" fill="#FF9CB0" opacity="0.85"/></svg>`,
+  `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="27" cy="31" r="13" fill="#C98A5E" stroke="#9A6B3A" stroke-width="2.4"/><circle cx="73" cy="31" r="13" fill="#C98A5E" stroke="#9A6B3A" stroke-width="2.4"/><circle cx="27" cy="31" r="5.5" fill="#FFD9E6"/><circle cx="73" cy="31" r="5.5" fill="#FFD9E6"/><circle cx="50" cy="56" r="29" fill="#D89A6E" stroke="#9A6B3A" stroke-width="2.8"/><ellipse cx="50" cy="67" rx="15" ry="11" fill="#F7E3CE" stroke="#9A6B3A" stroke-width="1.6"/><ellipse cx="41" cy="52" rx="3.6" ry="4.8" fill="#4A3B4A"/><ellipse cx="59" cy="52" rx="3.6" ry="4.8" fill="#4A3B4A"/><circle cx="40" cy="50" r="1.4" fill="#fff"/><circle cx="58" cy="50" r="1.4" fill="#fff"/><ellipse cx="50" cy="64" rx="4" ry="3" fill="#6B4630"/><path d="M50 67 V69 M50 69 Q45 73 41 69 M50 69 Q55 73 59 69" stroke="#6B4630" stroke-width="1.8" fill="none" stroke-linecap="round"/><ellipse cx="30" cy="60" rx="5" ry="3" fill="#FF9CB0" opacity=".8"/><ellipse cx="70" cy="60" rx="5" ry="3" fill="#FF9CB0" opacity=".8"/></svg>`,
   `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="38" cy="28" rx="7" ry="20" fill="#FFFFFF" stroke="#D9C2D0" stroke-width="2.2"/><ellipse cx="62" cy="28" rx="7" ry="20" fill="#FFFFFF" stroke="#D9C2D0" stroke-width="2.2"/><ellipse cx="38" cy="30" rx="3" ry="12" fill="#FFC2D6"/><ellipse cx="62" cy="30" rx="3" ry="12" fill="#FFC2D6"/><circle cx="50" cy="60" r="25" fill="#FFFFFF" stroke="#D9C2D0" stroke-width="2.6"/><ellipse cx="42" cy="57" rx="3.6" ry="4.8" fill="#4A3B4A"/><ellipse cx="58" cy="57" rx="3.6" ry="4.8" fill="#4A3B4A"/><circle cx="41" cy="55" r="1.4" fill="#fff"/><circle cx="57" cy="55" r="1.4" fill="#fff"/><path d="M47 64 L53 64 L50 68 Z" fill="#FF7E9D"/><ellipse cx="36" cy="66" rx="4" ry="2.4" fill="#FF9CB0" opacity="0.85"/><ellipse cx="64" cy="66" rx="4" ry="2.4" fill="#FF9CB0" opacity="0.85"/></svg>`,
-  `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="34" cy="40" r="13" fill="#D7D7DE" stroke="#9A9AA6" stroke-width="2.2"/><circle cx="66" cy="40" r="13" fill="#D7D7DE" stroke="#9A9AA6" stroke-width="2.2"/><circle cx="34" cy="40" r="6" fill="#FFC2D6"/><circle cx="66" cy="40" r="6" fill="#FFC2D6"/><circle cx="50" cy="58" r="24" fill="#D7D7DE" stroke="#9A9AA6" stroke-width="2.6"/><ellipse cx="50" cy="58" rx="5" ry="4" fill="#FF9AB0"/><ellipse cx="42" cy="54" rx="3.6" ry="4.8" fill="#4A3B4A"/><ellipse cx="58" cy="54" rx="3.6" ry="4.8" fill="#4A3B4A"/><circle cx="41" cy="52" r="1.4" fill="#fff"/><circle cx="57" cy="52" r="1.4" fill="#fff"/><path d="M74 74 Q92 66 86 46" stroke="#FF9AB0" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="36" cy="63" rx="4" ry="2.4" fill="#FF9CB0" opacity="0.85"/><ellipse cx="64" cy="63" rx="4" ry="2.4" fill="#FF9CB0" opacity="0.85"/></svg>`,
-  `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M30 40 Q22 30 33 32 Q41 34 36 44 Z" fill="#FFC2CF" stroke="#E08A98" stroke-width="2.2"/><path d="M70 40 Q78 30 67 32 Q59 34 64 44 Z" fill="#FFC2CF" stroke="#E08A98" stroke-width="2.2"/><circle cx="50" cy="55" r="27" fill="#FFC2CF" stroke="#E08A98" stroke-width="2.6"/><ellipse cx="42" cy="50" rx="3.6" ry="4.8" fill="#4A3B4A"/><ellipse cx="58" cy="50" rx="3.6" ry="4.8" fill="#4A3B4A"/><circle cx="41" cy="48" r="1.4" fill="#fff"/><circle cx="57" cy="48" r="1.4" fill="#fff"/><ellipse cx="50" cy="63" rx="11" ry="7" fill="#FF9AB0" stroke="#E08A98" stroke-width="1.6"/><circle cx="45" cy="63" r="1.8" fill="#C06068"/><circle cx="55" cy="63" r="1.8" fill="#C06068"/><ellipse cx="34" cy="66" rx="4" ry="2.4" fill="#FF9CB0" opacity="0.85"/><ellipse cx="66" cy="66" rx="4" ry="2.4" fill="#FF9CB0" opacity="0.85"/></svg>`,
+  `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="27" cy="34" r="15" fill="#FFC2D6" stroke="#E08A98" stroke-width="2.2"/><circle cx="73" cy="34" r="15" fill="#FFC2D6" stroke="#E08A98" stroke-width="2.2"/><circle cx="27" cy="34" r="7" fill="#FFEDF4"/><circle cx="73" cy="34" r="7" fill="#FFEDF4"/><circle cx="50" cy="58" r="27" fill="#F7E4EC" stroke="#E08A98" stroke-width="2.6"/><ellipse cx="41" cy="54" rx="3.6" ry="4.8" fill="#4A3B4A"/><ellipse cx="59" cy="54" rx="3.6" ry="4.8" fill="#4A3B4A"/><circle cx="40" cy="52" r="1.4" fill="#fff"/><circle cx="58" cy="52" r="1.4" fill="#fff"/><ellipse cx="50" cy="66" rx="5" ry="3.6" fill="#FF7E9D"/><path d="M50 69 V71 M50 71 Q44 76 40 71 M50 71 Q56 76 60 71" stroke="#E08A98" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M74 68 Q92 74 86 86" stroke="#E08A98" stroke-width="3.2" fill="none" stroke-linecap="round"/><ellipse cx="31" cy="63" rx="4.5" ry="2.6" fill="#FF9CB0" opacity=".85"/><ellipse cx="69" cy="63" rx="4.5" ry="2.6" fill="#FF9CB0" opacity=".85"/></svg>`,
+  `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M25 33 Q16 18 31 25 Q36 34 33 43 Z" fill="#FFB6C8" stroke="#E08A98" stroke-width="2.2"/><path d="M75 33 Q84 18 69 25 Q64 34 67 43 Z" fill="#FFB6C8" stroke="#E08A98" stroke-width="2.2"/><circle cx="50" cy="56" r="29" fill="#FFCBD9" stroke="#E08A98" stroke-width="2.8"/><ellipse cx="50" cy="67" rx="14" ry="9.5" fill="#FF9AB0" stroke="#E08A98" stroke-width="1.8"/><ellipse cx="45" cy="67" rx="2.6" ry="3.4" fill="#C06068"/><ellipse cx="55" cy="67" rx="2.6" ry="3.4" fill="#C06068"/><ellipse cx="41" cy="52" rx="3.6" ry="4.8" fill="#4A3B4A"/><ellipse cx="59" cy="52" rx="3.6" ry="4.8" fill="#4A3B4A"/><circle cx="40" cy="50" r="1.4" fill="#fff"/><circle cx="58" cy="50" r="1.4" fill="#fff"/><ellipse cx="30" cy="62" rx="5.5" ry="3.2" fill="#FF8FA8" opacity=".75"/><ellipse cx="70" cy="62" rx="5.5" ry="3.2" fill="#FF8FA8" opacity=".75"/></svg>`,
   `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M42 30 Q40 16 48 20 Q50 12 56 18 Q60 14 60 26 Z" fill="#FF5A5A" stroke="#D83A3A" stroke-width="2"/><circle cx="50" cy="56" r="28" fill="#FFE38A" stroke="#D9A93C" stroke-width="2.8"/><path d="M30 52 Q24 64 36 68 Q40 58 38 50 Z" fill="#FFD066" stroke="#D9A93C" stroke-width="1.8"/><path d="M70 52 Q76 64 64 68 Q60 58 62 50 Z" fill="#FFD066" stroke="#D9A93C" stroke-width="1.8"/><ellipse cx="43" cy="52" rx="3.6" ry="4.8" fill="#3A2E22"/><ellipse cx="57" cy="52" rx="3.6" ry="4.8" fill="#3A2E22"/><circle cx="42" cy="50" r="1.4" fill="#fff"/><circle cx="56" cy="50" r="1.4" fill="#fff"/><polygon points="50,58 44,63 56,63" fill="#FF9A2A" stroke="#E08820" stroke-width="1.4"/><ellipse cx="36" cy="62" rx="4" ry="2.4" fill="#FF9CB0" opacity="0.8"/><ellipse cx="64" cy="62" rx="4" ry="2.4" fill="#FF9CB0" opacity="0.8"/></svg>`,
-  `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="28" fill="#FFE38A" stroke="#D9A93C" stroke-width="2.6"/><ellipse cx="42" cy="44" rx="3.6" ry="4.8" fill="#4A3B4A"/><ellipse cx="58" cy="44" rx="3.6" ry="4.8" fill="#4A3B4A"/><circle cx="41" cy="42" r="1.4" fill="#fff"/><circle cx="57" cy="42" r="1.4" fill="#fff"/><ellipse cx="50" cy="54" rx="16" ry="9" fill="#FF9A2A" stroke="#E08820" stroke-width="2"/><path d="M50 54 V60" stroke="#E08820" stroke-width="1.5"/><path d="M30 40 Q22 30 34 34" stroke="#D9A93C" stroke-width="2" fill="none"/></svg>`,
-  `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M68 50 L88 34 L88 66 Z" fill="#9FD8E8" stroke="#4FA7C0" stroke-width="2.4" stroke-linejoin="round"/><ellipse cx="46" cy="50" rx="32" ry="24" fill="#9FD8E8" stroke="#4FA7C0" stroke-width="2.6"/><circle cx="34" cy="46" r="4.5" fill="#4A3B4A"/><circle cx="33" cy="44" r="1.4" fill="#fff"/><path d="M58 36 Q62 44 58 52" stroke="#4FA7C0" stroke-width="2" fill="none"/><circle cx="70" cy="30" r="3" fill="#CFEFF7" stroke="#4FA7C0" stroke-width="1"/><ellipse cx="28" cy="56" rx="4" ry="2.4" fill="#FF9CB0" opacity="0.85"/><ellipse cx="64" cy="56" rx="4" ry="2.4" fill="#FF9CB0" opacity="0.85"/></svg>`,
+  `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="47" cy="42" r="26" fill="#FFE38A" stroke="#D9A93C" stroke-width="2.6"/><ellipse cx="50" cy="68" rx="19" ry="13" fill="#FFD066" stroke="#D9A93C" stroke-width="2"/><path d="M70 40 Q88 40 84 51 Q77 55 69 51 Z" fill="#FF9A2A" stroke="#E08820" stroke-width="2"/><ellipse cx="40" cy="38" rx="3.6" ry="4.8" fill="#4A3B4A"/><ellipse cx="56" cy="38" rx="3.6" ry="4.8" fill="#4A3B4A"/><circle cx="39" cy="36" r="1.4" fill="#fff"/><circle cx="55" cy="36" r="1.4" fill="#fff"/><ellipse cx="31" cy="48" rx="4.5" ry="2.6" fill="#FF9CB0" opacity=".8"/><ellipse cx="63" cy="48" rx="4.5" ry="2.6" fill="#FF9CB0" opacity=".8"/><path d="M20 84 Q33 77 50 84 Q67 91 80 84" stroke="#7FD8E8" stroke-width="3.4" fill="none" stroke-linecap="round"/></svg>`,
+  `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M64 50 L92 30 L87 50 L92 70 Z" fill="#7FD8E8" stroke="#2F8AA8" stroke-width="2.4" stroke-linejoin="round"/><ellipse cx="44" cy="50" rx="33" ry="25" fill="#A6E9F5" stroke="#2F8AA8" stroke-width="2.6"/><path d="M38 28 Q50 14 62 28" fill="#FFD066" stroke="#E0A93C" stroke-width="2"/><circle cx="31" cy="45" r="5.5" fill="#fff" stroke="#2F8AA8" stroke-width="1.6"/><circle cx="31" cy="45" r="2.6" fill="#4A3B4A"/><path d="M50 57 Q57 62 64 57" stroke="#2F8AA8" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="74" cy="20" r="3.2" fill="#DFF6FC" stroke="#2F8AA8" stroke-width="1"/><circle cx="84" cy="12" r="2.2" fill="#DFF6FC" stroke="#2F8AA8" stroke-width="1"/><ellipse cx="28" cy="57" rx="4.5" ry="2.6" fill="#FF9CB0" opacity=".8"/></svg>`,
   `<span class="emoji">🐸</span>`,
   `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="12" fill="#3A3A3A"/><circle cx="70" cy="30" r="12" fill="#3A3A3A"/><circle cx="50" cy="54" r="29" fill="#FFFFFF" stroke="#C9C9C9" stroke-width="2.4"/><ellipse cx="40" cy="50" rx="8" ry="11" fill="#3A3A3A"/><ellipse cx="60" cy="50" rx="8" ry="11" fill="#3A3A3A"/><circle cx="40" cy="48" r="2.6" fill="#fff"/><circle cx="60" cy="48" r="2.6" fill="#fff"/><ellipse cx="50" cy="62" rx="5" ry="3" fill="#3A3A3A"/><ellipse cx="50" cy="70" rx="8" ry="5" fill="#FFB0C0" opacity="0.6"/></svg>`,
   `<span class="emoji">🦊</span>`,
-  `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 34 Q42 26 34 30 Q20 34 22 52 Q24 74 50 76 Q76 74 78 52 Q80 34 66 30 Q58 26 50 34 Z" fill="#FF8A8A" stroke="#D85A5A" stroke-width="2.6"/><path d="M50 34 Q52 22 60 20" stroke="#6B3D1F" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M56 22 Q66 14 76 18 Q72 30 56 22 Z" fill="#9BD66B" stroke="#6FAE4A" stroke-width="1.6"/><ellipse cx="38" cy="48" rx="6" ry="10" fill="#fff" opacity="0.4"/></svg>`,
+  `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 33 Q53 17 66 15 Q63 31 50 33 Z" fill="#8FD46A" stroke="#5FA83C" stroke-width="2"/><path d="M50 31 Q33 25 25 44 Q21 77 50 85 Q79 77 75 44 Q67 25 50 31 Z" fill="#FF7A8A" stroke="#C81E3A" stroke-width="2.8"/><ellipse cx="41" cy="52" rx="3.6" ry="4.8" fill="#4A3B4A"/><ellipse cx="59" cy="52" rx="3.6" ry="4.8" fill="#4A3B4A"/><circle cx="40" cy="50" r="1.4" fill="#fff"/><circle cx="58" cy="50" r="1.4" fill="#fff"/><path d="M45 65 Q50 70 55 65" stroke="#8A2030" stroke-width="2" fill="none" stroke-linecap="round"/><ellipse cx="32" cy="60" rx="5.5" ry="3.2" fill="#FF9A8A" opacity=".7"/><ellipse cx="68" cy="60" rx="5.5" ry="3.2" fill="#FF9A8A" opacity=".7"/></svg>`,
   `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 36 Q34 36 30 54 Q28 74 50 80 Q72 74 70 54 Q66 36 50 36 Z" fill="#FF7A8A" stroke="#C81E3A" stroke-width="2.6"/><path d="M40 34 L50 44 L60 34 L54 28 L50 36 L46 28 Z" fill="#9BD66B" stroke="#6FAE4A" stroke-width="1.4" stroke-linejoin="round"/><g fill="#FFE27A"><circle cx="42" cy="50" r="2"/><circle cx="54" cy="52" r="2"/><circle cx="48" cy="60" r="2"/><circle cx="60" cy="62" r="2"/><circle cx="38" cy="62" r="2"/><circle cx="50" cy="70" r="2"/></g></svg>`,
-  `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect x="24" y="54" width="52" height="28" rx="6" fill="#FFC2D6" stroke="#E08A98" stroke-width="2.4"/><rect x="22" y="44" width="56" height="14" rx="7" fill="#FFF0F5" stroke="#E08A98" stroke-width="2"/><path d="M50 44 V34" stroke="#FF5E9C" stroke-width="2.4"/><circle cx="50" cy="32" r="5" fill="#FF5E9C" stroke="#D44F8E" stroke-width="1.4"/><path d="M28 60 h44" stroke="#E08A98" stroke-width="1.6" opacity="0.5"/></svg>`,
-  `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="52" r="30" fill="#FFD9B0" stroke="#C98A5E" stroke-width="2.6"/><circle cx="50" cy="52" r="11" fill="#FFFFFF" stroke="#C98A5E" stroke-width="2.6"/><g stroke-linecap="round" stroke-width="4"><path d="M34 40 l6 6" stroke="#FF5E9C"/><path d="M62 36 l-3 9" stroke="#5DD8C4"/><path d="M70 56 l-9 1" stroke="#5FB0E6"/><path d="M40 68 l7 -6" stroke="#FFD000"/></g></svg>`
+  `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect x="27" y="54" width="46" height="30" rx="6" fill="#FFE3C0" stroke="#C98A5E" stroke-width="2.4"/><rect x="23" y="44" width="54" height="13" rx="6" fill="#FFF3F7" stroke="#E08A98" stroke-width="2"/><path d="M27 54 Q34 63 41 54 Q48 63 55 54 Q62 63 69 54" fill="none" stroke="#E08A98" stroke-width="2"/><path d="M50 44 V29" stroke="#FF5E9C" stroke-width="3"/><ellipse cx="50" cy="25" rx="4" ry="6" fill="#FFD066" stroke="#E0A93C" stroke-width="1.4"/><circle cx="38" cy="40" r="7" fill="#FF7A8A" stroke="#C81E3A" stroke-width="1.6"/><circle cx="62" cy="40" r="7" fill="#FF7A8A" stroke="#C81E3A" stroke-width="1.6"/><path d="M38 34 Q40 29 44 31" stroke="#5FA83C" stroke-width="2" fill="none"/><ellipse cx="42" cy="70" rx="3.2" ry="4.4" fill="#4A3B4A"/><ellipse cx="58" cy="70" rx="3.2" ry="4.4" fill="#4A3B4A"/><path d="M46 76 Q50 80 54 76" stroke="#8A5A30" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>`,
+  `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><defs><clipPath id="dnc"><path d="M50 18 A32 32 0 1 1 49.9 18 Z M50 40 A12 12 0 1 0 50.1 40 Z" fill-rule="evenodd"/></clipPath></defs><path d="M50 18 A32 32 0 1 1 49.9 18 Z M50 40 A12 12 0 1 0 50.1 40 Z" fill-rule="evenodd" fill="#F0C89A" stroke="#C98A5E" stroke-width="2.4"/><g clip-path="url(#dnc)"><path d="M12 46 Q20 28 34 40 Q42 50 50 36 Q60 24 70 38 Q80 28 90 44 L90 12 L12 12 Z" fill="#FFB6D5"/></g><g stroke-linecap="round" stroke-width="3"><path d="M32 30 l6 4" stroke="#5DD8C4"/><path d="M64 30 l-5 6" stroke="#FFD000"/><path d="M76 52 l-7 2" stroke="#7FD8E8"/><path d="M28 56 l7 -4" stroke="#FF7E9D"/><path d="M46 66 l6 2" stroke="#B58FE0"/></g><ellipse cx="40" cy="70" rx="3.2" ry="4.4" fill="#4A3B4A"/><ellipse cx="60" cy="70" rx="3.2" ry="4.4" fill="#4A3B4A"/><path d="M45 77 Q50 81 55 77" stroke="#8A5A30" stroke-width="1.8" fill="none" stroke-linecap="round"/><ellipse cx="30" cy="70" rx="4" ry="2.4" fill="#FF9CB0" opacity=".7"/><ellipse cx="70" cy="70" rx="4" ry="2.4" fill="#FF9CB0" opacity=".7"/></svg>`
 ];
 
 // 食物系补充（6）+ 自然系（2）
@@ -614,45 +660,45 @@ const EXTRA_ICONS=[
   {name:'冰淇淋',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M38 56 L50 90 L62 56 Z" fill="#E8C089" stroke="#B07A30" stroke-width="2.2"/><path d="M41 62 L59 62 M44 70 L56 70" stroke="#B07A30" stroke-width="2"/><circle cx="44" cy="46" r="15" fill="#FFB6C8" stroke="#E07A9A" stroke-width="2"/><circle cx="58" cy="44" r="14" fill="#B6E0C8" stroke="#5FB89A" stroke-width="2"/><circle cx="50" cy="34" r="13" fill="#FFD9A8" stroke="#C98A5E" stroke-width="2"/><circle cx="50" cy="32" r="3" fill="#FF5E9C"/></svg>`},
   {name:'西瓜',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="52" r="32" fill="#6FBF4A" stroke="#3C8A2A" stroke-width="2.8"/><path d="M50 20 Q40 52 50 84" stroke="#3C8A2A" stroke-width="3" fill="none" opacity="0.6"/><path d="M28 32 Q32 52 28 72" stroke="#3C8A2A" stroke-width="3" fill="none" opacity="0.6"/><path d="M72 32 Q68 52 72 72" stroke="#3C8A2A" stroke-width="3" fill="none" opacity="0.6"/><path d="M50 20 Q53 11 60 12" stroke="#3C8A2A" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="42" cy="50" rx="3.6" ry="4.8" fill="#3A2E22"/><ellipse cx="58" cy="50" rx="3.6" ry="4.8" fill="#3A2E22"/><circle cx="41" cy="48" r="1.4" fill="#fff"/><circle cx="57" cy="48" r="1.4" fill="#fff"/><path d="M44 60 Q50 65 56 60" stroke="#3A2E22" stroke-width="1.8" fill="none" stroke-linecap="round"/><ellipse cx="34" cy="60" rx="4" ry="2.4" fill="#FF9CB0" opacity="0.7"/><ellipse cx="66" cy="60" rx="4" ry="2.4" fill="#FF9CB0" opacity="0.7"/></svg>`},
   {name:'香蕉',svg:`<span class="emoji">🍌</span>`},
-  {name:'胡萝卜',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 30 L36 78 Q50 88 64 78 Z" fill="#FFB066" stroke="#D2772A" stroke-width="2.6" stroke-linejoin="round"/><g stroke="#5FA83C" stroke-width="3" stroke-linecap="round" fill="none"><path d="M50 30 V14"/><path d="M44 32 L34 18"/><path d="M56 32 L66 18"/></g><g stroke="#C8701A" stroke-width="2"><path d="M46 46 H54"/><path d="M44 58 H56"/><path d="M46 70 H54"/></g></svg>`},
+  {name:'胡萝卜',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 36 L35 80 Q50 90 65 80 Z" fill="#FFA860" stroke="#D2772A" stroke-width="2.6" stroke-linejoin="round"/><g stroke="#6FBF4A" stroke-width="4" stroke-linecap="round" fill="none"><path d="M50 36 V16"/><path d="M41 38 L29 24"/><path d="M59 38 L71 24"/></g><g stroke="#E08A30" stroke-width="2"><path d="M43 48 H57"/><path d="M41 60 H59"/><path d="M44 71 H56"/></g><ellipse cx="43" cy="48" rx="3.2" ry="4.4" fill="#4A3B4A"/><ellipse cx="57" cy="48" rx="3.2" ry="4.4" fill="#4A3B4A"/><circle cx="42" cy="46" r="1.2" fill="#fff"/><circle cx="56" cy="46" r="1.2" fill="#fff"/><path d="M45 58 Q50 62 55 58" stroke="#B35A18" stroke-width="1.8" fill="none" stroke-linecap="round"/><ellipse cx="38" cy="55" rx="4" ry="2.4" fill="#FF9CB0" opacity=".7"/><ellipse cx="62" cy="55" rx="4" ry="2.4" fill="#FF9CB0" opacity=".7"/></svg>`},
   {name:'棒棒糖',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect x="47" y="54" width="6" height="38" rx="3" fill="#E0C4E8"/><circle cx="50" cy="40" r="28" fill="#F3D9F7" stroke="#B58FE0" stroke-width="2.8"/><path d="M50 40 Q64 28 60 44 Q54 60 42 54 Q30 46 42 36 Q52 28 60 40" fill="none" stroke="#E07AC0" stroke-width="5" stroke-linecap="round"/><circle cx="40" cy="30" r="4" fill="#fff" opacity="0.7"/><path d="M70 26 l1.6 4 l4 1.6 l-4 1.6 l-1.6 4 l-1.6 -4 l-4 -1.6 l4 -1.6 z" fill="#FFE08A"/></svg>`},
   {name:'牛角包',svg:`<span class="emoji">🥐</span>`},
-  {name:'太阳',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="22" fill="#FFE08A" stroke="#E0A93C" stroke-width="2.6"/><g stroke="#F5B700" stroke-width="4.5" stroke-linecap="round"><path d="M50 14 V5"/><path d="M50 95 V86"/><path d="M14 50 H5"/><path d="M95 50 H86"/><path d="M24 24 L17 17"/><path d="M76 24 L83 17"/><path d="M24 76 L17 83"/><path d="M76 76 L83 83"/></g><ellipse cx="42" cy="48" rx="3.6" ry="4.8" fill="#4A3B4A"/><ellipse cx="58" cy="48" rx="3.6" ry="4.8" fill="#4A3B4A"/><circle cx="41" cy="46" r="1.4" fill="#fff"/><circle cx="57" cy="46" r="1.4" fill="#fff"/><path d="M45.5 60 Q50 65 54.5 60" stroke="#4A3B4A" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>`},
-  {name:'云',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g fill="#FFFFFF" stroke="#BCD4E2" stroke-width="2.6"><circle cx="38" cy="56" r="17"/><circle cx="60" cy="50" r="21"/><circle cx="70" cy="62" r="14"/><rect x="30" y="56" width="44" height="20" rx="10"/></g><ellipse cx="42" cy="54" rx="3.6" ry="4.8" fill="#4A3B4A"/><ellipse cx="58" cy="54" rx="3.6" ry="4.8" fill="#4A3B4A"/><circle cx="41" cy="52" r="1.4" fill="#fff"/><circle cx="57" cy="52" r="1.4" fill="#fff"/><path d="M46.0 64 Q50 69 54.0 64" stroke="#4A3B4A" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>`}
+  {name:'太阳',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g stroke="#FFB02A" stroke-width="5" stroke-linecap="round"><path d="M50 16 V6"/><path d="M50 94 V84"/><path d="M16 50 H6"/><path d="M94 50 H84"/><path d="M26 26 L19 19"/><path d="M74 26 L81 19"/><path d="M26 74 L19 81"/><path d="M74 74 L81 81"/></g><circle cx="50" cy="50" r="28" fill="#FFD86B" stroke="#E0A93C" stroke-width="2.8"/><path d="M38 46 Q42 41 46 46" stroke="#7A5A1F" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M54 46 Q58 41 62 46" stroke="#7A5A1F" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M42 58 Q50 66 58 58" stroke="#7A5A1F" stroke-width="2.4" fill="none" stroke-linecap="round"/><ellipse cx="32" cy="55" rx="5" ry="3" fill="#FF9A6A" opacity=".65"/><ellipse cx="68" cy="55" rx="5" ry="3" fill="#FF9A6A" opacity=".65"/></svg>`},
+  {name:'云',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g fill="#FFFFFF" stroke="#BCD4E2" stroke-width="2.6"><circle cx="36" cy="54" r="17"/><circle cx="58" cy="48" r="21"/><circle cx="70" cy="60" r="14"/><rect x="28" y="54" width="46" height="21" rx="10"/></g><ellipse cx="42" cy="52" rx="3.6" ry="4.8" fill="#4A3B4A"/><ellipse cx="58" cy="52" rx="3.6" ry="4.8" fill="#4A3B4A"/><circle cx="41" cy="50" r="1.4" fill="#fff"/><circle cx="57" cy="50" r="1.4" fill="#fff"/><path d="M46 62 Q50 67 54 62" stroke="#4A3B4A" stroke-width="1.8" fill="none" stroke-linecap="round"/><ellipse cx="34" cy="60" rx="4.5" ry="2.6" fill="#FF9CB0" opacity=".7"/><ellipse cx="66" cy="60" rx="4.5" ry="2.6" fill="#FF9CB0" opacity=".7"/><g fill="#7FD8E8"><ellipse cx="34" cy="84" rx="4" ry="5"/><ellipse cx="50" cy="88" rx="4" ry="5"/><ellipse cx="66" cy="84" rx="4" ry="5"/></g></svg>`}
 ];
 
 // 自然系补充（6）+ 物件系（6）
 const EXTRA2_ICONS=[
   {name:'月亮',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M64 18 A36 36 0 1 0 64 82 A28 28 0 1 1 64 18 Z" fill="#B58FE0" stroke="#6F3BA8" stroke-width="2.8"/><path d="M30 28 L33 35 L40 36 L35 41 L37 48 L30 44 L23 48 L25 41 L20 36 L27 35 Z" fill="#FFD86B" stroke="#E0A93C" stroke-width="1"/><circle cx="52" cy="48" r="3.4" fill="#fff"/><circle cx="63" cy="48" r="3.4" fill="#fff"/><circle cx="52" cy="48" r="1.6" fill="#4A3B4A"/><circle cx="63" cy="48" r="1.6" fill="#4A3B4A"/><path d="M54 60 Q58 64 62 60" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>`},
   {name:'星星',svg:`<span class="emoji">⭐</span>`},
-  {name:'小花',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g fill="#FFB3D1" stroke="#E07AA8" stroke-width="1.8"><circle cx="50" cy="30" r="12"/><circle cx="68" cy="42" r="12"/><circle cx="62" cy="64" r="12"/><circle cx="38" cy="64" r="12"/><circle cx="32" cy="42" r="12"/></g><circle cx="50" cy="50" r="11" fill="#FFE08A" stroke="#E0A93C" stroke-width="1.8"/><ellipse cx="42" cy="49" rx="3.6" ry="4.8" fill="#4A3B4A"/><ellipse cx="58" cy="49" rx="3.6" ry="4.8" fill="#4A3B4A"/><circle cx="41" cy="47" r="1.4" fill="#fff"/><circle cx="57" cy="47" r="1.4" fill="#fff"/><circle cx="46" cy="55" r="1.8" fill="#fff"/><circle cx="54" cy="55" r="1.8" fill="#fff"/></svg>`},
-  {name:'蘑菇',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M22 52 Q22 30 50 30 Q78 30 78 52 Z" fill="#FF7A8A" stroke="#C81E3A" stroke-width="2.6"/><rect x="40" y="50" width="20" height="28" rx="8" fill="#FFF0E0" stroke="#D9B48A" stroke-width="2"/><g fill="#FFFFFF"><circle cx="38" cy="44" r="4"/><circle cx="54" cy="40" r="4.5"/><circle cx="64" cy="48" r="3.5"/></g></svg>`},
-  {name:'树叶',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M30 76 C18 42 48 18 80 22 C82 56 58 82 30 76 Z" fill="#A8D98A" stroke="#5FA83C" stroke-width="2.6"/><path d="M34 72 C46 56 62 42 78 30" stroke="#5FA83C" stroke-width="2.2" fill="none"/><ellipse cx="46" cy="48" rx="6" ry="9" fill="#fff" opacity="0.35"/></svg>`},
-  {name:'彩虹',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M18 70 A32 32 0 0 1 82 70" fill="none" stroke="#FF5E9C" stroke-width="7"/><path d="M25 70 A25 25 0 0 1 75 70" fill="none" stroke="#FFB8D1" stroke-width="7"/><path d="M32 70 A18 18 0 0 1 68 70" fill="none" stroke="#5DD8C4" stroke-width="7"/><path d="M39 70 A11 11 0 0 1 61 70" fill="none" stroke="#5FB0E6" stroke-width="7"/></svg>`},
-  {name:'爱心',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 78 C20 58 20 34 38 32 C46 31 50 38 50 42 C50 38 54 31 62 32 C80 34 80 58 50 78 Z" fill="#FF9CB0" stroke="#E2647E" stroke-width="2.6"/><ellipse cx="40" cy="44" rx="6" ry="9" fill="#fff" opacity="0.4"/><ellipse cx="42" cy="46" rx="3.6" ry="4.8" fill="#4A3B4A"/><ellipse cx="58" cy="46" rx="3.6" ry="4.8" fill="#4A3B4A"/><circle cx="41" cy="44" r="1.4" fill="#fff"/><circle cx="57" cy="44" r="1.4" fill="#fff"/><path d="M45.5 58 Q50 63 54.5 58" stroke="#4A3B4A" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>`},
-  {name:'礼物',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect x="24" y="46" width="52" height="34" rx="5" fill="#FFC2D6" stroke="#E08A98" stroke-width="2.4"/><rect x="20" y="38" width="60" height="14" rx="5" fill="#FFC2D6" stroke="#E08A98" stroke-width="2.4"/><rect x="46" y="38" width="8" height="42" fill="#FFD86B" stroke="#E0A93C" stroke-width="1.4"/><path d="M50 38 Q34 24 38 36 Q50 42 50 38 Z" fill="#FFD86B" stroke="#E0A93C" stroke-width="1.4"/><path d="M50 38 Q66 24 62 36 Q50 42 50 38 Z" fill="#FFD86B" stroke="#E0A93C" stroke-width="1.4"/></svg>`},
-  {name:'气球',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="42" rx="26" ry="30" fill="#FF9CB0" stroke="#E2647E" stroke-width="2.6"/><path d="M50 72 L46 80 L54 80 Z" fill="#FF9CB0" stroke="#E2647E" stroke-width="2"/><path d="M50 80 Q58 88 50 96" stroke="#E2647E" stroke-width="2" fill="none"/><ellipse cx="42" cy="32" rx="6" ry="9" fill="#fff" opacity="0.4"/></svg>`},
-  {name:'雨伞',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M18 56 Q18 26 50 26 Q82 26 82 56 Z" fill="#7FD8E8" stroke="#2F8AA8" stroke-width="2.6"/><path d="M18 56 Q34 48 50 56 Q66 48 82 56" fill="#fff" opacity="0.5"/><path d="M50 56 V82 Q50 90 42 88" stroke="#7A5230" stroke-width="4" fill="none" stroke-linecap="round"/></svg>`},
-  {name:'钟表',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="52" r="30" fill="#FFFFFF" stroke="#7A5230" stroke-width="3.4"/><circle cx="50" cy="52" r="30" fill="none" stroke="#FFD86B" stroke-width="1.6"/><path d="M50 52 V36 M50 52 L64 58" stroke="#4A3B4A" stroke-width="3" stroke-linecap="round" fill="none"/><circle cx="50" cy="52" r="3" fill="#4A3B4A"/></svg>`},
-  {name:'杯子',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M30 40 H66 V72 Q66 82 56 82 H40 Q30 82 30 72 Z" fill="#9FD8E8" stroke="#4FA7C0" stroke-width="2.6"/><path d="M66 48 Q82 48 82 60 Q82 72 66 72" fill="none" stroke="#4FA7C0" stroke-width="4"/><path d="M36 34 Q40 30 44 34" stroke="#4FA7C0" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`}
+  {name:'小花',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g fill="#C9A7F0" stroke="#8E6BE8" stroke-width="1.8"><circle cx="50" cy="28" r="13"/><circle cx="70" cy="42" r="13"/><circle cx="62" cy="66" r="13"/><circle cx="38" cy="66" r="13"/><circle cx="30" cy="42" r="13"/></g><circle cx="50" cy="50" r="12" fill="#FFE08A" stroke="#E0A93C" stroke-width="1.8"/><ellipse cx="45" cy="48" rx="2.8" ry="3.8" fill="#4A3B4A"/><ellipse cx="55" cy="48" rx="2.8" ry="3.8" fill="#4A3B4A"/><path d="M45 56 Q50 60 55 56" stroke="#4A3B4A" stroke-width="1.6" fill="none" stroke-linecap="round"/><ellipse cx="39" cy="55" rx="3.5" ry="2.2" fill="#FF9CB0" opacity=".8"/><ellipse cx="61" cy="55" rx="3.5" ry="2.2" fill="#FF9CB0" opacity=".8"/></svg>`},
+  {name:'蘑菇',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M20 54 Q20 28 50 28 Q80 28 80 54 Z" fill="#FF8A9A" stroke="#C81E3A" stroke-width="2.6"/><g fill="#FFF6F0"><circle cx="36" cy="44" r="5"/><circle cx="55" cy="38" r="6"/><circle cx="68" cy="48" r="4.5"/></g><rect x="38" y="52" width="24" height="30" rx="10" fill="#FFF3E4" stroke="#D9B48A" stroke-width="2"/><ellipse cx="44" cy="66" rx="3.2" ry="4.4" fill="#4A3B4A"/><ellipse cx="56" cy="66" rx="3.2" ry="4.4" fill="#4A3B4A"/><path d="M46 74 Q50 78 54 74" stroke="#B58A5A" stroke-width="1.8" fill="none" stroke-linecap="round"/><ellipse cx="36" cy="72" rx="4" ry="2.4" fill="#FF9CB0" opacity=".75"/><ellipse cx="64" cy="72" rx="4" ry="2.4" fill="#FF9CB0" opacity=".75"/></svg>`},
+  {name:'树叶',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M28 78 C14 42 46 16 82 20 C84 56 58 84 28 78 Z" fill="#A8D98A" stroke="#5FA83C" stroke-width="2.6"/><path d="M32 74 C46 56 64 40 80 28" stroke="#5FA83C" stroke-width="2.2" fill="none"/><ellipse cx="46" cy="46" rx="3.2" ry="4.4" fill="#4A3B4A"/><ellipse cx="60" cy="52" rx="3.2" ry="4.4" fill="#4A3B4A"/><path d="M48 60 Q54 64 58 58" stroke="#3F7A28" stroke-width="1.8" fill="none" stroke-linecap="round"/><ellipse cx="40" cy="56" rx="4" ry="2.4" fill="#FF9CB0" opacity=".7"/></svg>`},
+  {name:'彩虹',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M14 74 A36 36 0 0 1 86 74" fill="none" stroke="#FF7E9D" stroke-width="8"/><path d="M23 74 A27 27 0 0 1 77 74" fill="none" stroke="#FFC46B" stroke-width="8"/><path d="M32 74 A18 18 0 0 1 68 74" fill="none" stroke="#7FD8A8" stroke-width="8"/><path d="M41 74 A9 9 0 0 1 59 74" fill="none" stroke="#7FC8F0" stroke-width="8"/><g fill="#FFFFFF" stroke="#BCD4E2" stroke-width="2"><circle cx="18" cy="72" r="9"/><circle cx="82" cy="72" r="9"/><rect x="18" y="68" width="64" height="12" rx="6"/></g><path d="M32 20 l1.6 4.4 l4.4 1.6 l-4.4 1.6 l-1.6 4.4 l-1.6 -4.4 l-4.4 -1.6 l4.4 -1.6 z" fill="#FFD86B"/></svg>`},
+  {name:'爱心',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M34 44 Q20 34 22 50 Q24 62 34 58" fill="#DFF3FF" stroke="#8FC4E8" stroke-width="2"/><path d="M66 44 Q80 34 78 50 Q76 62 66 58" fill="#DFF3FF" stroke="#8FC4E8" stroke-width="2"/><path d="M50 80 C22 62 20 36 36 32 C44 30 50 38 50 43 C50 38 56 30 64 32 C80 36 78 62 50 80 Z" fill="#FF9CB0" stroke="#E2647E" stroke-width="2.6"/><ellipse cx="41" cy="52" rx="3.2" ry="4.4" fill="#4A3B4A"/><ellipse cx="59" cy="52" rx="3.2" ry="4.4" fill="#4A3B4A"/><circle cx="40" cy="50" r="1.2" fill="#fff"/><circle cx="58" cy="50" r="1.2" fill="#fff"/><path d="M45 62 Q50 67 55 62" stroke="#A8384F" stroke-width="1.8" fill="none" stroke-linecap="round"/><ellipse cx="32" cy="58" rx="4" ry="2.4" fill="#FF6F90" opacity=".7"/><ellipse cx="68" cy="58" rx="4" ry="2.4" fill="#FF6F90" opacity=".7"/></svg>`},
+  {name:'礼物',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect x="24" y="46" width="52" height="36" rx="6" fill="#FFB6D5" stroke="#E07AA8" stroke-width="2.4"/><rect x="20" y="38" width="60" height="14" rx="5" fill="#FFCBD9" stroke="#E07AA8" stroke-width="2.4"/><rect x="46" y="38" width="8" height="44" fill="#FFD86B" stroke="#E0A93C" stroke-width="1.4"/><path d="M50 38 Q34 22 38 34 Q50 42 50 38 Z" fill="#FFD86B" stroke="#E0A93C" stroke-width="1.4"/><path d="M50 38 Q66 22 62 34 Q50 42 50 38 Z" fill="#FFD86B" stroke="#E0A93C" stroke-width="1.4"/><ellipse cx="38" cy="62" rx="3.2" ry="4.4" fill="#4A3B4A"/><ellipse cx="62" cy="62" rx="3.2" ry="4.4" fill="#4A3B4A"/><path d="M45 72 Q50 77 55 72" stroke="#B35A78" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>`},
+  {name:'气球',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="40" rx="27" ry="31" fill="#C9A7F0" stroke="#8E6BE8" stroke-width="2.6"/><path d="M50 71 L45 80 L55 80 Z" fill="#C9A7F0" stroke="#8E6BE8" stroke-width="2"/><path d="M50 80 Q58 90 50 96" stroke="#8E6BE8" stroke-width="2.2" fill="none"/><ellipse cx="41" cy="30" rx="7" ry="10" fill="#fff" opacity=".4"/><ellipse cx="42" cy="42" rx="3.2" ry="4.4" fill="#4A3B4A"/><ellipse cx="58" cy="42" rx="3.2" ry="4.4" fill="#4A3B4A"/><path d="M45 52 Q50 57 55 52" stroke="#5B3FB0" stroke-width="1.8" fill="none" stroke-linecap="round"/><ellipse cx="33" cy="50" rx="4.5" ry="2.6" fill="#FF9CB0" opacity=".7"/><ellipse cx="67" cy="50" rx="4.5" ry="2.6" fill="#FF9CB0" opacity=".7"/></svg>`},
+  {name:'雨伞',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M16 56 Q16 24 50 24 Q84 24 84 56 Z" fill="#7FD8E8" stroke="#2F8AA8" stroke-width="2.6"/><path d="M16 56 Q32 47 50 56 Q68 47 84 56" fill="#DFF6FC" opacity=".8"/><path d="M50 24 V30" stroke="#2F8AA8" stroke-width="3"/><path d="M50 56 V80 Q50 90 40 88" stroke="#8A6A4A" stroke-width="4" fill="none" stroke-linecap="round"/><ellipse cx="41" cy="42" rx="3.2" ry="4.4" fill="#4A3B4A"/><ellipse cx="59" cy="42" rx="3.2" ry="4.4" fill="#4A3B4A"/><path d="M45 50 Q50 54 55 50" stroke="#2F8AA8" stroke-width="1.8" fill="none" stroke-linecap="round"/><g fill="#7FC8F0"><ellipse cx="26" cy="90" rx="3.4" ry="4.5"/><ellipse cx="68" cy="92" rx="3.4" ry="4.5"/></g></svg>`},
+  {name:'钟表',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M28 30 L20 20 M72 30 L80 20" stroke="#7A5230" stroke-width="4" stroke-linecap="round"/><circle cx="50" cy="56" r="30" fill="#FFFFFF" stroke="#7A5230" stroke-width="3.4"/><circle cx="50" cy="56" r="30" fill="none" stroke="#FFD86B" stroke-width="1.6"/><path d="M50 56 V42 M50 56 L62 62" stroke="#4A3B4A" stroke-width="3" stroke-linecap="round" fill="none"/><circle cx="50" cy="56" r="3" fill="#4A3B4A"/><ellipse cx="40" cy="68" rx="3.2" ry="2.2" fill="#FF9CB0" opacity=".8"/><ellipse cx="60" cy="68" rx="3.2" ry="2.2" fill="#FF9CB0" opacity=".8"/></svg>`},
+  {name:'杯子',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M30 38 H70 V72 Q70 84 56 84 H44 Q30 84 30 72 Z" fill="#F7D9B8" stroke="#C98A5E" stroke-width="2.6"/><path d="M32 46 H68 V54 Q60 58 50 54 Q40 50 32 54 Z" fill="#FFF3E4" opacity=".9"/><path d="M70 46 Q86 46 86 58 Q86 70 70 70" fill="none" stroke="#C98A5E" stroke-width="4"/><path d="M56 34 L64 18" stroke="#FF7E9D" stroke-width="4" stroke-linecap="round"/><ellipse cx="42" cy="66" rx="3.2" ry="4.4" fill="#4A3B4A"/><ellipse cx="58" cy="66" rx="3.2" ry="4.4" fill="#4A3B4A"/><path d="M45 74 Q50 78 55 74" stroke="#8A5A30" stroke-width="1.8" fill="none" stroke-linecap="round"/><ellipse cx="34" cy="70" rx="4" ry="2.4" fill="#FF9CB0" opacity=".7"/><ellipse cx="66" cy="70" rx="4" ry="2.4" fill="#FF9CB0" opacity=".7"/></svg>`}
 ];
 
 // 物件系补充（2）+ 符号系（6）
 const EXTRA3_ICONS=[
-  {name:'书',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 30 Q30 22 18 28 L18 76 Q30 70 50 78 Z" fill="#FFB3D1" stroke="#C93F86" stroke-width="2.4"/><path d="M50 30 Q70 22 82 28 L82 76 Q70 70 50 78 Z" fill="#FFB3D1" stroke="#C93F86" stroke-width="2.4"/><path d="M50 30 V78" stroke="#fff" stroke-width="2"/><path d="M26 40 H42 M26 48 H42 M58 40 H74 M58 48 H74" stroke="#fff" stroke-width="2"/></svg>`},
-  {name:'音符',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M40 70 V30 L74 22 V62" fill="none" stroke="#B58FE0" stroke-width="8" stroke-linejoin="round"/><ellipse cx="36" cy="72" rx="11" ry="9" fill="#B58FE0" stroke="#6F3BA8" stroke-width="2"/><ellipse cx="70" cy="64" rx="11" ry="9" fill="#B58FE0" stroke="#6F3BA8" stroke-width="2"/></svg>`},
-  {name:'笑脸',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="30" fill="#FFE08A" stroke="#E0A93C" stroke-width="2.6"/><ellipse cx="42" cy="44" rx="3.6" ry="4.8" fill="#4A3B4A"/><ellipse cx="58" cy="44" rx="3.6" ry="4.8" fill="#4A3B4A"/><circle cx="41" cy="42" r="1.4" fill="#fff"/><circle cx="57" cy="42" r="1.4" fill="#fff"/><path d="M44.0 58 Q50 63 56.0 58" stroke="#4A3B4A" stroke-width="1.8" fill="none" stroke-linecap="round"/><circle cx="34" cy="58" r="4" fill="#FF9A9A" opacity="0.6"/><circle cx="66" cy="58" r="4" fill="#FF9A9A" opacity="0.6"/></svg>`},
+  {name:'书',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 32 Q32 24 18 30 L18 78 Q32 72 50 80 Z" fill="#FFC2D6" stroke="#C93F86" stroke-width="2.4"/><path d="M50 32 Q68 24 82 30 L82 78 Q68 72 50 80 Z" fill="#FFD9E6" stroke="#C93F86" stroke-width="2.4"/><path d="M50 32 V80" stroke="#C93F86" stroke-width="2"/><path d="M26 42 H42 M26 50 H42 M58 42 H74 M58 50 H74" stroke="#fff" stroke-width="2"/><ellipse cx="41" cy="62" rx="3.2" ry="4.4" fill="#4A3B4A"/><ellipse cx="59" cy="62" rx="3.2" ry="4.4" fill="#4A3B4A"/><path d="M45 70 Q50 74 55 70" stroke="#8A2A5A" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>`},
+  {name:'音符',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M40 70 V28 L76 20 V62" fill="none" stroke="#B58FE0" stroke-width="8" stroke-linejoin="round"/><ellipse cx="34" cy="72" rx="12" ry="10" fill="#B58FE0" stroke="#6F3BA8" stroke-width="2"/><ellipse cx="70" cy="64" rx="12" ry="10" fill="#B58FE0" stroke="#6F3BA8" stroke-width="2"/><ellipse cx="34" cy="72" rx="3" ry="4" fill="#4A3B4A"/><ellipse cx="70" cy="64" rx="3" ry="4" fill="#4A3B4A"/><path d="M50 22 l1.6 4.4 l4.4 1.6 l-4.4 1.6 l-1.6 4.4 l-1.6 -4.4 l-4.4 -1.6 l4.4 -1.6 z" fill="#FFD86B"/></svg>`},
+  {name:'笑脸',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="30" fill="#FFE08A" stroke="#E0A93C" stroke-width="2.8"/><path d="M36 42 Q41 37 46 42" stroke="#4A3B4A" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M54 42 Q59 37 64 42" stroke="#4A3B4A" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M40 56 Q50 68 60 56" stroke="#4A3B4A" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M44 62 Q50 74 56 62 Z" fill="#FF7E9D" stroke="#D45A78" stroke-width="1.4"/><ellipse cx="30" cy="52" rx="5" ry="3" fill="#FF9A6A" opacity=".6"/><ellipse cx="70" cy="52" rx="5" ry="3" fill="#FF9A6A" opacity=".6"/></svg>`},
   {name:'笑泪',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="52" r="30" fill="#FFB6D5" stroke="#E07AA8" stroke-width="2.8"/><path d="M36 46 Q42 40 48 46" stroke="#4A2E40" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M52 46 Q58 40 64 46" stroke="#4A2E40" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M38 58 Q50 72 62 58 Q50 64 38 58 Z" fill="#E23E5A" stroke="#C03050" stroke-width="1.6"/><path d="M42 59 H58 V62 Q50 64 42 62 Z" fill="#fff" opacity="0.9"/><path d="M30 44 Q26 54 32 58 Q38 54 34 44 Z" fill="#7FD0F0" stroke="#3FA8D0" stroke-width="1.4"/><path d="M70 44 Q66 54 72 58 Q78 54 74 44 Z" fill="#7FD0F0" stroke="#3FA8D0" stroke-width="1.4"/><ellipse cx="34" cy="56" rx="4" ry="2.4" fill="#FF7AA0" opacity="0.6"/><ellipse cx="66" cy="56" rx="4" ry="2.4" fill="#FF7AA0" opacity="0.6"/></svg>`},
   {name:'火苗',svg:`<span class="emoji">🔥</span>`},
-  {name:'闪电',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M56 14 L30 56 L48 56 L42 86 L74 40 L54 40 Z" fill="#FFE08A" stroke="#E0A93C" stroke-width="2.6" stroke-linejoin="round"/></svg>`},
-  {name:'钻石',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M30 40 L50 26 L70 40 L50 84 Z" fill="#A8E0F0" stroke="#2F8AA8" stroke-width="2.6" stroke-linejoin="round"/><path d="M30 40 L50 46 L70 40 M50 46 L50 84" stroke="#2F8AA8" stroke-width="1.8" fill="none"/><path d="M30 40 L70 40 L50 46 Z" fill="#CFEFF7" opacity="0.6"/></svg>`},
-  {name:'皇冠',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M24 64 L24 40 L38 52 L50 34 L62 52 L76 40 L76 64 Z" fill="#FFD86B" stroke="#E0A93C" stroke-width="2.6" stroke-linejoin="round"/><rect x="24" y="64" width="52" height="10" rx="4" fill="#FFD86B" stroke="#E0A93C" stroke-width="2"/><circle cx="50" cy="34" r="5" fill="#FF5E9C"/><circle cx="24" cy="40" r="4" fill="#7FD8F0"/><circle cx="76" cy="40" r="4" fill="#7FD8F0"/></svg>`}
+  {name:'闪电',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M58 12 L28 56 L48 56 L40 88 L74 40 L52 40 Z" fill="#FFD86B" stroke="#E0A93C" stroke-width="2.6" stroke-linejoin="round"/><path d="M54 24 L40 48 L52 48 L47 66" fill="none" stroke="#FFF3C4" stroke-width="2.6" stroke-linecap="round"/><ellipse cx="46" cy="42" rx="3" ry="4" fill="#4A3B4A"/><ellipse cx="60" cy="46" rx="3" ry="4" fill="#4A3B4A"/><path d="M46 54 Q52 58 57 53" stroke="#8A6A1F" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>`},
+  {name:'钻石',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M28 42 L50 22 L72 42 L50 86 Z" fill="#A8E0F0" stroke="#2F8AA8" stroke-width="2.6" stroke-linejoin="round"/><path d="M28 42 L50 48 L72 42 M50 48 L50 86" stroke="#2F8AA8" stroke-width="1.8" fill="none"/><path d="M28 42 L50 48 L72 42 L50 22 Z" fill="#DFF6FC" opacity=".7"/><path d="M50 12 l1.6 4.4 l4.4 1.6 l-4.4 1.6 l-1.6 4.4 l-1.6 -4.4 l-4.4 -1.6 l4.4 -1.6 z" fill="#FFD86B"/><path d="M74 26 l1.2 3.4 l3.4 1.2 l-3.4 1.2 l-1.2 3.4 l-1.2 -3.4 l-3.4 -1.2 l3.4 -1.2 z" fill="#FFB6D5"/></svg>`},
+  {name:'皇冠',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M22 62 L22 38 L38 52 L50 32 L62 52 L78 38 L78 62 Z" fill="#FFD86B" stroke="#E0A93C" stroke-width="2.6" stroke-linejoin="round"/><rect x="22" y="62" width="56" height="12" rx="5" fill="#FFE8A0" stroke="#E0A93C" stroke-width="2"/><circle cx="50" cy="32" r="5.5" fill="#FF7E9D"/><circle cx="22" cy="38" r="4.5" fill="#7FD8F0"/><circle cx="78" cy="38" r="4.5" fill="#7FD8F0"/><ellipse cx="42" cy="68" rx="3" ry="3.4" fill="#4A3B4A"/><ellipse cx="58" cy="68" rx="3" ry="3.4" fill="#4A3B4A"/><path d="M46 73 Q50 76 54 73" stroke="#8A6A1F" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>`}
 ];
 
 
 const EXTRA4_ICONS=[
   {name:'猫头鹰',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="24" r="9" fill="#B58FE0" stroke="#6F3BA8" stroke-width="2.2"/><circle cx="68" cy="24" r="9" fill="#B58FE0" stroke="#6F3BA8" stroke-width="2.2"/><ellipse cx="50" cy="54" rx="30" ry="32" fill="#B58FE0" stroke="#6F3BA8" stroke-width="2.8"/><ellipse cx="50" cy="62" rx="18" ry="20" fill="#E6D6F5" stroke="#6F3BA8" stroke-width="1.6"/><circle cx="38" cy="50" r="13" fill="#fff" stroke="#6F3BA8" stroke-width="2"/><circle cx="62" cy="50" r="13" fill="#fff" stroke="#6F3BA8" stroke-width="2"/><circle cx="38" cy="50" r="6" fill="#4A3B4A"/><circle cx="62" cy="50" r="6" fill="#4A3B4A"/><circle cx="40" cy="48" r="2" fill="#fff"/><circle cx="64" cy="48" r="2" fill="#fff"/><path d="M50 56 L44 62 L56 62 Z" fill="#FFB02A" stroke="#D48800" stroke-width="1.4"/><ellipse cx="30" cy="62" rx="4" ry="2.4" fill="#FF9A9A" opacity="0.7"/><ellipse cx="70" cy="62" rx="4" ry="2.4" fill="#FF9A9A" opacity="0.7"/></svg>`},
-  {name:'孔雀',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g transform="translate(50,66)"><g fill="#5FB0C0" stroke="#2F8AA8" stroke-width="2"><ellipse cx="0" cy="-26" rx="6" ry="18" transform="rotate(-32)"/><ellipse cx="0" cy="-26" rx="6" ry="18" transform="rotate(-16)"/><ellipse cx="0" cy="-26" rx="6" ry="18"/><ellipse cx="0" cy="-26" rx="6" ry="18" transform="rotate(16)"/><ellipse cx="0" cy="-26" rx="6" ry="18" transform="rotate(32)"/></g><g fill="#FFD000" stroke="#2F8AA8" stroke-width="1"><circle cx="0" cy="-44" r="3.5"/><circle cx="12.7" cy="-42.2" r="3.5"/><circle cx="-12.7" cy="-42.2" r="3.5"/><circle cx="24.4" cy="-37" r="3.5"/><circle cx="-24.4" cy="-37" r="3.5"/></g></g><ellipse cx="50" cy="62" rx="13" ry="16" fill="#5FB0C0" stroke="#2F8AA8" stroke-width="2.6"/><path d="M50 50 Q47 36 53 32" stroke="#2F8AA8" stroke-width="6" fill="none" stroke-linecap="round"/><circle cx="54" cy="30" r="7" fill="#5FB0C0" stroke="#2F8AA8" stroke-width="2"/><circle cx="56" cy="29" r="2" fill="#4A3B4A"/><path d="M60 30 L67 33 L60 36 Z" fill="#FFB02A" stroke="#D48800" stroke-width="1"/></svg>`},
+  {name:'孔雀',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g transform="translate(50,62)"><g fill="#7FC8E0" stroke="#2F8AA8" stroke-width="1.8"><ellipse cx="0" cy="-24" rx="6" ry="17" transform="rotate(-36)"/><ellipse cx="0" cy="-24" rx="6" ry="17" transform="rotate(-18)"/><ellipse cx="0" cy="-24" rx="6" ry="17"/><ellipse cx="0" cy="-24" rx="6" ry="17" transform="rotate(18)"/><ellipse cx="0" cy="-24" rx="6" ry="17" transform="rotate(36)"/></g><g fill="#FFD86B" stroke="#2F8AA8" stroke-width="1"><circle cx="0" cy="-42" r="3.4"/><circle cx="14" cy="-39" r="3.4"/><circle cx="-14" cy="-39" r="3.4"/><circle cx="26" cy="-33" r="3.4"/><circle cx="-26" cy="-33" r="3.4"/></g></g><ellipse cx="50" cy="68" rx="14" ry="16" fill="#7FC8E0" stroke="#2F8AA8" stroke-width="2.6"/><circle cx="50" cy="46" r="11" fill="#A8E0F0" stroke="#2F8AA8" stroke-width="2.2"/><ellipse cx="46" cy="45" rx="3" ry="4" fill="#4A3B4A"/><ellipse cx="55" cy="45" rx="3" ry="4" fill="#4A3B4A"/><path d="M50 50 L44 55 L56 55 Z" fill="#FFB02A" stroke="#D48800" stroke-width="1.2"/><path d="M56 40 L64 43 L56 46 Z" fill="#FFB02A" stroke="#D48800" stroke-width="1"/></svg>`},
   {name:'企鹅',svg:`<span class="emoji">🐧</span>`},
   {name:'鹦鹉',svg:`<span class="emoji">🦜</span>`},
   {name:'天鹅',svg:`<span class="emoji">🦢</span>`},
@@ -661,8 +707,8 @@ const EXTRA4_ICONS=[
   {name:'大象',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M20 48 Q2 46 12 72 Q26 68 30 54 Z" fill="#C9D2DA" stroke="#7A8690" stroke-width="2.2"/><path d="M80 48 Q98 46 88 72 Q74 68 70 54 Z" fill="#C9D2DA" stroke="#7A8690" stroke-width="2.2"/><ellipse cx="50" cy="50" rx="31" ry="29" fill="#C9D2DA" stroke="#7A8690" stroke-width="2.6"/><path d="M50 62 Q52 84 42 86 Q36 86 38 80 Q46 78 46 64 Z" fill="#C9D2DA" stroke="#7A8690" stroke-width="2.2"/><ellipse cx="40" cy="46" rx="3.6" ry="4.8" fill="#4A3B4A"/><ellipse cx="60" cy="46" rx="3.6" ry="4.8" fill="#4A3B4A"/><circle cx="39" cy="44" r="1.4" fill="#fff"/><circle cx="59" cy="44" r="1.4" fill="#fff"/></svg>`},
   {name:'长颈鹿',svg:`<span class="emoji">🦒</span>`},
   {name:'猴子',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="26" cy="50" r="13" fill="#C99A6A" stroke="#7A5230" stroke-width="2.2"/><circle cx="74" cy="50" r="13" fill="#C99A6A" stroke="#7A5230" stroke-width="2.2"/><circle cx="26" cy="50" r="6" fill="#E8B890"/><circle cx="74" cy="50" r="6" fill="#E8B890"/><circle cx="50" cy="50" r="27" fill="#C99A6A" stroke="#7A5230" stroke-width="2.6"/><path d="M50 38 Q34 40 36 56 Q40 73 50 71 Q60 73 64 56 Q66 40 50 38 Z" fill="#F0C89A" stroke="#7A5230" stroke-width="1.4"/><ellipse cx="42" cy="48" rx="3.6" ry="4.8" fill="#4A3B4A"/><ellipse cx="58" cy="48" rx="3.6" ry="4.8" fill="#4A3B4A"/><circle cx="41" cy="46" r="1.4" fill="#fff"/><circle cx="57" cy="46" r="1.4" fill="#fff"/><ellipse cx="50" cy="60" rx="5" ry="3.5" fill="#7A5230"/><path d="M44 64 Q50 70 56 64" stroke="#7A5230" stroke-width="2" fill="none" stroke-linecap="round"/></svg>`},
-  {name:'鹿',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M44 34 L40 14 M40 22 L30 18 M40 26 L32 26 M56 34 L60 14 M60 22 L70 18 M60 26 L68 26" stroke="#8A5A2A" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="50" cy="54" r="24" fill="#E0B07A" stroke="#B58A3A" stroke-width="2.6"/><ellipse cx="50" cy="64" rx="9" ry="7" fill="#F0D6B0" stroke="#B58A3A" stroke-width="1.4"/><ellipse cx="42" cy="52" rx="3.6" ry="4.8" fill="#4A3B4A"/><ellipse cx="58" cy="52" rx="3.6" ry="4.8" fill="#4A3B4A"/><circle cx="41" cy="50" r="1.4" fill="#fff"/><circle cx="57" cy="50" r="1.4" fill="#fff"/><circle cx="50" cy="62" r="2.5" fill="#5A3A1F"/><path d="M44 66 Q50 71 56 66" stroke="#B58A3A" stroke-width="2" fill="none" stroke-linecap="round"/></svg>`},
-  {name:'绵羊',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g fill="#FFFFFF" stroke="#C9D4DC" stroke-width="2"><circle cx="50" cy="50" r="20"/><circle cx="34" cy="48" r="13"/><circle cx="66" cy="48" r="13"/><circle cx="40" cy="34" r="12"/><circle cx="60" cy="34" r="12"/><circle cx="50" cy="64" r="13"/></g><rect x="42" y="70" width="4" height="13" rx="2" fill="#5A4A3A"/><rect x="54" y="70" width="4" height="13" rx="2" fill="#5A4A3A"/><ellipse cx="50" cy="58" rx="13" ry="15" fill="#5A4A3A" stroke="#3A2E22" stroke-width="2"/><ellipse cx="34" cy="56" rx="8" ry="4" fill="#5A4A3A" stroke="#3A2E22" stroke-width="1.4"/><ellipse cx="66" cy="56" rx="8" ry="4" fill="#5A4A3A" stroke="#3A2E22" stroke-width="1.4"/><circle cx="45" cy="56" r="2.5" fill="#fff"/><circle cx="55" cy="56" r="2.5" fill="#fff"/></svg>`},
+  {name:'鹿',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M42 36 L38 14 M38 22 L27 17 M38 28 L29 30 M58 36 L62 14 M62 22 L73 17 M62 28 L71 30" stroke="#8A5A2A" stroke-width="3.4" fill="none" stroke-linecap="round"/><circle cx="50" cy="56" r="26" fill="#E6BA84" stroke="#B58A3A" stroke-width="2.6"/><ellipse cx="50" cy="68" rx="11" ry="8" fill="#FCE8CC" stroke="#B58A3A" stroke-width="1.4"/><ellipse cx="41" cy="53" rx="3.6" ry="4.8" fill="#4A3B4A"/><ellipse cx="59" cy="53" rx="3.6" ry="4.8" fill="#4A3B4A"/><circle cx="40" cy="51" r="1.4" fill="#fff"/><circle cx="58" cy="51" r="1.4" fill="#fff"/><ellipse cx="50" cy="66" rx="3.4" ry="2.6" fill="#5A3A1F"/><path d="M44 72 Q50 77 56 72" stroke="#B58A3A" stroke-width="2" fill="none" stroke-linecap="round"/><ellipse cx="31" cy="62" rx="5" ry="3" fill="#FF9CB0" opacity=".75"/><ellipse cx="69" cy="62" rx="5" ry="3" fill="#FF9CB0" opacity=".75"/></svg>`},
+  {name:'绵羊',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect x="40" y="70" width="5" height="14" rx="2.5" fill="#7A6A5A"/><rect x="55" y="70" width="5" height="14" rx="2.5" fill="#7A6A5A"/><g fill="#FFFFFF" stroke="#D3DDE4" stroke-width="2"><circle cx="50" cy="50" r="21"/><circle cx="32" cy="48" r="14"/><circle cx="68" cy="48" r="14"/><circle cx="38" cy="32" r="13"/><circle cx="62" cy="32" r="13"/><circle cx="50" cy="66" r="14"/></g><ellipse cx="50" cy="58" rx="14" ry="16" fill="#6B5A4A" stroke="#3A2E22" stroke-width="2"/><ellipse cx="31" cy="56" rx="8" ry="4.5" fill="#6B5A4A" stroke="#3A2E22" stroke-width="1.4"/><ellipse cx="69" cy="56" rx="8" ry="4.5" fill="#6B5A4A" stroke="#3A2E22" stroke-width="1.4"/><ellipse cx="44" cy="55" rx="3" ry="4" fill="#fff"/><ellipse cx="56" cy="55" rx="3" ry="4" fill="#fff"/><circle cx="44" cy="56" r="1.8" fill="#3A2E22"/><circle cx="56" cy="56" r="1.8" fill="#3A2E22"/><g transform="translate(50,26)"><path d="M0 0 L-9 -6 L-9 6 Z" fill="#FF7E9D"/><path d="M0 0 L9 -6 L9 6 Z" fill="#FF7E9D"/><circle cx="0" cy="0" r="3.4" fill="#FFD86B"/></g></svg>`},
   {name:'蛇',svg:`<span class="emoji">🐍</span>`},
   {name:'南瓜',svg:`<span class="emoji">🎃</span>`},
   {name:'刺猬',svg:`<span class="emoji">🦔</span>`}
@@ -771,6 +817,11 @@ function loadSave(){
       if(!m.ownedBGM.includes(0))m.ownedBGM.push(0);
       if(!m.ownedBGM.includes(1))m.ownedBGM.push(1);
       if(typeof m.bgmTrack!=='number'||m.bgmTrack<0||m.bgmTrack>=BGM_TRACKS.length||!m.ownedBGM.includes(m.bgmTrack))m.bgmTrack=0;
+      // 每日挑战存档兼容
+      if(!m.daily||typeof m.daily!=='object')m.daily={history:{},best:0,plays:0};
+      if(!m.daily.history||typeof m.daily.history!=='object')m.daily.history={};
+      if(typeof m.daily.best!=='number')m.daily.best=0;
+      if(typeof m.daily.plays!=='number')m.daily.plays=0;
       return m;
     }
   }catch(e){}
@@ -779,6 +830,14 @@ function loadSave(){
 function saveGame(){try{localStorage.setItem(SAVE_KEY,JSON.stringify(save));}catch(e){}}
 // 全部图案（图标全局索引）随时可用，无需逐款购买/解锁
 function allIconPool(){const a=[];for(let i=0;i<FULL_ICONS.length;i++)a.push(i);return a;}
+
+// ====== 可替换随机源：每日挑战用固定种子，保证同一天每个人拿到同一套布局 ======
+let RNG=Math.random;
+let dailyMode=false, dailyTypes=null, dailyTimeLeft=100, dailyTimer=null;
+const DAILY_TIME=100, DAILY_TYPES=7, DAILY_ROWS=7;
+function rnd(){return RNG();}
+function hashStr(s){let h=2166136261>>>0;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)>>>0;}return h>>>0;}
+function mulberry32(a){return function(){a=(a+0x6D2B79F5)|0;let t=Math.imul(a^(a>>>15),1|a);t=(t+Math.imul(t^(t>>>7),61|t))^t;return((t^(t>>>14))>>>0)/4294967296;};}
 
 const SKINS=[
   {id:'green',name:'奶油薄荷',price:0,free:true,bg:['#DCEFF4','#EAF8F0','#F8D9E5'],bg4:'#FCC7DB',card:['#FFFFFF','#F0FAF8','#C9E2DD'],accent:'#FF6FA5',ui:['#FFFFFF','#F2FAF9','#B5D9D2'],text:'#2D4A45',
@@ -818,7 +877,7 @@ function setTileSize(){
   boardEl.style.gridTemplateRows=`repeat(${rows}, ${size}px)`;
 }
 function COLS(){return 8;}
-function ROWS(){return Math.min(6+Math.floor((level-1)/2),9);}
+function ROWS(){return dailyMode?DAILY_ROWS:Math.min(6+Math.floor((level-1)/2),9);}
 
 // ====== 靠拢方向（随关卡递增难度） ======
 // Lv 1-4:  单方向（↓←↑→）
@@ -924,7 +983,7 @@ function applyCenterCollapse(rows,cols){
 }
 function onBorder(r,c){return r===0||r===ROWS()-1||c===0||c===COLS()-1;}
 
-function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 
 // 每关自动轮换图案：保留 50%，其余从 prev 之外的新图案中随机抽取替换
 function rollTypes(prev,nTypes){
@@ -947,7 +1006,7 @@ function generateBoard(lv){
   level=lv;
   const rows=ROWS(), cols=COLS(), totalCells=rows*cols;
   grid=Array(rows).fill().map(()=>Array(cols).fill(null));
-  const chosen=save.levelTypes.slice();
+  const chosen=(dailyMode?dailyTypes:save.levelTypes).slice();
   const nTypes=chosen.length;
   // 保证每种图案数量都是偶数，总和恰好等于 totalCells
   let pool=[];
@@ -1018,7 +1077,7 @@ function simStep(){
     if(a.i===b.i && (canConnect(a.r,a.c,b.r,b.c)||(onBorder(a.r,a.c)&&onBorder(b.r,b.c)))) pairs.push([a,b]);
   }
   if(!pairs.length)return null;
-  return pairs[Math.floor(Math.random()*pairs.length)];
+  return pairs[Math.floor(rnd()*pairs.length)];
 }
 function simulateFullClear(){
   const saved=grid;
@@ -1062,17 +1121,26 @@ function renderBoard(){
 }
 
 function updateUI(){
-  document.getElementById('level-badge').textContent=`第 ${level} 关`;
+  const lb=document.getElementById('level-badge');
+  if(dailyMode)lb.textContent='每日挑战 '+dailyTimeLeft+'s';
+  else lb.textContent=`第 ${level} 关`;
   document.getElementById('coin-num').textContent=save.coins;
-  const pct=total?Math.round(((total-remaining)/total)*100):0;
-  document.getElementById('progress-fill').style.width=pct+'%';
-  document.getElementById('progress-text').textContent=pct+'%';
+  const fill=document.getElementById('progress-fill'),txt=document.getElementById('progress-text'),pbox=document.getElementById('progress-box');
+  if(dailyMode){
+    const pct=Math.max(0,Math.min(100,dailyTimeLeft/DAILY_TIME*100));
+    fill.style.width=pct+'%';txt.textContent='⏱ '+dailyTimeLeft+'s';
+    if(pbox)pbox.classList.toggle('warn',dailyTimeLeft<=15);
+  }else{
+    const pct=total?Math.round(((total-remaining)/total)*100):0;
+    fill.style.width=pct+'%';txt.textContent=pct+'%';
+    if(pbox)pbox.classList.remove('warn');
+  }
   setCount('hint',save.items.hint);setCount('refresh',save.items.refresh);
   setCount('bomb',save.items.bomb);
   document.getElementById('tool-hint').classList.toggle('used',save.items.hint<=0);
   document.getElementById('tool-refresh').classList.toggle('used',save.items.refresh<=0);
   document.getElementById('tool-bomb').classList.toggle('used',save.items.bomb<=0);
-  const db=document.getElementById('dir-bar');if(db)db.textContent='本关 '+collapseName(level);
+  const db=document.getElementById('dir-bar');if(db)db.textContent=dailyMode?'每日挑战 · 限时清空':'本关 '+collapseName(level);
   updateSoundButtons();
 }
 function updateSoundButtons(){
@@ -1195,7 +1263,7 @@ function matchTiles(r1,c1,r2,c2){
     score+=10+combo*2;
     if(combo>=2)showCombo('连击 x'+combo);
     remaining-=2;selected=null;updateUI();
-    if(remaining===0){combo=0;Sound.win();setTimeout(showWin,500);return;}
+    if(remaining===0){combo=0;Sound.win();const wasDaily=dailyMode;setTimeout(()=>{wasDaily?finishDaily(true):showWin();},500);return;}
     if(!hasAnyMatch()){
       combo=0;
       ensureSolvable();                 // 尽量自动洗牌逼出一步可走
@@ -1246,6 +1314,107 @@ function showWin(){
   document.getElementById('win-screen').classList.remove('hidden');
   updateUI();}
 function showStuck(){document.getElementById('stuck-screen').classList.remove('hidden');}
+
+// ====== 每日挑战：固定种子关卡 + 限时 + 连续打卡 ======
+function fmtDate(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function todayKey(){return fmtDate(new Date());}
+function shiftDay(n){const d=new Date();d.setDate(d.getDate()+n);return fmtDate(d);}
+function dailyDoneToday(){return !!(save.daily.history||{})[todayKey()];}
+function dailyStreak(){
+  const h=save.daily.history||{};
+  const d=new Date();
+  if(!h[fmtDate(d)])d.setDate(d.getDate()-1);
+  let s=0;
+  while(h[fmtDate(d)]){s++;d.setDate(d.getDate()-1);}
+  return s;
+}
+function stopDailyTimer(){if(dailyTimer){clearInterval(dailyTimer);dailyTimer=null;}}
+function startDailyTimer(){
+  stopDailyTimer();
+  dailyTimer=setInterval(()=>{
+    dailyTimeLeft--;
+    if(dailyTimeLeft<=0){dailyTimeLeft=0;stopDailyTimer();updateUI();finishDaily(false);return;}
+    updateUI();
+  },1000);
+}
+function exitDailyBoard(){stopDailyTimer();dailyMode=false;RNG=Math.random;}
+function startDaily(){
+  exitDailyBoard();
+  dailyMode=true;level=3;
+  score=0;combo=0;maxCombo=0;selected=null;pendingRoll=false;
+  RNG=mulberry32(hashStr('xxl-daily-v1-'+todayKey()));  // 同一天 => 同一套图案与布局
+  dailyTypes=rollTypes(null,DAILY_TYPES);
+  setTileSize();
+  generateBoard(3);
+  RNG=Math.random;
+  dailyTimeLeft=DAILY_TIME;
+  updateUI();
+  startDailyTimer();
+  if(save.musicOn)Sound.startBGM();
+}
+const DAILY_MILE={3:100,7:300,14:800,21:1200,30:2000};
+function finishDaily(win){
+  stopDailyTimer();
+  const d=save.daily,key=todayKey();
+  if(!win){
+    document.getElementById('dr-title').textContent='⏰ 时间到';
+    document.getElementById('dr-sub').textContent=`还剩 ${remaining/2} 对没消掉`;
+    document.getElementById('dr-reward').textContent='今天还能再挑战，通关才算打卡';
+    document.getElementById('daily-result-screen').classList.remove('hidden');
+    return;
+  }
+  const first=!d.history[key];
+  let coins=80+dailyTimeLeft*2+maxCombo*5, mile=0;
+  if(first){
+    d.history[key]=1;
+    d.plays=(d.plays||0)+1;
+    if(dailyTimeLeft>(d.best||0))d.best=dailyTimeLeft;
+    const st=dailyStreak();
+    mile=DAILY_MILE[st]||0;
+    coins+=mile;
+  }else{
+    coins=Math.min(coins,30); // 当天重复通关只给少量金币
+  }
+  save.coins+=coins;Sound.coin();saveGame();
+  const st=dailyStreak();
+  document.getElementById('dr-title').textContent=first?'🎉 打卡成功':'🎉 挑战成功';
+  document.getElementById('dr-sub').textContent=first?`连续打卡 ${st} 天 · 剩余 ${dailyTimeLeft} 秒 · 最高连击 ${maxCombo}`:'今天已打过卡，再玩只给少量金币';
+  document.getElementById('dr-reward').textContent=`获得金币 +${coins}`+(mile?`（含连续 ${st} 天奖励 ${mile}）`:'');
+  document.getElementById('daily-result-screen').classList.remove('hidden');
+  updateUI();
+}
+function openDaily(){
+  exitDailyBoard();
+  renderDaily();
+  document.getElementById('daily-screen').classList.remove('hidden');
+}
+function renderDaily(){
+  const d=save.daily,key=todayKey(),done=!!d.history[key];
+  document.getElementById('daily-streak-num').textContent=dailyStreak();
+  const wk=document.getElementById('daily-week');wk.innerHTML='';
+  for(let i=6;i>=0;i--){
+    const dt=new Date();dt.setDate(dt.getDate()-i);
+    const k=fmtDate(dt),ok=!!d.history[k];
+    const el=document.createElement('div');
+    el.className='dw-item'+(ok?' done':'')+(k===key?' today':'');
+    el.innerHTML='<div class="dw-d">'+(dt.getMonth()+1)+'/'+dt.getDate()+'</div><div class="dw-m">'+(ok?'✓':'·')+'</div>';
+    wk.appendChild(el);
+  }
+  const st=dailyStreak();
+  document.getElementById('daily-tip').textContent=done
+    ? `今天已通关，明天再来（当前连续 ${st} 天）`
+    : '今日未通关 · 通关 80 金币起，连击与剩时都加钱';
+  document.getElementById('daily-start-btn').textContent=done?'再玩一次（不计打卡）':'开始挑战';
+  const y=shiftDay(-1);
+  const canMend=!d.history[y] && save.coins>=150;
+  const mend=document.getElementById('daily-mend');
+  mend.classList.toggle('off',!canMend);
+  mend.textContent=canMend?'💰150 补签昨天（保住连续天数）':(d.history[y]?'昨天已打卡':'金币不足 150，无法补签');
+  mend.onclick=()=>{
+    if(!canMend||save.coins<150)return;
+    save.coins-=150;d.history[y]=1;saveGame();Sound.coin();renderDaily();updateUI();
+  };
+}
 
 // ====== 屏幕/菜单 ======
 function applySkin(){
@@ -1409,8 +1578,11 @@ function renderScene(sc){
   }
 }
 function openHome(){
+  exitDailyBoard();
   document.getElementById('home-coins').textContent=save.coins;
   document.getElementById('home-level').textContent=save.best;
+  const hd=document.getElementById('home-daily');
+  if(hd)hd.textContent=dailyDoneToday()?'📅 今日已打卡':'📅 每日挑战';
   document.getElementById('home-screen').classList.remove('hidden');
 }
 function renderShop(){
@@ -1499,9 +1671,15 @@ document.getElementById('shop-close').onclick=()=>document.getElementById('shop-
 document.getElementById('home-skin').onclick=()=>{renderSkins();document.getElementById('skin-screen').classList.remove('hidden');};
 document.getElementById('skin-close').onclick=()=>document.getElementById('skin-screen').classList.add('hidden');
 document.getElementById('home-btn').onclick=()=>{openHome();};
+// 每日挑战
+document.getElementById('home-daily').onclick=()=>{Sound.init();document.getElementById('home-screen').classList.add('hidden');openDaily();};
+document.getElementById('daily-close').onclick=()=>{document.getElementById('daily-screen').classList.add('hidden');openHome();};
+document.getElementById('daily-start-btn').onclick=()=>{Sound.init();document.getElementById('daily-screen').classList.add('hidden');startDaily();};
+document.getElementById('dr-again').onclick=()=>{document.getElementById('daily-result-screen').classList.add('hidden');startDaily();};
+document.getElementById('dr-home').onclick=()=>{document.getElementById('daily-result-screen').classList.add('hidden');openHome();};
 document.getElementById('next-level-btn').onclick=()=>{document.getElementById('win-screen').classList.add('hidden');pendingRoll=true;startGame(level+1);};
 document.getElementById('replay-win-btn').onclick=()=>{document.getElementById('win-screen').classList.add('hidden');startGame(level);};
-document.getElementById('auto-shuffle-btn').onclick=()=>{document.getElementById('stuck-screen').classList.add('hidden');shuffleRemaining(true);ensureSolvable();};document.getElementById('retry-stuck-btn').onclick=()=>{document.getElementById('stuck-screen').classList.add('hidden');startGame(level);};
+document.getElementById('auto-shuffle-btn').onclick=()=>{document.getElementById('stuck-screen').classList.add('hidden');shuffleRemaining(true);ensureSolvable();};document.getElementById('retry-stuck-btn').onclick=()=>{document.getElementById('stuck-screen').classList.add('hidden');dailyMode?startDaily():startGame(level);};
 document.getElementById('tool-hint').onclick=useHint;
 document.getElementById('tool-refresh').onclick=useRefresh;
 document.getElementById('tool-bomb').onclick=useBomb;
@@ -1509,6 +1687,7 @@ document.getElementById('btn-music').onclick=function(){Sound.init();save.musicO
 document.getElementById('btn-sfx').onclick=function(){Sound.init();save.sfxOn=!save.sfxOn;if(save.sfxOn)Sound.select();updateSoundButtons();saveGame();};
 
 function startGame(lv){
+  exitDailyBoard();
   score=0;combo=0;maxCombo=0;selected=null;
   const nTypes=Math.min(FULL_ICONS.length, 7+lv);
   if(pendingRoll && save.levelTypes && save.levelTypes.length){
