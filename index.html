@@ -813,7 +813,7 @@ const BGM_TRACKS=[
 
 // ====== 存档 ======
 const SAVE_KEY='xxl_save_v3';
-function defaultSave(){return{coins:0,level:1,best:1,items:{hint:3,refresh:3,bomb:1},skin:'green',skins:['green'],levelTypes:null,sfxOn:true,musicOn:false,ownedSounds:['pop'],activeSound:'pop',bgmTrack:0,ownedBGM:[0,1],stars:{},yangWins:0};}
+function defaultSave(){return{coins:0,level:1,best:1,items:{hint:3,refresh:3,bomb:1},skin:'green',skins:['green'],levelTypes:null,sfxOn:true,musicOn:false,ownedSounds:['pop'],activeSound:'pop',bgmTrack:0,ownedBGM:[0,1],stars:{},yangWins:0,yangLevel:1};}
 let save=loadSave();
 function loadSave(){
   try{
@@ -841,6 +841,7 @@ function loadSave(){
       // 过关星级（存 level->最高星级）与萌羊消消通关次数
       if(!m.stars||typeof m.stars!=='object'||Array.isArray(m.stars))m.stars={};
       if(typeof m.yangWins!=='number')m.yangWins=0;
+      if(typeof m.yangLevel!=='number'||m.yangLevel<1)m.yangLevel=1;
       return m;
     }
   }catch(e){}
@@ -1498,6 +1499,7 @@ function openHome(){
   document.getElementById('home-coins').textContent=save.coins;
   document.getElementById('home-level').textContent=save.best;
   document.getElementById('home-stars').textContent=totalStars();
+  document.getElementById('home-yang').innerHTML='🐑 萌羊消消 · 第'+(save.yangLevel||1)+'关<span class="new-badge">NEW</span>';
   document.getElementById('home-screen').classList.remove('hidden');
 }
 function renderShop(){
@@ -1614,15 +1616,24 @@ function startGame(lv){
 
 // ====== 萌羊消消（羊了个羊玩法）：三层堆叠 + 7格槽位三消 ======
 let yangActive=false,yangTiles=[],yangSlot=[],yangShuffles=1,yangUndos=1,yt=46,ytStep=46,yangLock=false;
-const YLAYERS=[{rows:4,cols:4},{rows:3,cols:4},{rows:2,cols:4}]; // 16+12+8=36 块，12 类型 × 3
+const YANG_MAX_LV=6; // 第 6 关起 48 块封顶
+let yangLv=1;
+function yangLayerCaps(T){ // 底层最厚、越往上越薄，恰好 T 块
+  const nL=T<=24?3:4;
+  const w=nL===3?[0.45,0.33,0.22]:[0.38,0.28,0.19,0.15];
+  const caps=w.map(x=>Math.round(T*x));
+  caps[0]+=T-caps.reduce((a,b)=>a+b,0);
+  return caps;
+}
 function totalStars(){const s=save.stars||{};return Object.keys(s).reduce((a,k)=>a+(s[k]||0),0);}
-function startYang(){
+function startYang(lv){
   yangActive=true;
+  yangLv=Math.min(YANG_MAX_LV,lv||save.yangLevel||1);
   document.getElementById('home-screen').classList.add('hidden');
   document.getElementById('yang-result').classList.add('hidden');
   yt=Math.min(48,Math.max(34,Math.floor((Math.min(window.innerWidth,460)-48)/4.8)));
   ytStep=yt;
-  buildYang();
+  buildYang(yangLv);
   renderYangBoard();
   renderSlot();
   updateYangUI();
@@ -1635,16 +1646,17 @@ function exitYang(){
   yangActive=false;
   document.getElementById('yang-screen').classList.add('hidden');
 }
-function buildYang(){
-  const nTypes=12;
+function buildYang(lv){ // 第1关18块6种，每关+6块，最多48块16种，总数恒为3的倍数
+  const T=18+(lv-1)*6;
+  const nTypes=T/3;
   const pool=shuffle(allIconPool()).slice(0,nTypes);
   const types=[];
   pool.forEach(t=>{types.push(t,t,t);}); // 先成组再洗牌，保证每种恰好 3 个
   shuffle(types);
   yangTiles=[];let id=0;
-  YLAYERS.forEach((ly,li)=>{
-    for(let r=0;r<ly.rows;r++)for(let c=0;c<ly.cols;c++){
-      yangTiles.push({id:id++,layer:li,row:r,col:c,type:types.pop(),state:'board',el:null});
+  yangLayerCaps(T).forEach((cap,li)=>{
+    for(let i=0;i<cap;i++){
+      yangTiles.push({id:id++,layer:li,row:Math.floor(i/4),col:i%4,type:types.pop(),state:'board',el:null});
     }
   });
   yangSlot=[];yangShuffles=1;yangUndos=1;yangLock=false;
@@ -1669,9 +1681,12 @@ function yangRefreshCover(){
 function renderYangBoard(){
   const b=document.getElementById('yang-board');
   b.innerHTML='';
-  const off2=Math.round(yt*0.35)*2;
-  b.style.width=(4*ytStep+off2)+'px';
-  b.style.height=(4*ytStep+off2)+'px';
+  const bt=yangTiles.filter(t=>t.state==='board');
+  const nL=Math.max(1,...bt.map(t=>t.layer+1));
+  const offM=Math.round(yt*0.35)*Math.max(2,nL-1);
+  const maxR=Math.max(4,...bt.map(t=>t.row+1));
+  b.style.width=(4*ytStep+offM)+'px';
+  b.style.height=(maxR*ytStep+offM)+'px';
   b.style.setProperty('--yt',yt+'px');
   yangTiles.filter(t=>t.state==='board').sort((a,b)=>a.layer-b.layer).forEach(t=>{
     const d=document.createElement('div');
@@ -1741,7 +1756,7 @@ function renderSlot(){
 }
 function updateYangUI(){
   const left=yangTiles.filter(x=>x.state==='board').length;
-  document.getElementById('yang-progress').textContent='剩 '+left;
+  document.getElementById('yang-progress').textContent='第 '+yangLv+' 关 · 剩 '+left;
   const sn=document.getElementById('yang-shuffle-n'),un=document.getElementById('yang-undo-n');
   sn.textContent=yangShuffles;un.textContent=yangUndos;
   document.getElementById('yang-shuffle').classList.toggle('used',yangShuffles<=0);
@@ -1775,16 +1790,21 @@ function yangUndoFn(){
   warnYang('');
 }
 function yangWin(){
-  save.yangWins++;save.coins+=80;saveGame();
+  const reward=40+yangLv*20;
+  save.coins+=reward;save.yangWins++;
+  if(yangLv>=save.yangLevel&&yangLv<YANG_MAX_LV)save.yangLevel=yangLv+1; // 解锁下一关
+  saveGame();
   Sound.win();
   document.getElementById('yr-title').textContent='🎉 通关啦！';
-  document.getElementById('yr-text').textContent='羊圈清空！获得金币 +80（已通关 '+save.yangWins+' 次）';
+  document.getElementById('yr-text').textContent='第 '+yangLv+' 关羊圈清空！获得金币 +'+reward+(yangLv<YANG_MAX_LV?'，已解锁第 '+(yangLv+1)+' 关':'（已到最高关）')+'（累计通关 '+save.yangWins+' 次）';
+  document.getElementById('yr-again').textContent=yangLv<YANG_MAX_LV?'下一关 ▶':'再玩一次';
   document.getElementById('yang-result').classList.remove('hidden');
 }
 function yangLose(msg){
   save.coins+=10;saveGame();
   document.getElementById('yr-title').textContent='😮 差一点点';
-  document.getElementById('yr-text').textContent=msg+' 安慰奖 +10 金币，再来一次！';
+  document.getElementById('yr-text').textContent='第 '+yangLv+' 关：'+msg+' 安慰奖 +10 金币，再来一次！';
+  document.getElementById('yr-again').textContent='重试本关';
   document.getElementById('yang-result').classList.remove('hidden');
 }
 window.addEventListener('resize',()=>{setTileSize();if(grid.length)renderBoard();if(yangActive){yt=Math.min(48,Math.max(34,Math.floor((Math.min(window.innerWidth,460)-48)/4.8)));ytStep=yt;renderYangBoard();renderSlot();}});
