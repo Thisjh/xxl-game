@@ -236,21 +236,6 @@ html,body{
 @keyframes flowerSway{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}}
 @keyframes bfFlutter{0%,100%{transform:translate(0,0) rotate(-3deg)}50%{transform:translate(-5px,-10px) rotate(3deg)}}
 @keyframes bfFlap{0%,100%{transform:scaleX(1)}50%{transform:scaleX(.6)}}
-/* ===== 每日挑战 ===== */
-.modal .btn.daily{background:linear-gradient(135deg,#C9A7FF,#8E6BE8);box-shadow:0 5px 14px rgba(91,63,176,.35),0 2px 5px rgba(91,63,176,.22)}
-.modal .btn.daily:active{transform:translateY(3px);box-shadow:0 1px 4px rgba(91,63,176,.28)}
-.daily-streak{display:flex;flex-direction:column;align-items:center;margin:8px 0 2px}
-.ds-num{font-size:34px;font-weight:900;color:var(--text);line-height:1.1}
-.ds-lbl{font-size:12px;opacity:.7}
-.daily-week{display:flex;gap:5px;justify-content:center;margin:10px 0 6px}
-.dw-item{flex:1;background:rgba(255,255,255,.55);border-radius:10px;padding:6px 2px;text-align:center;box-shadow:0 2px 4px rgba(80,140,130,.08)}
-.dw-item .dw-d{font-size:10px;opacity:.6}
-.dw-item .dw-m{font-size:15px;font-weight:900;color:var(--text);opacity:.3}
-.dw-item.done .dw-m{opacity:1;color:#1FAA74}
-.dw-item.today{outline:2px solid var(--accent);outline-offset:-1px}
-.daily-mend{font-size:12px;color:var(--accent);text-decoration:underline;cursor:pointer;display:inline-block;margin-top:2px}
-.daily-mend.off{opacity:.4;text-decoration:none;cursor:default}
-#progress-box.warn #progress-fill{background:linear-gradient(90deg,#FF5E5E,#FFA07A)!important}
 /* ===== 过关打分评定 ===== */
 .win-stars{display:flex;gap:8px;justify-content:center;margin:2px 0 4px;min-height:42px}
 .win-stars span{font-size:36px;line-height:1;display:inline-block;animation:starPop .5s cubic-bezier(.34,1.56,.64,1) both}
@@ -414,7 +399,6 @@ html,body{
       <div class="stat"><div class="stat-num" id="home-stars">0</div><div class="stat-lbl">⭐ 星星</div></div>
     </div>
     <button class="btn big" id="home-start" data-page-node-id="p9OL7NtUGkaPgObSlywmxO">🐱 经典连连看</button>
-    <button class="btn big daily" id="home-daily">📅 每日挑战</button>
     <button class="btn big sheep" id="home-yang">🐑 萌羊消消<span class="new-badge">NEW</span></button>
     <div class="home-row" data-page-node-id="qs0KnmjfLTJOxGENFOchlI">
       <button class="btn secondary sm" id="home-shop" data-page-node-id="4ENI0DsGbdNN3d9bliEKoW">🛒 商店</button>
@@ -443,25 +427,6 @@ html,body{
   </div>
 </div>
 
-<!-- 每日挑战 -->
-<div class="overlay hidden" id="daily-screen">
-  <div class="modal">
-    <h2>📅 每日挑战</h2>
-    <p>今天这一关固定布局，限时 90 秒清空</p>
-    <div class="daily-streak">
-      <div class="ds-num" id="daily-streak-num">0</div>
-      <div class="ds-lbl">连续打卡（天）</div>
-    </div>
-    <div class="daily-week" id="daily-week"></div>
-    <p id="daily-tip">通关得 80 金币起，剩时越多奖励越高</p>
-    <div><span class="daily-mend" id="daily-mend">💰150 补签昨天</span></div>
-    <div>
-      <button class="btn" id="daily-start-btn">开始挑战</button>
-      <button class="btn secondary" id="daily-close">关闭</button>
-    </div>
-  </div>
-</div>
-
 <!-- 萌羊消消 -->
 <div class="hidden" id="yang-screen">
   <div id="yang-top">
@@ -484,17 +449,6 @@ html,body{
     <p id="yr-text"></p>
     <button class="btn" id="yr-again">再来一局</button>
     <button class="btn secondary" id="yr-home">回主页</button>
-  </div>
-</div>
-
-<!-- 每日挑战结算 -->
-<div class="overlay hidden" id="daily-result-screen">
-  <div class="modal">
-    <h2 id="dr-title">🎉 挑战成功</h2>
-    <p id="dr-sub"></p>
-    <p id="dr-reward"></p>
-    <button class="btn" id="dr-again">再玩一次</button>
-    <button class="btn secondary" id="dr-home">返回主页</button>
   </div>
 </div>
 
@@ -859,7 +813,7 @@ const BGM_TRACKS=[
 
 // ====== 存档 ======
 const SAVE_KEY='xxl_save_v3';
-function defaultSave(){return{coins:0,level:1,best:1,items:{hint:3,refresh:3,bomb:1},skin:'green',skins:['green'],levelTypes:null,sfxOn:true,musicOn:false,ownedSounds:['pop'],activeSound:'pop',bgmTrack:0,ownedBGM:[0,1],stars:{},yangWins:0,daily:{history:{},best:0,plays:0}};}
+function defaultSave(){return{coins:0,level:1,best:1,items:{hint:3,refresh:3,bomb:1},skin:'green',skins:['green'],levelTypes:null,sfxOn:true,musicOn:false,ownedSounds:['pop'],activeSound:'pop',bgmTrack:0,ownedBGM:[0,1],stars:{},yangWins:0};}
 let save=loadSave();
 function loadSave(){
   try{
@@ -884,11 +838,6 @@ function loadSave(){
       if(!m.ownedBGM.includes(0))m.ownedBGM.push(0);
       if(!m.ownedBGM.includes(1))m.ownedBGM.push(1);
       if(typeof m.bgmTrack!=='number'||m.bgmTrack<0||m.bgmTrack>=BGM_TRACKS.length||!m.ownedBGM.includes(m.bgmTrack))m.bgmTrack=0;
-      // 每日挑战存档兼容
-      if(!m.daily||typeof m.daily!=='object')m.daily={history:{},best:0,plays:0};
-      if(!m.daily.history||typeof m.daily.history!=='object')m.daily.history={};
-      if(typeof m.daily.best!=='number')m.daily.best=0;
-      if(typeof m.daily.plays!=='number')m.daily.plays=0;
       // 过关星级（存 level->最高星级）与萌羊消消通关次数
       if(!m.stars||typeof m.stars!=='object'||Array.isArray(m.stars))m.stars={};
       if(typeof m.yangWins!=='number')m.yangWins=0;
@@ -900,14 +849,6 @@ function loadSave(){
 function saveGame(){try{localStorage.setItem(SAVE_KEY,JSON.stringify(save));}catch(e){}}
 // 全部图案（图标全局索引）随时可用，无需逐款购买/解锁
 function allIconPool(){const a=[];for(let i=0;i<FULL_ICONS.length;i++)a.push(i);return a;}
-
-// ====== 可替换随机源：每日挑战用固定种子，保证同一天每个人拿到同一套布局 ======
-let RNG=Math.random;
-let dailyMode=false, dailyTypes=null, dailyTimeLeft=100, dailyTimer=null;
-const DAILY_TIME=100, DAILY_TYPES=7, DAILY_ROWS=7;
-function rnd(){return RNG();}
-function hashStr(s){let h=2166136261>>>0;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)>>>0;}return h>>>0;}
-function mulberry32(a){return function(){a=(a+0x6D2B79F5)|0;let t=Math.imul(a^(a>>>15),1|a);t=(t+Math.imul(t^(t>>>7),61|t))^t;return((t^(t>>>14))>>>0)/4294967296;};}
 
 const SKINS=[
   {id:'green',name:'奶油薄荷',price:0,free:true,bg:['#DCEFF4','#EAF8F0','#F8D9E5'],bg4:'#FCC7DB',card:['#FFFFFF','#F0FAF8','#C9E2DD'],accent:'#FF6FA5',ui:['#FFFFFF','#F2FAF9','#B5D9D2'],text:'#2D4A45',
@@ -947,7 +888,7 @@ function setTileSize(){
   boardEl.style.gridTemplateRows=`repeat(${rows}, ${size}px)`;
 }
 function COLS(){return 8;}
-function ROWS(){return dailyMode?DAILY_ROWS:Math.min(6+Math.floor((level-1)/2),9);}
+function ROWS(){return Math.min(6+Math.floor((level-1)/2),9);}
 
 // ====== 靠拢方向（随关卡递增难度） ======
 // Lv 1-4:  单方向（↓←↑→）
@@ -1053,7 +994,7 @@ function applyCenterCollapse(rows,cols){
 }
 function onBorder(r,c){return r===0||r===ROWS()-1||c===0||c===COLS()-1;}
 
-function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 
 // 每关自动轮换图案：保留 50%，其余从 prev 之外的新图案中随机抽取替换
 function rollTypes(prev,nTypes){
@@ -1076,7 +1017,7 @@ function generateBoard(lv){
   level=lv;
   const rows=ROWS(), cols=COLS(), totalCells=rows*cols;
   grid=Array(rows).fill().map(()=>Array(cols).fill(null));
-  const chosen=(dailyMode?dailyTypes:save.levelTypes).slice();
+  const chosen=save.levelTypes.slice();
   const nTypes=chosen.length;
   // 保证每种图案数量都是偶数，总和恰好等于 totalCells
   let pool=[];
@@ -1147,7 +1088,7 @@ function simStep(){
     if(a.i===b.i && (canConnect(a.r,a.c,b.r,b.c)||(onBorder(a.r,a.c)&&onBorder(b.r,b.c)))) pairs.push([a,b]);
   }
   if(!pairs.length)return null;
-  return pairs[Math.floor(rnd()*pairs.length)];
+  return pairs[Math.floor(Math.random()*pairs.length)];
 }
 function simulateFullClear(){
   const saved=grid;
@@ -1192,25 +1133,18 @@ function renderBoard(){
 
 function updateUI(){
   const lb=document.getElementById('level-badge');
-  if(dailyMode)lb.textContent='每日挑战 '+dailyTimeLeft+'s';
-  else lb.textContent=`第 ${level} 关`;
+  lb.textContent=`第 ${level} 关`;
   document.getElementById('coin-num').textContent=save.coins;
   const fill=document.getElementById('progress-fill'),txt=document.getElementById('progress-text'),pbox=document.getElementById('progress-box');
-  if(dailyMode){
-    const pct=Math.max(0,Math.min(100,dailyTimeLeft/DAILY_TIME*100));
-    fill.style.width=pct+'%';txt.textContent='⏱ '+dailyTimeLeft+'s';
-    if(pbox)pbox.classList.toggle('warn',dailyTimeLeft<=15);
-  }else{
-    const pct=total?Math.round(((total-remaining)/total)*100):0;
-    fill.style.width=pct+'%';txt.textContent=pct+'%';
-    if(pbox)pbox.classList.remove('warn');
-  }
+  const pct=total?Math.round(((total-remaining)/total)*100):0;
+  fill.style.width=pct+'%';txt.textContent=pct+'%';
+  if(pbox)pbox.classList.remove('warn');
   setCount('hint',save.items.hint);setCount('refresh',save.items.refresh);
   setCount('bomb',save.items.bomb);
   document.getElementById('tool-hint').classList.toggle('used',save.items.hint<=0);
   document.getElementById('tool-refresh').classList.toggle('used',save.items.refresh<=0);
   document.getElementById('tool-bomb').classList.toggle('used',save.items.bomb<=0);
-  const db=document.getElementById('dir-bar');if(db)db.textContent=dailyMode?'每日挑战 · 限时清空':'本关 '+collapseName(level);
+  const db=document.getElementById('dir-bar');if(db)db.textContent='本关 '+collapseName(level);
   updateSoundButtons();
 }
 function updateSoundButtons(){
@@ -1333,7 +1267,7 @@ function matchTiles(r1,c1,r2,c2){
     score+=10+combo*2;
     if(combo>=2)showCombo('连击 x'+combo);
     remaining-=2;selected=null;updateUI();
-    if(remaining===0){combo=0;Sound.win();const wasDaily=dailyMode;setTimeout(()=>{wasDaily?finishDaily(true):showWin();},500);return;}
+    if(remaining===0){combo=0;Sound.win();setTimeout(showWin,500);return;}
     if(!hasAnyMatch()){
       combo=0;
       ensureSolvable();                 // 尽量自动洗牌逼出一步可走
@@ -1397,107 +1331,6 @@ function showWin(){
   document.getElementById('win-screen').classList.remove('hidden');
   updateUI();}
 function showStuck(){document.getElementById('stuck-screen').classList.remove('hidden');}
-
-// ====== 每日挑战：固定种子关卡 + 限时 + 连续打卡 ======
-function fmtDate(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
-function todayKey(){return fmtDate(new Date());}
-function shiftDay(n){const d=new Date();d.setDate(d.getDate()+n);return fmtDate(d);}
-function dailyDoneToday(){return !!(save.daily.history||{})[todayKey()];}
-function dailyStreak(){
-  const h=save.daily.history||{};
-  const d=new Date();
-  if(!h[fmtDate(d)])d.setDate(d.getDate()-1);
-  let s=0;
-  while(h[fmtDate(d)]){s++;d.setDate(d.getDate()-1);}
-  return s;
-}
-function stopDailyTimer(){if(dailyTimer){clearInterval(dailyTimer);dailyTimer=null;}}
-function startDailyTimer(){
-  stopDailyTimer();
-  dailyTimer=setInterval(()=>{
-    dailyTimeLeft--;
-    if(dailyTimeLeft<=0){dailyTimeLeft=0;stopDailyTimer();updateUI();finishDaily(false);return;}
-    updateUI();
-  },1000);
-}
-function exitDailyBoard(){stopDailyTimer();dailyMode=false;RNG=Math.random;}
-function startDaily(){
-  exitDailyBoard();
-  dailyMode=true;level=3;
-  score=0;combo=0;maxCombo=0;selected=null;pendingRoll=false;toolsUsed=0;
-  RNG=mulberry32(hashStr('xxl-daily-v1-'+todayKey()));  // 同一天 => 同一套图案与布局
-  dailyTypes=rollTypes(null,DAILY_TYPES);
-  setTileSize();
-  generateBoard(3);
-  RNG=Math.random;
-  dailyTimeLeft=DAILY_TIME;
-  updateUI();
-  startDailyTimer();
-  if(save.musicOn)Sound.startBGM();
-}
-const DAILY_MILE={3:100,7:300,14:800,21:1200,30:2000};
-function finishDaily(win){
-  stopDailyTimer();
-  const d=save.daily,key=todayKey();
-  if(!win){
-    document.getElementById('dr-title').textContent='⏰ 时间到';
-    document.getElementById('dr-sub').textContent=`还剩 ${remaining/2} 对没消掉`;
-    document.getElementById('dr-reward').textContent='今天还能再挑战，通关才算打卡';
-    document.getElementById('daily-result-screen').classList.remove('hidden');
-    return;
-  }
-  const first=!d.history[key];
-  let coins=80+dailyTimeLeft*2+maxCombo*5, mile=0;
-  if(first){
-    d.history[key]=1;
-    d.plays=(d.plays||0)+1;
-    if(dailyTimeLeft>(d.best||0))d.best=dailyTimeLeft;
-    const st=dailyStreak();
-    mile=DAILY_MILE[st]||0;
-    coins+=mile;
-  }else{
-    coins=Math.min(coins,30); // 当天重复通关只给少量金币
-  }
-  save.coins+=coins;Sound.coin();saveGame();
-  const st=dailyStreak();
-  document.getElementById('dr-title').textContent=first?'🎉 打卡成功':'🎉 挑战成功';
-  document.getElementById('dr-sub').textContent=first?`连续打卡 ${st} 天 · 剩余 ${dailyTimeLeft} 秒 · 最高连击 ${maxCombo}`:'今天已打过卡，再玩只给少量金币';
-  document.getElementById('dr-reward').textContent=`获得金币 +${coins}`+(mile?`（含连续 ${st} 天奖励 ${mile}）`:'');
-  document.getElementById('daily-result-screen').classList.remove('hidden');
-  updateUI();
-}
-function openDaily(){
-  exitDailyBoard();
-  renderDaily();
-  document.getElementById('daily-screen').classList.remove('hidden');
-}
-function renderDaily(){
-  const d=save.daily,key=todayKey(),done=!!d.history[key];
-  document.getElementById('daily-streak-num').textContent=dailyStreak();
-  const wk=document.getElementById('daily-week');wk.innerHTML='';
-  for(let i=6;i>=0;i--){
-    const dt=new Date();dt.setDate(dt.getDate()-i);
-    const k=fmtDate(dt),ok=!!d.history[k];
-    const el=document.createElement('div');
-    el.className='dw-item'+(ok?' done':'')+(k===key?' today':'');
-    el.innerHTML='<div class="dw-d">'+(dt.getMonth()+1)+'/'+dt.getDate()+'</div><div class="dw-m">'+(ok?'✓':'·')+'</div>';
-    wk.appendChild(el);
-  }
-  const st=dailyStreak();
-  document.getElementById('daily-tip').textContent=done
-    ? `今天已通关，明天再来（当前连续 ${st} 天）`
-    : '今日未通关 · 通关 80 金币起，连击与剩时都加钱';
-  document.getElementById('daily-start-btn').textContent=done?'再玩一次（不计打卡）':'开始挑战';
-  const y=shiftDay(-1);
-  const canMend=!d.history[y] && save.coins>=150;
-  const mend=document.getElementById('daily-mend');
-  mend.classList.toggle('off',!canMend);
-  mend.textContent=canMend?'💰150 补签昨天（保住连续天数）':(d.history[y]?'昨天已打卡':'金币不足 150，无法补签');
-  mend.onclick=()=>{
-    if(!canMend||save.coins<150)return;
-    save.coins-=150;d.history[y]=1;saveGame();Sound.coin();renderDaily();updateUI();
-  };
-}
 
 // ====== 屏幕/菜单 ======
 function applySkin(){
@@ -1661,13 +1494,10 @@ function renderScene(sc){
   }
 }
 function openHome(){
-  exitDailyBoard();
   exitYang();
   document.getElementById('home-coins').textContent=save.coins;
   document.getElementById('home-level').textContent=save.best;
   document.getElementById('home-stars').textContent=totalStars();
-  const hd=document.getElementById('home-daily');
-  if(hd)hd.textContent=dailyDoneToday()?'📅 今日已打卡':'📅 每日挑战';
   document.getElementById('home-screen').classList.remove('hidden');
 }
 function renderShop(){
@@ -1756,15 +1586,9 @@ document.getElementById('shop-close').onclick=()=>document.getElementById('shop-
 document.getElementById('home-skin').onclick=()=>{renderSkins();document.getElementById('skin-screen').classList.remove('hidden');};
 document.getElementById('skin-close').onclick=()=>document.getElementById('skin-screen').classList.add('hidden');
 document.getElementById('home-btn').onclick=()=>{openHome();};
-// 每日挑战
-document.getElementById('home-daily').onclick=()=>{Sound.init();document.getElementById('home-screen').classList.add('hidden');openDaily();};
-document.getElementById('daily-close').onclick=()=>{document.getElementById('daily-screen').classList.add('hidden');openHome();};
-document.getElementById('daily-start-btn').onclick=()=>{Sound.init();document.getElementById('daily-screen').classList.add('hidden');startDaily();};
-document.getElementById('dr-again').onclick=()=>{document.getElementById('daily-result-screen').classList.add('hidden');startDaily();};
-document.getElementById('dr-home').onclick=()=>{document.getElementById('daily-result-screen').classList.add('hidden');openHome();};
 document.getElementById('next-level-btn').onclick=()=>{document.getElementById('win-screen').classList.add('hidden');pendingRoll=true;startGame(level+1);};
 document.getElementById('replay-win-btn').onclick=()=>{document.getElementById('win-screen').classList.add('hidden');startGame(level);};
-document.getElementById('auto-shuffle-btn').onclick=()=>{document.getElementById('stuck-screen').classList.add('hidden');shuffleRemaining(true);ensureSolvable();};document.getElementById('retry-stuck-btn').onclick=()=>{document.getElementById('stuck-screen').classList.add('hidden');dailyMode?startDaily():startGame(level);};
+document.getElementById('auto-shuffle-btn').onclick=()=>{document.getElementById('stuck-screen').classList.add('hidden');shuffleRemaining(true);ensureSolvable();};document.getElementById('retry-stuck-btn').onclick=()=>{document.getElementById('stuck-screen').classList.add('hidden');startGame(level);};
 document.getElementById('tool-hint').onclick=useHint;
 document.getElementById('tool-refresh').onclick=useRefresh;
 document.getElementById('tool-bomb').onclick=useBomb;
@@ -1772,7 +1596,6 @@ document.getElementById('btn-music').onclick=function(){Sound.init();save.musicO
 document.getElementById('btn-sfx').onclick=function(){Sound.init();save.sfxOn=!save.sfxOn;if(save.sfxOn)Sound.select();updateSoundButtons();saveGame();};
 
 function startGame(lv){
-  exitDailyBoard();
   document.getElementById('game').classList.remove('hidden');
   toolsUsed=0;
   score=0;combo=0;maxCombo=0;selected=null;
@@ -1794,7 +1617,6 @@ let yangActive=false,yangTiles=[],yangSlot=[],yangShuffles=1,yangUndos=1,yt=46,y
 const YLAYERS=[{rows:4,cols:4},{rows:3,cols:4},{rows:2,cols:4}]; // 16+12+8=36 块，12 类型 × 3
 function totalStars(){const s=save.stars||{};return Object.keys(s).reduce((a,k)=>a+(s[k]||0),0);}
 function startYang(){
-  exitDailyBoard();
   yangActive=true;
   document.getElementById('home-screen').classList.add('hidden');
   document.getElementById('yang-result').classList.add('hidden');
