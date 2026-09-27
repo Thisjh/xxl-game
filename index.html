@@ -251,6 +251,44 @@ html,body{
 .daily-mend{font-size:12px;color:var(--accent);text-decoration:underline;cursor:pointer;display:inline-block;margin-top:2px}
 .daily-mend.off{opacity:.4;text-decoration:none;cursor:default}
 #progress-box.warn #progress-fill{background:linear-gradient(90deg,#FF5E5E,#FFA07A)!important}
+/* ===== 过关打分评定 ===== */
+.win-stars{display:flex;gap:8px;justify-content:center;margin:2px 0 4px;min-height:42px}
+.win-stars span{font-size:36px;line-height:1;display:inline-block;animation:starPop .5s cubic-bezier(.34,1.56,.64,1) both}
+.win-stars span:nth-child(2){animation-delay:.16s}
+.win-stars span:nth-child(3){animation-delay:.32s}
+.win-stars span.dim{opacity:.22;filter:grayscale(1)}
+@keyframes starPop{from{transform:scale(0) rotate(-40deg)}to{transform:scale(1) rotate(0)}}
+.win-remark{font-weight:900;color:var(--accent);font-size:14px;opacity:1}
+/* ===== 萌羊消消（羊了个羊玩法） ===== */
+.btn.sheep{background:linear-gradient(135deg,#FFB168,#FF8A3C);box-shadow:0 5px 14px rgba(216,120,30,.32),0 2px 5px rgba(216,120,30,.2);position:relative}
+.btn.sheep:active{transform:translateY(3px);box-shadow:0 1px 4px rgba(216,120,30,.26)}
+.new-badge{position:absolute;top:-9px;right:-6px;background:var(--danger);color:#fff;font-size:10px;font-weight:900;padding:2px 8px;border-radius:10px;box-shadow:0 2px 5px rgba(0,0,0,.2);animation:nbPulse 1.3s ease-in-out infinite}
+@keyframes nbPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+#game.hidden,#yang-screen.hidden{display:none}
+#yang-screen{position:fixed;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+#yang-top{width:100%;max-width:460px;display:flex;align-items:center;gap:10px;padding:14px 16px 8px}
+#yang-badge{background:linear-gradient(160deg,var(--ui1),var(--ui2));border-radius:var(--r-pill);padding:8px 18px;font-weight:900;font-size:var(--f-sub);color:var(--text);box-shadow:var(--sh-ui),inset 0 1px 0 rgba(255,255,255,.9);border:1px solid rgba(181,217,210,.7);white-space:nowrap}
+#yang-progress{margin-left:auto;background:linear-gradient(160deg,var(--ui1),var(--ui2));border-radius:var(--r-pill);padding:9px 14px;font-weight:900;font-size:var(--f-sub);color:var(--text);box-shadow:var(--sh-ui);border:1px solid rgba(181,217,210,.7)}
+#yang-board-wrap{flex:1;width:100%;max-width:460px;display:flex;align-items:center;justify-content:center;padding:6px}
+#yang-board{position:relative}
+.ytile{position:absolute;border-radius:12px;background:linear-gradient(160deg,#FFFFFF,#F0FAF8);border:1.5px solid #D8ECE6;box-shadow:0 3px 8px rgba(74,130,122,.22),inset 0 1.5px 2px rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:filter .15s}
+.ytile svg{width:86%;height:86%;display:block}
+.ytile .emoji{width:86%;height:86%;display:flex;align-items:center;justify-content:center;font-size:calc(var(--yt,46px)*.55);line-height:1}
+.ytile.covered{filter:brightness(.72) saturate(.8)}
+.ytile.shake{animation:yshake .32s}
+@keyframes yshake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.ytile.gone{animation:popOut .3s forwards}
+#yang-warn{min-height:18px;font-size:12px;font-weight:700;color:var(--danger);opacity:0;transition:opacity .2s}
+#yang-warn.show{opacity:1;animation:nbPulse 1s ease-in-out infinite}
+#yang-tools{display:flex;gap:12px;justify-content:center;padding:2px 0 8px}
+#yang-tools .tool{max-width:110px;min-width:96px}
+#yang-slot{display:flex;gap:6px;background:rgba(255,255,255,.65);border:1.5px solid var(--card-shadow);border-radius:16px;padding:7px;margin:0 10px 18px;box-shadow:var(--sh-ui-sm)}
+.yslot{width:42px;height:42px;border-radius:11px;background:rgba(255,255,255,.5);border:1.5px dashed rgba(150,190,180,.55);display:flex;align-items:center;justify-content:center}
+.yslot.filled{background:linear-gradient(160deg,#fff,#F0FAF8);border:1.5px solid #D8ECE6;box-shadow:0 2px 6px rgba(74,130,122,.18);animation:slotIn .22s cubic-bezier(.34,1.56,.64,1)}
+.yslot.filled svg{width:86%;height:86%;display:block}
+.yslot.filled .emoji{width:86%;height:86%;display:flex;align-items:center;justify-content:center;font-size:24px;line-height:1}
+.yslot.clearing{animation:popOut .32s forwards}
+@keyframes slotIn{from{transform:scale(.3)}to{transform:scale(1)}}
 </style>
 </head>
 <body data-page-node-id="DaHkSUkeV9zMd0xgxZeYTY">
@@ -373,9 +411,11 @@ html,body{
     <div class="home-stats" data-page-node-id="fELOAjq1qhf5V7jZ5AQvYJ">
       <div class="stat" data-page-node-id="cpdcvX1ogy8yQF50QCbLBV"><div class="stat-num" id="home-coins" data-page-node-id="C1Z1RsamxFk7g7qg6oH2c3">0</div><div class="stat-lbl" data-page-node-id="oiIS9zWer8HCI0WcHwli03">金币</div></div>
       <div class="stat" data-page-node-id="PXBgAAs52GiS7c4E7OhHX1"><div class="stat-num" id="home-level" data-page-node-id="H3uQLcVqQpBTepJ2jSh6Fo">1</div><div class="stat-lbl" data-page-node-id="EBwRiNNwiObAOGAdFf3Yh2">最高关卡</div></div>
+      <div class="stat"><div class="stat-num" id="home-stars">0</div><div class="stat-lbl">⭐ 星星</div></div>
     </div>
-    <button class="btn big" id="home-start" data-page-node-id="p9OL7NtUGkaPgObSlywmxO">开始游戏</button>
+    <button class="btn big" id="home-start" data-page-node-id="p9OL7NtUGkaPgObSlywmxO">🐱 经典连连看</button>
     <button class="btn big daily" id="home-daily">📅 每日挑战</button>
+    <button class="btn big sheep" id="home-yang">🐑 萌羊消消<span class="new-badge">NEW</span></button>
     <div class="home-row" data-page-node-id="qs0KnmjfLTJOxGENFOchlI">
       <button class="btn secondary sm" id="home-shop" data-page-node-id="4ENI0DsGbdNN3d9bliEKoW">🛒 商店</button>
       <button class="btn secondary sm" id="home-skin" data-page-node-id="3yVWEHwYHDfW5TozAikZit">🎨 皮肤</button>
@@ -422,6 +462,31 @@ html,body{
   </div>
 </div>
 
+<!-- 萌羊消消 -->
+<div class="hidden" id="yang-screen">
+  <div id="yang-top">
+    <button class="home-circle" id="yang-home">🏠</button>
+    <div id="yang-badge">🐑 萌羊消消</div>
+    <div id="yang-progress">剩 36</div>
+  </div>
+  <div id="yang-board-wrap"><div id="yang-board"></div></div>
+  <div id="yang-warn"></div>
+  <div id="yang-tools">
+    <div class="tool" id="yang-shuffle"><div class="tool-icon">🔄</div><div class="tool-name">洗牌</div><div class="tool-count" id="yang-shuffle-n">1</div></div>
+    <div class="tool" id="yang-undo"><div class="tool-icon">↩️</div><div class="tool-name">退回</div><div class="tool-count" id="yang-undo-n">1</div></div>
+  </div>
+  <div id="yang-slot"></div>
+</div>
+
+<div class="overlay hidden" id="yang-result">
+  <div class="modal">
+    <h2 id="yr-title">🎉 通关啦！</h2>
+    <p id="yr-text"></p>
+    <button class="btn" id="yr-again">再来一局</button>
+    <button class="btn secondary" id="yr-home">回主页</button>
+  </div>
+</div>
+
 <!-- 每日挑战结算 -->
 <div class="overlay hidden" id="daily-result-screen">
   <div class="modal">
@@ -436,6 +501,8 @@ html,body{
 <div class="overlay hidden" id="win-screen" data-page-node-id="RmNE7Jnozvdbe0CCnhkXPb">
   <div class="modal" data-page-node-id="uvaOC4bWXX3TN1boeOIKOp">
     <h2 data-page-node-id="OUJDr8ipaLqkiDN4lwGWJw">🎉 过关啦！</h2>
+    <div class="win-stars" id="win-stars"></div>
+    <p class="win-remark" id="win-remark"></p>
     <p id="win-text" data-page-node-id="aR4OdrGgYQG3RwL2rnSJo8">第 1 关完成</p>
     <p id="win-reward" data-page-node-id="L7agvE0EgFar19stdU5PxR"></p>
     <button class="btn" id="next-level-btn" data-page-node-id="crak1vX0z59ZauJJ0aVtqy">下一关</button>
@@ -792,7 +859,7 @@ const BGM_TRACKS=[
 
 // ====== 存档 ======
 const SAVE_KEY='xxl_save_v3';
-function defaultSave(){return{coins:0,level:1,best:1,items:{hint:3,refresh:3,bomb:1},skin:'green',skins:['green'],levelTypes:null,sfxOn:true,musicOn:false,ownedSounds:['pop'],activeSound:'pop',bgmTrack:0,ownedBGM:[0,1]};}
+function defaultSave(){return{coins:0,level:1,best:1,items:{hint:3,refresh:3,bomb:1},skin:'green',skins:['green'],levelTypes:null,sfxOn:true,musicOn:false,ownedSounds:['pop'],activeSound:'pop',bgmTrack:0,ownedBGM:[0,1],stars:{},yangWins:0,daily:{history:{},best:0,plays:0}};}
 let save=loadSave();
 function loadSave(){
   try{
@@ -822,6 +889,9 @@ function loadSave(){
       if(!m.daily.history||typeof m.daily.history!=='object')m.daily.history={};
       if(typeof m.daily.best!=='number')m.daily.best=0;
       if(typeof m.daily.plays!=='number')m.daily.plays=0;
+      // 过关星级（存 level->最高星级）与萌羊消消通关次数
+      if(!m.stars||typeof m.stars!=='object'||Array.isArray(m.stars))m.stars={};
+      if(typeof m.yangWins!=='number')m.yangWins=0;
       return m;
     }
   }catch(e){}
@@ -1292,7 +1362,7 @@ function findAHint(){
   }
   return null;
 }
-function useHint(){if(save.items.hint<=0)return;const p=findAHint();if(!p){showStuck();return;}save.items.hint--;saveGame();const[a,b]=p;grid[a.r][a.c].el.classList.add('hint');grid[b.r][b.c].el.classList.add('hint');setTimeout(()=>{if(grid[a.r][a.c])grid[a.r][a.c].el.classList.remove('hint');if(grid[b.r][b.c])grid[b.r][b.c].el.classList.remove('hint');},2200);updateUI();}
+function useHint(){if(save.items.hint<=0)return;const p=findAHint();if(!p){showStuck();return;}toolsUsed++;save.items.hint--;saveGame();const[a,b]=p;grid[a.r][a.c].el.classList.add('hint');grid[b.r][b.c].el.classList.add('hint');setTimeout(()=>{if(grid[a.r][a.c])grid[a.r][a.c].el.classList.remove('hint');if(grid[b.r][b.c])grid[b.r][b.c].el.classList.remove('hint');},2200);updateUI();}
 function shuffleRemaining(snd=true){
   const ts=[];
   for(let r=0;r<ROWS();r++)for(let c=0;c<COLS();c++)if(grid[r][c])ts.push({r,c,i:grid[r][c].icon});
@@ -1301,16 +1371,29 @@ function shuffleRemaining(snd=true){
   ts.forEach((t,i)=>grid[t.r][t.c].icon=icons[i]);
   if(snd)Sound.shuffle();renderBoard();updateUI();
 }
-function useRefresh(){if(save.items.refresh<=0)return;save.items.refresh--;saveGame();combo=0;shuffleRemaining(true);ensureSolvable();updateUI();}
-function useBomb(){if(save.items.bomb<=0)return;const p=findAHint();if(!p){showStuck();return;}save.items.bomb--;saveGame();if(selected&&grid[selected.r][selected.c])grid[selected.r][selected.c].el.classList.remove('selected');selected=null;matchTiles(p[0].r,p[0].c,p[1].r,p[1].c);updateUI();}
+function useRefresh(){if(save.items.refresh<=0)return;toolsUsed++;save.items.refresh--;saveGame();combo=0;shuffleRemaining(true);ensureSolvable();updateUI();}
+function useBomb(){if(save.items.bomb<=0)return;const p=findAHint();if(!p){showStuck();return;}toolsUsed++;save.items.bomb--;saveGame();if(selected&&grid[selected.r][selected.c])grid[selected.r][selected.c].el.classList.remove('selected');selected=null;matchTiles(p[0].r,p[0].c,p[1].r,p[1].c);updateUI();}
+const STAR_BONUS={1:0,2:20,3:50};
+function starOfCombo(mc){return mc>=8?3:mc>=5?2:1;}
+let toolsUsed=0;
 function showWin(){
-  const reward=50+level*30+maxCombo*5;
+  const stars=starOfCombo(maxCombo);
+  const prevBest=(save.stars&&save.stars[level])||0;
+  const bonus=Math.max(0,(STAR_BONUS[stars]||0)-(STAR_BONUS[prevBest]||0));
+  const reward=50+level*30+maxCombo*5+bonus;
   save.coins+=reward;Sound.coin();
+  if(!save.stars)save.stars={};
+  if(stars>prevBest)save.stars[level]=stars;
   if(level>=save.best)save.best=level+1;
   if(level+1>save.level)save.level=level+1;
   saveGame();
-  document.getElementById('win-text').textContent=`第 ${level} 关完成！得分 ${score}`;
-  document.getElementById('win-reward').textContent=`获得金币 +${reward}（连击奖励 ${maxCombo*5}）`;
+  const remarks={1:'通关小勇士！',2:'连击小达人！',3:'连击之王！'};
+  const ws=document.getElementById('win-stars');
+  ws.innerHTML='';
+  for(let i=1;i<=3;i++){const s=document.createElement('span');s.textContent='⭐';if(i>stars)s.className='dim';ws.appendChild(s);}
+  document.getElementById('win-remark').textContent=remarks[stars]+(toolsUsed>0?' 善用道具的小机灵鬼':'');
+  document.getElementById('win-text').textContent=`第 ${level} 关完成！最高连击 ×${maxCombo}`;
+  document.getElementById('win-reward').textContent=`获得金币 +${reward}`+(bonus>0?`（含星级奖励 +${bonus}）`:'');
   document.getElementById('win-screen').classList.remove('hidden');
   updateUI();}
 function showStuck(){document.getElementById('stuck-screen').classList.remove('hidden');}
@@ -1341,7 +1424,7 @@ function exitDailyBoard(){stopDailyTimer();dailyMode=false;RNG=Math.random;}
 function startDaily(){
   exitDailyBoard();
   dailyMode=true;level=3;
-  score=0;combo=0;maxCombo=0;selected=null;pendingRoll=false;
+  score=0;combo=0;maxCombo=0;selected=null;pendingRoll=false;toolsUsed=0;
   RNG=mulberry32(hashStr('xxl-daily-v1-'+todayKey()));  // 同一天 => 同一套图案与布局
   dailyTypes=rollTypes(null,DAILY_TYPES);
   setTileSize();
@@ -1579,8 +1662,10 @@ function renderScene(sc){
 }
 function openHome(){
   exitDailyBoard();
+  exitYang();
   document.getElementById('home-coins').textContent=save.coins;
   document.getElementById('home-level').textContent=save.best;
+  document.getElementById('home-stars').textContent=totalStars();
   const hd=document.getElementById('home-daily');
   if(hd)hd.textContent=dailyDoneToday()?'📅 今日已打卡':'📅 每日挑战';
   document.getElementById('home-screen').classList.remove('hidden');
@@ -1688,6 +1773,8 @@ document.getElementById('btn-sfx').onclick=function(){Sound.init();save.sfxOn=!s
 
 function startGame(lv){
   exitDailyBoard();
+  document.getElementById('game').classList.remove('hidden');
+  toolsUsed=0;
   score=0;combo=0;maxCombo=0;selected=null;
   const nTypes=Math.min(FULL_ICONS.length, 7+lv);
   if(pendingRoll && save.levelTypes && save.levelTypes.length){
@@ -1701,7 +1788,191 @@ function startGame(lv){
   generateBoard(lv);
   if(save.musicOn)Sound.startBGM();
 }
-window.addEventListener('resize',()=>{setTileSize();if(grid.length)renderBoard();});
+
+// ====== 萌羊消消（羊了个羊玩法）：三层堆叠 + 7格槽位三消 ======
+let yangActive=false,yangTiles=[],yangSlot=[],yangShuffles=1,yangUndos=1,yt=46,ytStep=46,yangLock=false;
+const YLAYERS=[{rows:4,cols:4},{rows:3,cols:4},{rows:2,cols:4}]; // 16+12+8=36 块，12 类型 × 3
+function totalStars(){const s=save.stars||{};return Object.keys(s).reduce((a,k)=>a+(s[k]||0),0);}
+function startYang(){
+  exitDailyBoard();
+  yangActive=true;
+  document.getElementById('home-screen').classList.add('hidden');
+  document.getElementById('yang-result').classList.add('hidden');
+  yt=Math.min(48,Math.max(34,Math.floor((Math.min(window.innerWidth,460)-48)/4.8)));
+  ytStep=yt;
+  buildYang();
+  renderYangBoard();
+  renderSlot();
+  updateYangUI();
+  warnYang('');
+  document.getElementById('yang-screen').classList.remove('hidden');
+  document.getElementById('game').classList.add('hidden');
+  if(save.musicOn)Sound.startBGM();
+}
+function exitYang(){
+  yangActive=false;
+  document.getElementById('yang-screen').classList.add('hidden');
+}
+function buildYang(){
+  const nTypes=12;
+  const pool=shuffle(allIconPool()).slice(0,nTypes);
+  const types=[];
+  pool.forEach(t=>{types.push(t,t,t);}); // 先成组再洗牌，保证每种恰好 3 个
+  shuffle(types);
+  yangTiles=[];let id=0;
+  YLAYERS.forEach((ly,li)=>{
+    for(let r=0;r<ly.rows;r++)for(let c=0;c<ly.cols;c++){
+      yangTiles.push({id:id++,layer:li,row:r,col:c,type:types.pop(),state:'board',el:null});
+    }
+  });
+  yangSlot=[];yangShuffles=1;yangUndos=1;yangLock=false;
+}
+function yangPos(t){const off=Math.round(yt*0.35)*t.layer;return{x:off+t.col*ytStep,y:off+t.row*ytStep};}
+function yangCovered(t){
+  if(t.state!=='board')return false;
+  const p=yangPos(t);
+  return yangTiles.some(o=>{
+    if(o===t||o.state!=='board'||o.layer<=t.layer)return false;
+    const q=yangPos(o);
+    const ox=Math.min(p.x+yt,q.x+yt)-Math.max(p.x,q.x);
+    const oy=Math.min(p.y+yt,q.y+yt)-Math.max(p.y,q.y);
+    return ox>0&&oy>0&&ox*oy>0.3*yt*yt;
+  });
+}
+function yangRefreshCover(){
+  yangTiles.forEach(t=>{
+    if(t.state==='board'&&t.el)t.el.classList.toggle('covered',yangCovered(t));
+  });
+}
+function renderYangBoard(){
+  const b=document.getElementById('yang-board');
+  b.innerHTML='';
+  const off2=Math.round(yt*0.35)*2;
+  b.style.width=(4*ytStep+off2)+'px';
+  b.style.height=(4*ytStep+off2)+'px';
+  b.style.setProperty('--yt',yt+'px');
+  yangTiles.filter(t=>t.state==='board').sort((a,b)=>a.layer-b.layer).forEach(t=>{
+    const d=document.createElement('div');
+    d.className='ytile';
+    d.style.width=yt+'px';d.style.height=yt+'px';d.style.zIndex=t.layer*10+t.row;
+    const p=yangPos(t);d.style.left=p.x+'px';d.style.top=p.y+'px';
+    d.innerHTML=FULL_ICONS[t.type].svg;
+    d.addEventListener('click',()=>yangTap(t));
+    t.el=d;
+    b.appendChild(d);
+  });
+  yangRefreshCover();
+}
+function yangTap(t){
+  if(yangLock||!yangActive||t.state!=='board')return;
+  if(yangCovered(t)){
+    if(t.el){t.el.classList.remove('shake');void t.el.offsetWidth;t.el.classList.add('shake');}
+    Sound.select();return;
+  }
+  yangLock=true;
+  Sound.select();
+  t.state='slot';
+  if(t.el){const el=t.el;t.el=null;el.classList.add('gone');setTimeout(()=>el.remove(),300);}
+  yangSlot.push(t);
+  renderSlot();
+  yangRefreshCover();
+  setTimeout(()=>yangResolve(t.type),300);
+}
+function yangResolve(type){
+  const same=yangSlot.filter(x=>x.type===type&&x.state==='slot');
+  if(same.length>=3){
+    Sound.playMatch();
+    same.slice(0,3).forEach((x,i)=>{
+      x.state='clear';
+      const el=x.el;
+      if(el)setTimeout(()=>el.classList.add('clearing'),60*i);
+    });
+    setTimeout(()=>{
+      yangSlot=yangSlot.filter(x=>x.state!=='clear');
+      same.slice(0,3).forEach(x=>{x.state='gone';x.el=null;});
+      renderSlot();
+      yangAfter();
+      yangLock=false;
+    },420);
+    return;
+  }
+  yangAfter();
+  yangLock=false;
+}
+function yangAfter(){
+  const left=yangTiles.filter(x=>x.state==='board').length;
+  yangRefreshCover();
+  if(left===0&&yangSlot.length===0){yangWin();return;}
+  if(yangSlot.length>=7){yangLose('槽位满啦！下次卡住记得早点点「退回」↩️');return;}
+  if(left===0){yangLose('棋盘清空了，但槽位里还有图案没凑成三连');return;}
+  warnYang(yangSlot.length===6?'槽位快满了，卡住就点「退回」↩️':'');
+  updateYangUI();
+}
+function renderSlot(){
+  const sl=document.getElementById('yang-slot');sl.innerHTML='';
+  for(let i=0;i<7;i++){
+    const d=document.createElement('div');d.className='yslot';
+    const t=yangSlot[i];
+    if(t){d.classList.add('filled');d.innerHTML=FULL_ICONS[t.type].svg;t.el=d;}
+    sl.appendChild(d);
+  }
+}
+function updateYangUI(){
+  const left=yangTiles.filter(x=>x.state==='board').length;
+  document.getElementById('yang-progress').textContent='剩 '+left;
+  const sn=document.getElementById('yang-shuffle-n'),un=document.getElementById('yang-undo-n');
+  sn.textContent=yangShuffles;un.textContent=yangUndos;
+  document.getElementById('yang-shuffle').classList.toggle('used',yangShuffles<=0);
+  document.getElementById('yang-undo').classList.toggle('used',yangUndos<=0);
+}
+function warnYang(msg){
+  const w=document.getElementById('yang-warn');
+  w.textContent=msg;
+  w.classList.toggle('show',!!msg);
+}
+function yangShuffleFn(){
+  if(yangShuffles<=0||yangLock)return;
+  const bt=yangTiles.filter(x=>x.state==='board');
+  if(bt.length<2)return;
+  yangShuffles--;
+  const ts=bt.map(x=>x.type);
+  shuffle(ts);
+  bt.forEach((x,i)=>{x.type=ts[i];});
+  Sound.shuffle();
+  renderYangBoard();updateYangUI();
+}
+function yangUndoFn(){
+  if(yangUndos<=0||yangLock||yangSlot.length===0)return;
+  const t=yangSlot.pop();
+  if(t){t.state='board';t.el=null;t.elSlot=false;}
+  yangUndos--;
+  Sound.select();
+  renderSlot();
+  renderYangBoard();
+  updateYangUI();
+  warnYang('');
+}
+function yangWin(){
+  save.yangWins++;save.coins+=80;saveGame();
+  Sound.win();
+  document.getElementById('yr-title').textContent='🎉 通关啦！';
+  document.getElementById('yr-text').textContent='羊圈清空！获得金币 +80（已通关 '+save.yangWins+' 次）';
+  document.getElementById('yang-result').classList.remove('hidden');
+}
+function yangLose(msg){
+  save.coins+=10;saveGame();
+  document.getElementById('yr-title').textContent='😮 差一点点';
+  document.getElementById('yr-text').textContent=msg+' 安慰奖 +10 金币，再来一次！';
+  document.getElementById('yang-result').classList.remove('hidden');
+}
+window.addEventListener('resize',()=>{setTileSize();if(grid.length)renderBoard();if(yangActive){yt=Math.min(48,Math.max(34,Math.floor((Math.min(window.innerWidth,460)-48)/4.8)));ytStep=yt;renderYangBoard();renderSlot();}});
+// 萌羊消消事件绑定
+document.getElementById('home-yang').onclick=()=>{Sound.init();startYang();};
+document.getElementById('yang-home').onclick=()=>{exitYang();openHome();};
+document.getElementById('yr-again').onclick=()=>{document.getElementById('yang-result').classList.add('hidden');startYang();};
+document.getElementById('yr-home').onclick=()=>{document.getElementById('yang-result').classList.add('hidden');exitYang();openHome();};
+document.getElementById('yang-shuffle').onclick=yangShuffleFn;
+document.getElementById('yang-undo').onclick=yangUndoFn;
 // 初始化
 applySkin();
 setTileSize();
