@@ -297,6 +297,20 @@ html,body{
 .ckey.eq{background:linear-gradient(135deg,#FF9CC0,#FF6FA5);color:#fff;border:none;box-shadow:var(--sh-btn-2)}
 .ckey.hint{grid-column:span 2;background:linear-gradient(160deg,#EAFBF7,#D6F3EC);color:var(--ok-d);border-color:rgba(31,163,149,.4)}
 .ckey.clear{grid-column:span 2;background:linear-gradient(160deg,#FFEFEF,#FFE0E0);color:var(--danger);border-color:rgba(255,92,122,.35)}
+
+.ccard.sel{box-shadow:0 0 0 3.5px var(--accent),0 7px 16px rgba(229,80,138,.30);transform:translateY(-2px) scale(1.04)}
+#calc-tools{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;width:92%;max-width:400px;margin-top:10px}
+.ctool{padding:9px 13px;border-radius:var(--r-pill);border:1px solid rgba(181,217,210,.6);background:linear-gradient(160deg,var(--ui1),var(--ui2));box-shadow:var(--sh-ui-sm);font-size:13px;font-weight:900;color:var(--text);cursor:pointer;white-space:nowrap}
+.ctool:active{transform:translateY(3px);box-shadow:var(--sh-ui-active)}
+#calc-tier-list{max-height:50vh;overflow-y:auto;margin:8px 0 4px;padding-right:2px}
+.ctier{margin-bottom:10px}
+.ctier-name{font-size:12px;font-weight:900;color:var(--text);opacity:.75;text-align:left;margin-bottom:5px}
+.cstages{display:grid;grid-template-columns:repeat(10,1fr);gap:5px}
+.cstage{height:28px;border-radius:9px;background:linear-gradient(160deg,#FFFFFF,#F0FAF8);border:1.5px solid #D8ECE6;font-size:11px;font-weight:900;color:var(--text);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.cstage.done{background:linear-gradient(135deg,#5FD3C6,#2BC4B0);color:#fff;border-color:transparent}
+.cstage.cur{background:linear-gradient(135deg,#FF9CC0,#FF6FA5);color:#fff;border-color:transparent;box-shadow:0 0 0 3px rgba(255,111,165,.25)}
+.cstage.lock{opacity:.35}
+
 </style>
 </head>
 <body data-page-node-id="DaHkSUkeV9zMd0xgxZeYTY">
@@ -480,27 +494,47 @@ html,body{
 <div class="hidden" id="calc-screen">
   <div id="calc-top">
     <button class="home-circle" id="calc-home">🏠</button>
-    <div id="calc-badge">🧮 24点速算</div>
+    <div id="calc-badge">入门 第 1 关</div>
     <div id="calc-score">🏆 0</div>
   </div>
   <div id="calc-subtop">
-    <span id="calc-timer">⏱ 60s</span>
+    <span id="calc-time">⏱ 0s</span>
+    <span id="calc-prog">进度 0/90</span>
     <span id="calc-best">最好 0</span>
   </div>
   <div id="calc-cards"></div>
   <div id="calc-expr"></div>
   <div id="calc-msg"></div>
   <div id="calc-pad">
-    <div class="ckey" data-k="(">(</div>
-    <div class="ckey" data-k=")">)</div>
-    <div class="ckey" data-k="back">⌫</div>
     <div class="ckey op" data-k="+">+</div>
     <div class="ckey op" data-k="-">−</div>
     <div class="ckey op" data-k="*">×</div>
     <div class="ckey op" data-k="/">÷</div>
-    <div class="ckey clear" data-k="clear">清空</div>
-    <div class="ckey eq" data-k="=">=</div>
-    <div class="ckey hint" data-k="hint">💡 提示</div>
+  </div>
+  <div id="calc-tools">
+    <div class="ctool" id="calc-undo">↩️ 撤销</div>
+    <div class="ctool" id="calc-reset">🔄 重置</div>
+    <div class="ctool" id="calc-hint">💡 提示</div>
+    <div class="ctool" id="calc-levels-btn">📋 关卡</div>
+  </div>
+</div>
+
+<div class="overlay hidden" id="calc-levels">
+  <div class="modal">
+    <h2>🧮 24点速算</h2>
+    <p id="calc-prog-text">已通关 0 / 90 关</p>
+    <div id="calc-tier-list"></div>
+    <button class="btn" id="calc-levels-close">关闭</button>
+  </div>
+</div>
+
+<div class="overlay hidden" id="calc-result">
+  <div class="modal">
+    <h2 id="cr-title">🎉 过关啦！</h2>
+    <p id="cr-text"></p>
+    <button class="btn" id="cr-next">下一关 ▶</button>
+    <button class="btn secondary" id="cr-again">再玩一次</button>
+    <button class="btn secondary" id="cr-levels">关卡</button>
   </div>
 </div>
 
@@ -865,7 +899,7 @@ const BGM_TRACKS=[
 
 // ====== 存档 ======
 const SAVE_KEY='xxl_save_v3';
-function defaultSave(){return{coins:0,level:1,best:1,items:{hint:3,refresh:3,bomb:1},skin:'green',skins:['green'],levelTypes:null,sfxOn:true,musicOn:false,ownedSounds:['pop'],activeSound:'pop',bgmTrack:0,ownedBGM:[0,1],stars:{},yangWins:0,yangLevel:1,yangTodayDate:'',yangTodayLv:1,yangCleared:false,calcBest:0,calcPlays:0};}
+function defaultSave(){return{coins:0,level:1,best:1,items:{hint:3,refresh:3,bomb:1},skin:'green',skins:['green'],levelTypes:null,sfxOn:true,musicOn:false,ownedSounds:['pop'],activeSound:'pop',bgmTrack:0,ownedBGM:[0,1],stars:{},yangWins:0,yangLevel:1,yangTodayDate:'',yangTodayLv:1,yangCleared:false,calcBest:0,calcPlays:0,calcIdx:0};}
 let save=loadSave();
 function loadSave(){
   try{
@@ -899,6 +933,7 @@ function loadSave(){
       if(typeof m.yangCleared!=='boolean')m.yangCleared=false;
       if(typeof m.calcBest!=='number')m.calcBest=0;
       if(typeof m.calcPlays!=='number')m.calcPlays=0;
+      if(typeof m.calcIdx!=='number'||m.calcIdx<0)m.calcIdx=0;
       return m;
     }
   }catch(e){}
@@ -1563,6 +1598,7 @@ function openHome(){
     const ylv=(save.yangTodayDate===td?save.yangTodayLv:1);
     document.getElementById('home-yang').innerHTML='🐑 萌羊消消 · 第'+ylv+'关';
   }
+  document.getElementById('home-calc').textContent='🧮 24点速算 · '+Math.min(save.calcIdx||0,CALC_TOTAL)+'/'+CALC_TOTAL;
   document.getElementById('home-screen').classList.remove('hidden');
 }
 function renderShop(){
@@ -1908,35 +1944,28 @@ document.getElementById('yr-home').onclick=()=>{document.getElementById('yang-re
 document.getElementById('yang-shuffle').onclick=yangShuffleFn;
 document.getElementById('yang-undo').onclick=yangUndoFn;
 // 24点速算 事件绑定与逻辑
-let calcNums=[],calcTokens=[],calcUsed=[false,false,false,false],calcScore=0,calcCombo=0,calcTimer=60,calcTimerId=null,calcActive=false,calcBest=0;
+const CALC_TIERS=[
+ {name:'入门',max:5,intOnly:true},
+ {name:'初级',max:6,intOnly:true},
+ {name:'中级',max:8,intOnly:true},
+ {name:'高级',max:10,intOnly:false},
+ {name:'顶级',max:11,intOnly:false},
+ {name:'骨灰级',max:12,intOnly:false},
+ {name:'宗师级',max:13,intOnly:false},
+ {name:'传奇级',max:13,frac:true},
+ {name:'王者',max:13,frac:true}
+];
+const CALC_PER=10;
+const CALC_TOTAL=CALC_TIERS.length*CALC_PER;
+let calcTier=0,calcStage=0,calcCards=[],calcBase=[],calcSel=-1,calcOp='',calcHist=[],calcStart=0,calcTid=null,calcScore=0,calcBest=0,calcPlaying=false;
 function gcd(a,b){a=Math.abs(a);b=Math.abs(b);while(b){const t=a%b;a=b;b=t;}return a||1;}
 function Rat(n,d){if(d===undefined)d=1;if(d<0){n=-n;d=-d;}const g=gcd(n,d)||1;this.n=n/g;this.d=d/g;}
 Rat.prototype.add=function(o){return new Rat(this.n*o.d+o.n*this.d,this.d*o.d);};
 Rat.prototype.sub=function(o){return new Rat(this.n*o.d-o.n*this.d,this.d*o.d);};
 Rat.prototype.mul=function(o){return new Rat(this.n*o.n,this.d*o.d);};
 Rat.prototype.div=function(o){if(o.n===0)return null;return new Rat(this.n*o.d,this.d*o.n);};
-function toRPN(tokens){
-  const out=[],ops=[];const prec={'+':1,'-':1,'*':2,'/':2};
-  for(const t of tokens){
-    if(typeof t==='number'){out.push({type:'num',v:t});}
-    else if(t==='('){ops.push(t);}
-    else if(t===')'){while(ops.length&&ops[ops.length-1]!=='(')out.push({type:'op',v:ops.pop()});if(!ops.length)return null;ops.pop();}
-    else{while(ops.length&&ops[ops.length-1]!=='('&&prec[ops[ops.length-1]]>=prec[t])out.push({type:'op',v:ops.pop()});ops.push(t);}
-  }
-  while(ops.length){const o=ops.pop();if(o==='('||o===')')return null;out.push({type:'op',v:o});}
-  return out;
-}
-function evalRPN(rpn){
-  const st=[];
-  for(const t of rpn){
-    if(t.type==='num')st.push(new Rat(t.v));
-    else{const b=st.pop(),a=st.pop();if(a===undefined||b===undefined)return null;let r;
-      if(t.v==='+')r=a.add(b);else if(t.v==='-')r=a.sub(b);else if(t.v==='*')r=a.mul(b);else{r=a.div(b);}
-      if(!r)return null;st.push(r);}
-  }
-  return st.length===1?st[0]:null;
-}
-function calcSolveExpr(nums){
+function fmtRat(v){return v.d===1?String(v.n):(v.n+'/'+v.d);}
+function calcSolve(nums,intOnly){
   const ops=['+','-','*','/'];
   function rec(arr,expr){
     if(arr.length===1){if(arr[0].d===1&&arr[0].n===24)return expr[0];return null;}
@@ -1944,6 +1973,7 @@ function calcSolveExpr(nums){
       const a=arr[i],b=arr[j];const rest=arr.filter((_,k)=>k!==i&&k!==j);const restE=expr.filter((_,k)=>k!==i&&k!==j);
       for(const op of ops){let r;
         if(op==='+')r=a.add(b);else if(op==='-')r=a.sub(b);else if(op==='*')r=a.mul(b);else{r=a.div(b);if(!r)continue;}
+        if(intOnly&&r.d!==1)continue;
         const sol=rec(rest.concat([r]),restE.concat(['('+expr[i]+op+expr[j]+')']));
         if(sol)return sol;
       }
@@ -1952,80 +1982,183 @@ function calcSolveExpr(nums){
   }
   return rec(nums.map(n=>new Rat(n)),nums.map(n=>String(n)));
 }
-function calcHasSolution(nums){return !!calcSolveExpr(nums);}
-function newCalcPuzzle(){
-  for(let tries=0;tries<500;tries++){
-    const nums=[];for(let i=0;i<4;i++)nums.push(1+Math.floor(Math.random()*13));
-    if(calcHasSolution(nums))return nums;
+function calcHasSolution(nums){return !!calcSolve(nums,false);}
+function genPuzzle(tier){
+  const cfg=CALC_TIERS[tier]||CALC_TIERS[0];
+  for(let t=0;t<800;t++){
+    const nums=[];for(let i=0;i<4;i++)nums.push(1+Math.floor(Math.random()*cfg.max));
+    if(!calcHasSolution(nums))continue;
+    if(cfg.intOnly&&!calcSolve(nums,true))continue;
+    if(cfg.frac&&calcSolve(nums,true))continue;
+    return nums;
   }
-  return [4,4,4,4];
+  return cfg.frac?[3,3,8,8]:(cfg.intOnly?[4,4,4,4]:[6,6,6,6]);
 }
-function startCalc(){
-  calcActive=true;
+function startCalcStage(tier,stage){
+  calcTier=tier;calcStage=stage;
+  calcBase=genPuzzle(tier).map(n=>new Rat(n));
+  calcCards=calcBase.slice();calcHist=[];calcSel=-1;calcOp='';
+  calcPlaying=true;calcStart=Date.now();
   document.getElementById('home-screen').classList.add('hidden');
   document.getElementById('game').classList.add('hidden');
   document.getElementById('yang-screen').classList.add('hidden');
+  document.getElementById('calc-levels').classList.add('hidden');
+  document.getElementById('calc-result').classList.add('hidden');
   document.getElementById('calc-screen').classList.remove('hidden');
-  if(save.musicOn)Sound.startBGM();
   calcBest=save.calcBest||0;
-  newCalcRound();
+  startCalcTimer();
+  renderCalcCards();renderCalcExpr();
+  warnCalc('① 点一个数字 → ② 点运算符 → ③ 点另一个数字，两个会合并成一个结果','');
+  updateCalcUI();
+  if(save.musicOn)Sound.startBGM();
 }
-function exitCalc(){calcActive=false;stopCalcTimer();document.getElementById('calc-screen').classList.add('hidden');}
-function stopCalcTimer(){if(calcTimerId){clearInterval(calcTimerId);calcTimerId=null;}}
+function startCalcTimer(){
+  if(calcTid)clearInterval(calcTid);
+  calcTid=setInterval(()=>{
+    if(!calcPlaying)return;
+    document.getElementById('calc-time').textContent='⏱ '+Math.floor((Date.now()-calcStart)/1000)+'s';
+  },500);
+}
+function stopCalcTimer(){if(calcTid){clearInterval(calcTid);calcTid=null;}}
 function renderCalcCards(){
   const c=document.getElementById('calc-cards');c.innerHTML='';
-  calcNums.forEach((n,i)=>{const d=document.createElement('div');d.className='ccard'+(calcUsed[i]?' used':'');d.textContent=n;d.onclick=()=>calcTapCard(i);c.appendChild(d);});
+  calcCards.forEach((v,i)=>{
+    const d=document.createElement('div');
+    d.className='ccard'+(i===calcSel?' sel':'');
+    d.textContent=fmtRat(v);
+    d.onclick=()=>calcTapCard(i);
+    c.appendChild(d);
+  });
 }
 function renderCalcExpr(){
   const e=document.getElementById('calc-expr');
-  const s=calcTokens.map(t=>t.t==='num'?t.v:(t.v==='*'?'×':t.v==='/'?'÷':t.v==='-'?'−':t.v)).join(' ');
-  e.textContent=s||' ';
+  let s='';
+  if(calcSel>=0&&calcCards[calcSel]){
+    const a=fmtRat(calcCards[calcSel]);
+    s=calcOp?(a+' '+calcOp+' ?'):(a+' …');
+  }
+  e.textContent=s||' ';
 }
-function calcTapCard(i){if(!calcActive||calcUsed[i])return;calcUsed[i]=true;calcTokens.push({t:'num',v:calcNums[i],idx:i});renderCalcCards();renderCalcExpr();Sound.select();}
-function calcPushOp(o){calcTokens.push({t:'op',v:o});renderCalcExpr();Sound.select();}
-function calcPushParen(p){calcTokens.push({t:'p',v:p});renderCalcExpr();Sound.select();}
-function calcBack(){const last=calcTokens.pop();if(last&&last.t==='num')calcUsed[last.idx]=false;renderCalcCards();renderCalcExpr();}
-function calcClear(){calcTokens=[];calcUsed=[false,false,false,false];renderCalcCards();renderCalcExpr();}
-function warnCalc(msg,type){const w=document.getElementById('calc-msg');w.textContent=msg;w.className=type||'';}
-function updateCalcTimer(){document.getElementById('calc-timer').textContent='⏱ '+calcTimer+'s';}
-function updateCalcUI(){document.getElementById('calc-score').textContent='🏆 '+calcScore;document.getElementById('calc-best').textContent='最好 '+calcBest;}
-function newCalcRound(){
-  stopCalcTimer();
-  calcNums=newCalcPuzzle();calcTokens=[];calcUsed=[false,false,false,false];
+function calcTapCard(i){
+  if(!calcPlaying)return;
+  if(calcSel<0){calcSel=i;renderCalcCards();renderCalcExpr();Sound.select();warnCalc('已选 '+fmtRat(calcCards[i])+'，再点一个运算符','');return;}
+  if(!calcOp){
+    if(i===calcSel){calcSel=-1;warnCalc('取消选择','');}
+    else{calcSel=i;warnCalc('改选 '+fmtRat(calcCards[i])+'（原来那个还能用）','');}
+    renderCalcCards();renderCalcExpr();Sound.select();return;
+  }
+  if(i===calcSel){warnCalc('同一个数字不能同时当两个数，请点另一个','bad');return;}
+  calcDoOp(i);
+}
+function calcDoOp(i){
+  const a=calcCards[calcSel],b=calcCards[i];const op=calcOp;let r;
+  if(op==='+')r=a.add(b);else if(op==='-')r=a.sub(b);else if(op==='*')r=a.mul(b);else r=a.div(b);
+  if(!r){warnCalc('0 不能做除数','bad');return;}
+  calcHist.push({cards:calcCards.slice()});
+  const idxs=[calcSel,i].sort((x,y)=>y-x);
+  idxs.forEach(k=>calcCards.splice(k,1));
+  calcCards.push(r);
+  const sym=op==='*'?'×':op==='/'?'÷':op;
+  calcSel=-1;calcOp='';
   renderCalcCards();renderCalcExpr();
-  warnCalc('用 + − × ÷ 和括号，让结果等于 24（4 张牌都要用）','');
-  calcTimer=60;updateCalcTimer();
-  calcTimerId=setInterval(()=>{calcTimer--;updateCalcTimer();if(calcTimer<=0)calcTimeUp();},1000);
+  warnCalc(fmtRat(a)+' '+sym+' '+fmtRat(b)+' = '+fmtRat(r),'ok');
+  Sound.select();
+  calcCheckDone();
+}
+function calcCheckDone(){
+  if(calcCards.length!==1)return;
+  const v=calcCards[0];
+  if(v.d===1&&v.n===24)calcWin();
+  else warnCalc('只剩 '+fmtRat(v)+'，不是 24 —— 点「撤销」再试','bad');
+}
+function calcWin(){
+  calcPlaying=false;stopCalcTimer();
+  const secs=Math.floor((Date.now()-calcStart)/1000);
+  calcScore+=100;
+  if(calcScore>calcBest){calcBest=calcScore;save.calcBest=calcBest;}
+  const idx=calcTier*CALC_PER+calcStage;
+  if(idx>=(save.calcIdx||0))save.calcIdx=idx+1;
+  save.calcPlays=(save.calcPlays||0)+1;
+  saveGame();Sound.win();
+  document.getElementById('cr-title').textContent='🎉 过关啦！';
+  document.getElementById('cr-text').textContent=CALC_TIERS[calcTier].name+' 第 '+(calcStage+1)+' 关完成，用时 '+secs+' 秒（得分 +100）';
+  document.getElementById('cr-next').style.display=((idx+1)<CALC_TOTAL)?'':'none';
+  document.getElementById('calc-result').classList.remove('hidden');
   updateCalcUI();
 }
-function calcSubmit(){
-  const numsUsed=calcTokens.filter(t=>t.t==='num');
-  if(numsUsed.length<4){warnCalc('要把 4 张牌都用上哦','bad');return;}
-  const raw=calcTokens.map(t=>t.t==='num'?t.v:t.v);
-  const rpn=toRPN(raw);
-  if(!rpn){warnCalc('算式不完整或括号不匹配','bad');return;}
-  const res=evalRPN(rpn);
-  if(!res){warnCalc('算式有问题（比如除以 0）','bad');return;}
-  if(res.d===1&&res.n===24){
-    stopCalcTimer();calcCombo++;
-    const gain=100+(calcCombo-1)*20;calcScore+=gain;
-    if(calcScore>calcBest){calcBest=calcScore;save.calcBest=calcBest;}
-    save.calcPlays=(save.calcPlays||0)+1;saveGame();Sound.win();
-    warnCalc('🎉 正确！+'+gain+(calcCombo>1?'（连击 ×'+calcCombo+'）':''),'ok');
-    updateCalcUI();
-    setTimeout(newCalcRound,900);
-  }else{
-    calcCombo=0;
-    const txt=res.d===1?String(res.n):(res.n+'/'+res.d);
-    warnCalc('结果是 '+txt+'，不是 24，再试试','bad');
-    updateCalcUI();
-  }
+function calcUndo(){
+  if(!calcPlaying)return;
+  if(!calcHist.length){warnCalc('没有可撤销的步骤','bad');return;}
+  calcCards=calcHist.pop().cards.slice();
+  calcSel=-1;calcOp='';
+  renderCalcCards();renderCalcExpr();warnCalc('已撤销一步，数字回来了','');
 }
-function calcHint(){const sol=calcSolveExpr(calcNums);warnCalc(sol?('💡 一种解法：'+sol):'这题暂未找到解，换一题','ok');}
-function calcTimeUp(){stopCalcTimer();calcCombo=0;const sol=calcSolveExpr(calcNums);warnCalc('⏰ 时间到！一种解法：'+(sol||'无'),'bad');updateCalcUI();setTimeout(newCalcRound,2400);}
-document.getElementById('home-calc').onclick=()=>{Sound.init();startCalc();};
+function calcReset(){
+  if(!calcPlaying)return;
+  calcCards=calcBase.slice();calcHist=[];calcSel=-1;calcOp='';
+  renderCalcCards();renderCalcExpr();warnCalc('已重置回原来的 4 个数字','');
+}
+function calcHint(){
+  const sol=calcSolve(calcBase.map(v=>v.n),false);
+  warnCalc(sol?('💡 一种解法：'+sol):'这题暂未找到解','ok');
+}
+function updateCalcUI(){
+  const el=document.getElementById('calc-score');if(el)el.textContent='🏆 '+calcScore;
+  const b=document.getElementById('calc-best');if(b)b.textContent='最好 '+calcBest;
+  const p=document.getElementById('calc-prog');if(p)p.textContent='进度 '+Math.min(save.calcIdx||0,CALC_TOTAL)+'/'+CALC_TOTAL;
+  const bd=document.getElementById('calc-badge');if(bd)bd.textContent=CALC_TIERS[calcTier].name+' 第 '+(calcStage+1)+' 关';
+}
+function warnCalc(msg,type){const w=document.getElementById('calc-msg');w.textContent=msg;w.className=type||'';}
+function exitCalc(){calcPlaying=false;stopCalcTimer();document.getElementById('calc-screen').classList.add('hidden');}
+function openCalcLevels(){
+  const box=document.getElementById('calc-tier-list');box.innerHTML='';
+  const done=Math.min(save.calcIdx||0,CALC_TOTAL);
+  document.getElementById('calc-prog-text').textContent='已通关 '+done+' / '+CALC_TOTAL+' 关';
+  CALC_TIERS.forEach((t,ti)=>{
+    const row=document.createElement('div');row.className='ctier';
+    const nm=document.createElement('div');nm.className='ctier-name';nm.textContent=t.name;
+    const st=document.createElement('div');st.className='cstages';
+    for(let s=0;s<CALC_PER;s++){
+      const idx=ti*CALC_PER+s;
+      const d=document.createElement('div');
+      d.className='cstage'+(idx<done?' done':(idx===done?' cur':' lock'));
+      d.textContent=(idx<done)?'✓':(s+1);
+      if(idx<=done)d.onclick=()=>{document.getElementById('calc-levels').classList.add('hidden');startCalcStage(ti,s);};
+      st.appendChild(d);
+    }
+    row.appendChild(nm);row.appendChild(st);box.appendChild(row);
+  });
+  document.getElementById('calc-levels').classList.remove('hidden');
+}
+function calcNextStage(){
+  const idx=calcTier*CALC_PER+calcStage+1;
+  document.getElementById('calc-result').classList.add('hidden');
+  if(idx>=CALC_TOTAL){openCalcLevels();return;}
+  startCalcStage(Math.floor(idx/CALC_PER),idx%CALC_PER);
+}
+document.getElementById('home-calc').onclick=()=>{Sound.init();calcScore=0;openCalcLevels();};
 document.getElementById('calc-home').onclick=()=>{exitCalc();openHome();};
-document.querySelectorAll('#calc-pad .ckey').forEach(el=>{el.onclick=()=>{const k=el.getAttribute('data-k');if(k==='(')calcPushParen('(');else if(k===')')calcPushParen(')');else if(k==='back')calcBack();else if(k==='clear')calcClear();else if(k==='=')calcSubmit();else if(k==='hint')calcHint();else calcPushOp(k);};});
+document.getElementById('calc-levels-btn').onclick=()=>{openCalcLevels();};
+document.getElementById('calc-levels-close').onclick=()=>{
+  document.getElementById('calc-levels').classList.add('hidden');
+  if(document.getElementById('calc-screen').classList.contains('hidden'))openHome();
+};
+document.getElementById('calc-undo').onclick=calcUndo;
+document.getElementById('calc-reset').onclick=calcReset;
+document.getElementById('calc-hint').onclick=calcHint;
+document.getElementById('cr-next').onclick=calcNextStage;
+document.getElementById('cr-again').onclick=()=>{document.getElementById('calc-result').classList.add('hidden');startCalcStage(calcTier,calcStage);};
+document.getElementById('cr-levels').onclick=()=>{document.getElementById('calc-result').classList.add('hidden');openCalcLevels();};
+document.querySelectorAll('#calc-pad .ckey').forEach(el=>{
+  el.onclick=()=>{
+    if(!calcPlaying)return;
+    if(calcSel<0){warnCalc('先点一个数字','bad');return;}
+    const k=el.getAttribute('data-k');
+    calcOp=k;renderCalcExpr();Sound.select();
+    warnCalc('选好 '+(k==='*'?'×':k==='/'?'÷':k)+' 了，再点另一个数字','');
+  };
+});
+
 // 初始化
 applySkin();
 setTileSize();
