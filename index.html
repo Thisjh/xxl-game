@@ -249,7 +249,7 @@ html,body{
 .btn.sheep:active{transform:translateY(3px);box-shadow:0 1px 4px rgba(216,120,30,.26)}
 .new-badge{position:absolute;top:-9px;right:-6px;background:var(--danger);color:#fff;font-size:10px;font-weight:900;padding:2px 8px;border-radius:10px;box-shadow:0 2px 5px rgba(0,0,0,.2);animation:nbPulse 1.3s ease-in-out infinite}
 @keyframes nbPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
-#game.hidden,#yang-screen.hidden{display:none}
+#game.hidden,#yang-screen.hidden,#calc-screen.hidden{display:none}
 #yang-screen{position:fixed;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
 #yang-top{width:100%;max-width:460px;display:flex;align-items:center;gap:10px;padding:14px 16px 8px}
 #yang-badge{background:linear-gradient(160deg,var(--ui1),var(--ui2));border-radius:var(--r-pill);padding:8px 18px;font-weight:900;font-size:var(--f-sub);color:var(--text);box-shadow:var(--sh-ui),inset 0 1px 0 rgba(255,255,255,.9);border:1px solid rgba(181,217,210,.7);white-space:nowrap}
@@ -274,6 +274,29 @@ html,body{
 .yslot.filled .emoji{width:86%;height:86%;display:flex;align-items:center;justify-content:center;font-size:24px;line-height:1}
 .yslot.clearing{animation:popOut .32s forwards}
 @keyframes slotIn{from{transform:scale(.3)}to{transform:scale(1)}}
+/* ===== 24点速算 ===== */
+.btn.calc{background:linear-gradient(135deg,#5FD3C6,#2BC4B0);box-shadow:0 5px 14px rgba(31,163,149,.32),0 2px 5px rgba(31,163,149,.2);position:relative}
+.btn.calc:active{transform:translateY(3px);box-shadow:0 1px 4px rgba(31,163,149,.26)}
+#calc-screen{position:fixed;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);background:transparent}
+#calc-top{width:100%;max-width:460px;display:flex;align-items:center;gap:10px;padding:14px 16px 8px}
+#calc-badge{background:linear-gradient(160deg,var(--ui1),var(--ui2));border-radius:var(--r-pill);padding:8px 18px;font-weight:900;font-size:var(--f-sub);color:var(--text);box-shadow:var(--sh-ui),inset 0 1px 0 rgba(255,255,255,.9);border:1px solid rgba(181,217,210,.7);white-space:nowrap}
+#calc-score{margin-left:auto;background:linear-gradient(160deg,var(--ui1),var(--ui2));border-radius:var(--r-pill);padding:9px 14px;font-weight:900;font-size:var(--f-sub);color:var(--text);box-shadow:var(--sh-ui);border:1px solid rgba(181,217,210,.7)}
+#calc-subtop{display:flex;gap:14px;justify-content:center;font-size:13px;font-weight:800;color:var(--text);opacity:.8;margin-top:2px}
+#calc-cards{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;padding:18px 12px 10px}
+.ccard{width:62px;height:82px;border-radius:16px;background:linear-gradient(160deg,#FFFFFF,#F0FAF8);border:2px solid #D8ECE6;box-shadow:0 4px 10px rgba(74,130,122,.18),inset 0 1.5px 2px rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:900;color:var(--text);cursor:pointer;transition:transform .12s,box-shadow .12s,opacity .12s}
+.ccard:active{transform:translateY(3px)}
+.ccard.used{opacity:.3;transform:scale(.9);box-shadow:var(--sh-ui-sm);cursor:default}
+#calc-expr{min-height:48px;width:92%;max-width:420px;background:rgba(255,255,255,.82);border-radius:14px;border:1.5px solid var(--card-shadow);box-shadow:var(--sh-ui-sm);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:900;color:var(--text);padding:8px 12px;letter-spacing:2px;margin:4px 0}
+#calc-msg{min-height:20px;font-size:13px;font-weight:700;margin:4px 0 8px;color:var(--text);opacity:.8;text-align:center;padding:0 10px}
+#calc-msg.ok{color:var(--ok-d);opacity:1}
+#calc-msg.bad{color:var(--danger);opacity:1;animation:nbPulse 1s ease-in-out infinite}
+#calc-pad{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;width:92%;max-width:360px;margin-top:6px}
+.ckey{padding:15px 0;border-radius:14px;border:1px solid rgba(181,217,210,.6);background:linear-gradient(160deg,var(--ui1),var(--ui2));box-shadow:var(--sh-ui-sm);font-size:20px;font-weight:900;color:var(--text);cursor:pointer;text-align:center;user-select:none;-webkit-user-select:none}
+.ckey:active{transform:translateY(3px);box-shadow:var(--sh-ui-active)}
+.ckey.op{background:linear-gradient(160deg,#FFF0F6,#FFE3EE);color:var(--accent-d);border-color:rgba(229,80,138,.4)}
+.ckey.eq{background:linear-gradient(135deg,#FF9CC0,#FF6FA5);color:#fff;border:none;box-shadow:var(--sh-btn-2)}
+.ckey.hint{grid-column:span 2;background:linear-gradient(160deg,#EAFBF7,#D6F3EC);color:var(--ok-d);border-color:rgba(31,163,149,.4)}
+.ckey.clear{grid-column:span 2;background:linear-gradient(160deg,#FFEFEF,#FFE0E0);color:var(--danger);border-color:rgba(255,92,122,.35)}
 </style>
 </head>
 <body data-page-node-id="DaHkSUkeV9zMd0xgxZeYTY">
@@ -400,6 +423,7 @@ html,body{
     </div>
     <button class="btn big" id="home-start" data-page-node-id="p9OL7NtUGkaPgObSlywmxO">🐱 经典连连看</button>
     <button class="btn big sheep" id="home-yang">🐑 萌羊消消<span class="new-badge">NEW</span></button>
+    <button class="btn big calc" id="home-calc">🧮 24点速算</button>
     <div class="home-row" data-page-node-id="qs0KnmjfLTJOxGENFOchlI">
       <button class="btn secondary sm" id="home-shop" data-page-node-id="4ENI0DsGbdNN3d9bliEKoW">🛒 商店</button>
       <button class="btn secondary sm" id="home-skin" data-page-node-id="3yVWEHwYHDfW5TozAikZit">🎨 皮肤</button>
@@ -449,6 +473,34 @@ html,body{
     <p id="yr-text"></p>
     <button class="btn" id="yr-again">再来一局</button>
     <button class="btn secondary" id="yr-home">回主页</button>
+  </div>
+</div>
+
+<!-- 24点速算 -->
+<div class="hidden" id="calc-screen">
+  <div id="calc-top">
+    <button class="home-circle" id="calc-home">🏠</button>
+    <div id="calc-badge">🧮 24点速算</div>
+    <div id="calc-score">🏆 0</div>
+  </div>
+  <div id="calc-subtop">
+    <span id="calc-timer">⏱ 60s</span>
+    <span id="calc-best">最好 0</span>
+  </div>
+  <div id="calc-cards"></div>
+  <div id="calc-expr"></div>
+  <div id="calc-msg"></div>
+  <div id="calc-pad">
+    <div class="ckey" data-k="(">(</div>
+    <div class="ckey" data-k=")">)</div>
+    <div class="ckey" data-k="back">⌫</div>
+    <div class="ckey op" data-k="+">+</div>
+    <div class="ckey op" data-k="-">−</div>
+    <div class="ckey op" data-k="*">×</div>
+    <div class="ckey op" data-k="/">÷</div>
+    <div class="ckey clear" data-k="clear">清空</div>
+    <div class="ckey eq" data-k="=">=</div>
+    <div class="ckey hint" data-k="hint">💡 提示</div>
   </div>
 </div>
 
@@ -813,7 +865,7 @@ const BGM_TRACKS=[
 
 // ====== 存档 ======
 const SAVE_KEY='xxl_save_v3';
-function defaultSave(){return{coins:0,level:1,best:1,items:{hint:3,refresh:3,bomb:1},skin:'green',skins:['green'],levelTypes:null,sfxOn:true,musicOn:false,ownedSounds:['pop'],activeSound:'pop',bgmTrack:0,ownedBGM:[0,1],stars:{},yangWins:0,yangLevel:1,yangTodayDate:'',yangTodayLv:1,yangCleared:false};}
+function defaultSave(){return{coins:0,level:1,best:1,items:{hint:3,refresh:3,bomb:1},skin:'green',skins:['green'],levelTypes:null,sfxOn:true,musicOn:false,ownedSounds:['pop'],activeSound:'pop',bgmTrack:0,ownedBGM:[0,1],stars:{},yangWins:0,yangLevel:1,yangTodayDate:'',yangTodayLv:1,yangCleared:false,calcBest:0,calcPlays:0};}
 let save=loadSave();
 function loadSave(){
   try{
@@ -845,6 +897,8 @@ function loadSave(){
       if(typeof m.yangTodayDate!=='string')m.yangTodayDate='';
       if(typeof m.yangTodayLv!=='number'||m.yangTodayLv<1)m.yangTodayLv=1;
       if(typeof m.yangCleared!=='boolean')m.yangCleared=false;
+      if(typeof m.calcBest!=='number')m.calcBest=0;
+      if(typeof m.calcPlays!=='number')m.calcPlays=0;
       return m;
     }
   }catch(e){}
@@ -1853,6 +1907,125 @@ document.getElementById('yr-again').onclick=()=>{
 document.getElementById('yr-home').onclick=()=>{document.getElementById('yang-result').classList.add('hidden');exitYang();openHome();};
 document.getElementById('yang-shuffle').onclick=yangShuffleFn;
 document.getElementById('yang-undo').onclick=yangUndoFn;
+// 24点速算 事件绑定与逻辑
+let calcNums=[],calcTokens=[],calcUsed=[false,false,false,false],calcScore=0,calcCombo=0,calcTimer=60,calcTimerId=null,calcActive=false,calcBest=0;
+function gcd(a,b){a=Math.abs(a);b=Math.abs(b);while(b){const t=a%b;a=b;b=t;}return a||1;}
+function Rat(n,d){if(d===undefined)d=1;if(d<0){n=-n;d=-d;}const g=gcd(n,d)||1;this.n=n/g;this.d=d/g;}
+Rat.prototype.add=function(o){return new Rat(this.n*o.d+o.n*this.d,this.d*o.d);};
+Rat.prototype.sub=function(o){return new Rat(this.n*o.d-o.n*this.d,this.d*o.d);};
+Rat.prototype.mul=function(o){return new Rat(this.n*o.n,this.d*o.d);};
+Rat.prototype.div=function(o){if(o.n===0)return null;return new Rat(this.n*o.d,this.d*o.n);};
+function toRPN(tokens){
+  const out=[],ops=[];const prec={'+':1,'-':1,'*':2,'/':2};
+  for(const t of tokens){
+    if(typeof t==='number'){out.push({type:'num',v:t});}
+    else if(t==='('){ops.push(t);}
+    else if(t===')'){while(ops.length&&ops[ops.length-1]!=='(')out.push({type:'op',v:ops.pop()});if(!ops.length)return null;ops.pop();}
+    else{while(ops.length&&ops[ops.length-1]!=='('&&prec[ops[ops.length-1]]>=prec[t])out.push({type:'op',v:ops.pop()});ops.push(t);}
+  }
+  while(ops.length){const o=ops.pop();if(o==='('||o===')')return null;out.push({type:'op',v:o});}
+  return out;
+}
+function evalRPN(rpn){
+  const st=[];
+  for(const t of rpn){
+    if(t.type==='num')st.push(new Rat(t.v));
+    else{const b=st.pop(),a=st.pop();if(a===undefined||b===undefined)return null;let r;
+      if(t.v==='+')r=a.add(b);else if(t.v==='-')r=a.sub(b);else if(t.v==='*')r=a.mul(b);else{r=a.div(b);}
+      if(!r)return null;st.push(r);}
+  }
+  return st.length===1?st[0]:null;
+}
+function calcSolveExpr(nums){
+  const ops=['+','-','*','/'];
+  function rec(arr,expr){
+    if(arr.length===1){if(arr[0].d===1&&arr[0].n===24)return expr[0];return null;}
+    for(let i=0;i<arr.length;i++)for(let j=0;j<arr.length;j++){if(i===j)continue;
+      const a=arr[i],b=arr[j];const rest=arr.filter((_,k)=>k!==i&&k!==j);const restE=expr.filter((_,k)=>k!==i&&k!==j);
+      for(const op of ops){let r;
+        if(op==='+')r=a.add(b);else if(op==='-')r=a.sub(b);else if(op==='*')r=a.mul(b);else{r=a.div(b);if(!r)continue;}
+        const sol=rec(rest.concat([r]),restE.concat(['('+expr[i]+op+expr[j]+')']));
+        if(sol)return sol;
+      }
+    }
+    return null;
+  }
+  return rec(nums.map(n=>new Rat(n)),nums.map(n=>String(n)));
+}
+function calcHasSolution(nums){return !!calcSolveExpr(nums);}
+function newCalcPuzzle(){
+  for(let tries=0;tries<500;tries++){
+    const nums=[];for(let i=0;i<4;i++)nums.push(1+Math.floor(Math.random()*13));
+    if(calcHasSolution(nums))return nums;
+  }
+  return [4,4,4,4];
+}
+function startCalc(){
+  calcActive=true;
+  document.getElementById('home-screen').classList.add('hidden');
+  document.getElementById('game').classList.add('hidden');
+  document.getElementById('yang-screen').classList.add('hidden');
+  document.getElementById('calc-screen').classList.remove('hidden');
+  if(save.musicOn)Sound.startBGM();
+  calcBest=save.calcBest||0;
+  newCalcRound();
+}
+function exitCalc(){calcActive=false;stopCalcTimer();document.getElementById('calc-screen').classList.add('hidden');}
+function stopCalcTimer(){if(calcTimerId){clearInterval(calcTimerId);calcTimerId=null;}}
+function renderCalcCards(){
+  const c=document.getElementById('calc-cards');c.innerHTML='';
+  calcNums.forEach((n,i)=>{const d=document.createElement('div');d.className='ccard'+(calcUsed[i]?' used':'');d.textContent=n;d.onclick=()=>calcTapCard(i);c.appendChild(d);});
+}
+function renderCalcExpr(){
+  const e=document.getElementById('calc-expr');
+  const s=calcTokens.map(t=>t.t==='num'?t.v:(t.v==='*'?'×':t.v==='/'?'÷':t.v==='-'?'−':t.v)).join(' ');
+  e.textContent=s||' ';
+}
+function calcTapCard(i){if(!calcActive||calcUsed[i])return;calcUsed[i]=true;calcTokens.push({t:'num',v:calcNums[i],idx:i});renderCalcCards();renderCalcExpr();Sound.select();}
+function calcPushOp(o){calcTokens.push({t:'op',v:o});renderCalcExpr();Sound.select();}
+function calcPushParen(p){calcTokens.push({t:'p',v:p});renderCalcExpr();Sound.select();}
+function calcBack(){const last=calcTokens.pop();if(last&&last.t==='num')calcUsed[last.idx]=false;renderCalcCards();renderCalcExpr();}
+function calcClear(){calcTokens=[];calcUsed=[false,false,false,false];renderCalcCards();renderCalcExpr();}
+function warnCalc(msg,type){const w=document.getElementById('calc-msg');w.textContent=msg;w.className=type||'';}
+function updateCalcTimer(){document.getElementById('calc-timer').textContent='⏱ '+calcTimer+'s';}
+function updateCalcUI(){document.getElementById('calc-score').textContent='🏆 '+calcScore;document.getElementById('calc-best').textContent='最好 '+calcBest;}
+function newCalcRound(){
+  stopCalcTimer();
+  calcNums=newCalcPuzzle();calcTokens=[];calcUsed=[false,false,false,false];
+  renderCalcCards();renderCalcExpr();
+  warnCalc('用 + − × ÷ 和括号，让结果等于 24（4 张牌都要用）','');
+  calcTimer=60;updateCalcTimer();
+  calcTimerId=setInterval(()=>{calcTimer--;updateCalcTimer();if(calcTimer<=0)calcTimeUp();},1000);
+  updateCalcUI();
+}
+function calcSubmit(){
+  const numsUsed=calcTokens.filter(t=>t.t==='num');
+  if(numsUsed.length<4){warnCalc('要把 4 张牌都用上哦','bad');return;}
+  const raw=calcTokens.map(t=>t.t==='num'?t.v:t.v);
+  const rpn=toRPN(raw);
+  if(!rpn){warnCalc('算式不完整或括号不匹配','bad');return;}
+  const res=evalRPN(rpn);
+  if(!res){warnCalc('算式有问题（比如除以 0）','bad');return;}
+  if(res.d===1&&res.n===24){
+    stopCalcTimer();calcCombo++;
+    const gain=100+(calcCombo-1)*20;calcScore+=gain;
+    if(calcScore>calcBest){calcBest=calcScore;save.calcBest=calcBest;}
+    save.calcPlays=(save.calcPlays||0)+1;saveGame();Sound.win();
+    warnCalc('🎉 正确！+'+gain+(calcCombo>1?'（连击 ×'+calcCombo+'）':''),'ok');
+    updateCalcUI();
+    setTimeout(newCalcRound,900);
+  }else{
+    calcCombo=0;
+    const txt=res.d===1?String(res.n):(res.n+'/'+res.d);
+    warnCalc('结果是 '+txt+'，不是 24，再试试','bad');
+    updateCalcUI();
+  }
+}
+function calcHint(){const sol=calcSolveExpr(calcNums);warnCalc(sol?('💡 一种解法：'+sol):'这题暂未找到解，换一题','ok');}
+function calcTimeUp(){stopCalcTimer();calcCombo=0;const sol=calcSolveExpr(calcNums);warnCalc('⏰ 时间到！一种解法：'+(sol||'无'),'bad');updateCalcUI();setTimeout(newCalcRound,2400);}
+document.getElementById('home-calc').onclick=()=>{Sound.init();startCalc();};
+document.getElementById('calc-home').onclick=()=>{exitCalc();openHome();};
+document.querySelectorAll('#calc-pad .ckey').forEach(el=>{el.onclick=()=>{const k=el.getAttribute('data-k');if(k==='(')calcPushParen('(');else if(k===')')calcPushParen(')');else if(k==='back')calcBack();else if(k==='clear')calcClear();else if(k==='=')calcSubmit();else if(k==='hint')calcHint();else calcPushOp(k);};});
 // 初始化
 applySkin();
 setTileSize();
