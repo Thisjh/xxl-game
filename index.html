@@ -138,7 +138,7 @@ html,body{
 .modal .btn.secondary{background:linear-gradient(135deg,#FFFFFF,#F0FAF8);box-shadow:var(--sh-ui-sm);margin-left:8px;font-size:15px;color:var(--text);border:1px solid rgba(180,217,210,.5)}
 .modal .btn.secondary:active{box-shadow:var(--sh-btn-2-active)}
 /* KIKI 生日卡片（8月3日每关弹出） *//* 主页 */
-.modal.home{padding:30px 24px}
+.modal.home{padding:30px 24px;max-height:92vh;overflow-y:auto}
 .home-logo{display:flex;align-items:center;justify-content:center;gap:8px;font-size:40px;font-weight:900;color:var(--text)}
 .home-logo span{font-size:34px}
 .home-logo .logo-pet{width:48px;height:48px;flex:0 0 auto;margin-right:4px}
@@ -277,6 +277,8 @@ html,body{
 /* ===== 24点速算 ===== */
 .btn.calc{background:linear-gradient(135deg,#5FD3C6,#2BC4B0);box-shadow:0 5px 14px rgba(31,163,149,.32),0 2px 5px rgba(31,163,149,.2);position:relative}
 .btn.calc:active{transform:translateY(3px);box-shadow:0 1px 4px rgba(31,163,149,.26)}
+.btn.math{background:linear-gradient(135deg,#7DC4FF,#3B82F6);box-shadow:0 5px 14px rgba(59,130,246,.32),0 2px 5px rgba(59,130,246,.2);position:relative}
+.btn.math:active{transform:translateY(3px);box-shadow:0 1px 4px rgba(59,130,246,.26)}
 #calc-screen{position:fixed;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);background:transparent}
 #calc-top{width:100%;max-width:460px;display:flex;align-items:center;gap:10px;padding:14px 16px 8px}
 #calc-badge{background:linear-gradient(160deg,var(--ui1),var(--ui2));border-radius:var(--r-pill);padding:8px 18px;font-weight:900;font-size:var(--f-sub);color:var(--text);box-shadow:var(--sh-ui),inset 0 1px 0 rgba(255,255,255,.9);border:1px solid rgba(181,217,210,.7);white-space:nowrap}
@@ -438,6 +440,7 @@ html,body{
     <button class="btn big" id="home-start" data-page-node-id="p9OL7NtUGkaPgObSlywmxO">🐱 经典连连看</button>
     <button class="btn big sheep" id="home-yang">🐑 萌羊消消<span class="new-badge">NEW</span></button>
     <button class="btn big calc" id="home-calc">🧮 24点速算</button>
+    <button class="btn big math" id="home-math">🔢 数学消消乐</button>
     <div class="home-row" data-page-node-id="qs0KnmjfLTJOxGENFOchlI">
       <button class="btn secondary sm" id="home-shop" data-page-node-id="4ENI0DsGbdNN3d9bliEKoW">🛒 商店</button>
       <button class="btn secondary sm" id="home-skin" data-page-node-id="3yVWEHwYHDfW5TozAikZit">🎨 皮肤</button>
@@ -2137,6 +2140,7 @@ function calcNextStage(){
   startCalcStage(Math.floor(idx/CALC_PER),idx%CALC_PER);
 }
 document.getElementById('home-calc').onclick=()=>{Sound.init();calcScore=0;openCalcLevels();};
+document.getElementById('home-math').onclick=()=>{Sound.init();window.location.href='./math.html';};
 document.getElementById('calc-home').onclick=()=>{exitCalc();openHome();};
 document.getElementById('calc-levels-btn').onclick=()=>{openCalcLevels();};
 document.getElementById('calc-levels-close').onclick=()=>{
